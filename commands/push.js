@@ -15,6 +15,7 @@ async function runPushCommand(params) {
   const { u } = params;
   if (u) {
     await runCommand(`git push --set-upstream origin ${currentBranch}`);
+    log.success('推送成功 🚀')
   }
 }
 
