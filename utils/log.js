@@ -12,10 +12,6 @@ function warning(text) {
   console.log(chalk.yellow(text));
 }
 
-function tip(text) {
-  console.log(chalk.gray(text));
-}
-
 module.exports = {
   success,
   error,

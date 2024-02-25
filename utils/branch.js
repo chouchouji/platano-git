@@ -16,6 +16,14 @@ function formatBranch(branch) {
     .filter(Boolean);
 }
 
+function getCurrentBranch(branch) {
+  const reg = new RegExp("\\*", "g");
+  const currentBranch = branch.split("\n").find((br) => br.includes("*"));
+
+  return currentBranch.replace(reg, "").trim();
+}
+
 module.exports = {
   formatBranch,
+  getCurrentBranch,
 };
