@@ -9,13 +9,14 @@ async function runPushCommand(params) {
 
   if (isEmptyObject(params)) {
     await runCommand(`git push`);
+    log.success('推送成功 🚀')
     return;
   }
 
   const { u } = params;
   if (u) {
     await runCommand(`git push --set-upstream origin ${currentBranch}`);
-    log.success('推送成功 🚀')
+    log.success('关联远端并推送成功 🚀')
   }
 }
 
