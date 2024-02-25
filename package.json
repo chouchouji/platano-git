@@ -1,0 +1,15 @@
+{
+  "name": "platano-git",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "bin": {
+    "platano": "/bin.js"
+  },
+  "author": "chouchouji",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0"
+  }
+}
