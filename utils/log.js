@@ -16,5 +16,4 @@ module.exports = {
   success,
   error,
   warning,
-  tip,
 };
