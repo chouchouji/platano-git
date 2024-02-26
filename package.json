@@ -1,11 +1,14 @@
 {
   "name": "platano-git",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "type": "commonjs",
   "bin": {
-    "platano": "/bin.js"
+    "platano": "/src/bin.js"
+  },
+  "scripts": {
+    "format": "prettier --write \"src/**/*.js\""
   },
   "author": "chouchouji",
   "license": "MIT",
@@ -13,5 +16,8 @@
     "chalk": "^4.1.2",
     "commander": "^12.0.0",
     "inquirer": "^8.1.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
   }
 }

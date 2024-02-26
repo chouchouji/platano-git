@@ -1,4 +1,4 @@
-const { exec } = require("child_process");
+const { exec } = require('child_process')
 
 async function runCommand(command) {
   return new Promise(async function (resolve, reject) {
@@ -9,15 +9,15 @@ async function runCommand(command) {
       },
       async function (err, stdout) {
         if (err) {
-          reject(err);
+          reject(err)
         } else {
-          resolve(stdout);
+          resolve(stdout)
         }
-      }
-    );
-  });
+      },
+    )
+  })
 }
 
 module.exports = {
   runCommand,
-};
+}
