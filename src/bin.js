@@ -1,7 +1,9 @@
 #!/usr/bin/env node
+
 const { Command } = require('commander')
 const { runBranchCommand } = require('./commands/branch')
 const { runPushCommand } = require('./commands/push')
+const { runPullCommand } = require('./commands/pull')
 
 const program = new Command()
 program.version('0.0.0')
@@ -23,6 +25,14 @@ program
   .description('推送分支')
   .action(async (params) => {
     await runPushCommand(params)
+  })
+
+program
+  .command('pull')
+  .option('-s', '选择远端并拉取远端分支')
+  .description('拉取分支')
+  .action(async (params) => {
+    await runPullCommand(params)
   })
 
 program.parse()

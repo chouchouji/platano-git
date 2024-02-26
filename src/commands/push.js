@@ -8,7 +8,7 @@ async function runPushCommand(params) {
   const currentBranch = getCurrentBranch(branch)
 
   if (isEmptyObject(params)) {
-    await runCommand(`git push`)
+    await runCommand('git push')
     log.success('推送成功 🚀')
     return
   }
@@ -18,7 +18,7 @@ async function runPushCommand(params) {
     await runCommand(`git push --set-upstream origin ${currentBranch}`)
     log.success('关联远端并推送成功 🚀')
   } else if (f) {
-    await runCommand(`git push -f`)
+    await runCommand('git push -f')
     log.success('强制推送成功 🚀')
   }
 }

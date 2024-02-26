@@ -6,6 +6,7 @@ function formatBranch(branch) {
   const reg = new RegExp('\\*', 'g')
   return branch
     .split('\n')
+    .filter((br) => !br.includes('->'))
     .map((br) => {
       if (br.includes('*')) {
         br = br.replace(reg, '')
@@ -23,7 +24,26 @@ function getCurrentBranch(branch) {
   return currentBranch.replace(reg, '').trim()
 }
 
+function getRemoteNames(branch) {
+  const reg = new RegExp('remotes/', 'g')
+  const remoteBranches = branch
+    .split('\n')
+    .filter((br) => br.includes('remotes/'))
+    .map((br) => br.trim().replace(reg, ''))
+  const remoteNames = ['origin']
+
+  remoteBranches.forEach((branch) => {
+    const [remoteName, _rest] = branch.split('/')
+    if (remoteName && !remoteNames.includes(remoteName)) {
+      remoteNames.push(remoteName)
+    }
+  })
+
+  return remoteNames
+}
+
 module.exports = {
   formatBranch,
   getCurrentBranch,
+  getRemoteNames,
 }
