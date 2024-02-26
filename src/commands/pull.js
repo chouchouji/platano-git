@@ -1,6 +1,7 @@
 const { runCommand } = require('../utils/run')
 const log = require('../utils/log')
 const { getRemoteNames } = require('../utils/branch')
+const inquirer = require('inquirer')
 
 async function getSelectRemoteName() {
   const res = await runCommand('git branch -a')
@@ -8,9 +9,10 @@ async function getSelectRemoteName() {
 
   const { selectName } = await inquirer.prompt([
     {
-      type: 'radio',
+      type: 'list',
       name: 'selectName',
       message: '请选择你要拉取的远程名字',
+      default: 'origin',
       choices,
     },
   ])
