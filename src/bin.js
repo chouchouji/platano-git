@@ -5,6 +5,7 @@ const packageJson = require('../package.json')
 const { runBranchCommand } = require('./commands/branch')
 const { runPushCommand } = require('./commands/push')
 const { runPullCommand } = require('./commands/pull')
+const { runCheckoutCommand } = require('./commands/checkout')
 
 const program = new Command()
 program.version(packageJson.version)
@@ -34,6 +35,13 @@ program
   .description('拉取分支')
   .action(async (params) => {
     await runPullCommand(params)
+  })
+
+program
+  .command('ck')
+  .description('切换分支')
+  .action(async (params) => {
+    await runCheckoutCommand(params)
   })
 
 program.parse()
