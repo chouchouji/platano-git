@@ -11,7 +11,7 @@ const program = new Command()
 program.version(packageJson.version)
 
 program
-  .command('branch')
+  .command('br')
   .option('-d', '删除本地分支')
   .option('-dr', '删除本地和对应的远端分支')
   .option('-a', '查看所有分支')
@@ -21,7 +21,7 @@ program
   })
 
 program
-  .command('push')
+  .command('ps')
   .option('-u', '推送并关联远程分支')
   .option('-f', '强制推送到远程分支')
   .description('推送分支')
@@ -30,7 +30,7 @@ program
   })
 
 program
-  .command('pull')
+  .command('pl')
   .option('-s', '选择远端并拉取远端分支')
   .description('拉取分支')
   .action(async (params) => {
