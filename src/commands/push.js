@@ -13,10 +13,13 @@ async function runPushCommand(params) {
     return
   }
 
-  const { u } = params
+  const { u, f } = params
   if (u) {
     await runCommand(`git push --set-upstream origin ${currentBranch}`)
     log.success('关联远端并推送成功 🚀')
+  } else if (f) {
+    await runCommand(`git push -f`)
+    log.success('强制推送成功 🚀')
   }
 }
 
