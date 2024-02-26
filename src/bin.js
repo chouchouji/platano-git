@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
 const { Command } = require('commander')
+const packageJson = require('../package.json')
 const { runBranchCommand } = require('./commands/branch')
 const { runPushCommand } = require('./commands/push')
 const { runPullCommand } = require('./commands/pull')
 
 const program = new Command()
-program.version('0.0.0')
+program.version(packageJson.version)
 
 program
   .command('branch')

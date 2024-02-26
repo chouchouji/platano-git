@@ -1,7 +1,7 @@
 {
   "name": "platano-git",
   "version": "0.0.0",
-  "description": "",
+  "description": "一个用于简化 git 操作的工具库",
   "main": "index.js",
   "type": "commonjs",
   "bin": {
@@ -10,6 +10,16 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.js\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chouchouji/platano-git"
+  },
+  "homepage": "https://github.com/chouchouji/platano-git",
+  "keywords": [
+    "cli",
+    "nodejs",
+    "git"
+  ],
   "author": "chouchouji",
   "license": "MIT",
   "dependencies": {
