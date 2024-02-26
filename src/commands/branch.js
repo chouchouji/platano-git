@@ -40,6 +40,7 @@ async function fetchLocalBranches() {
 async function deleteLocalBranches() {
   const selectBranches = await getSelectBranches()
   if (isEmptyArray(selectBranches)) {
+    log.warning('未选择任何分支')
     return
   }
 
@@ -61,13 +62,24 @@ async function deleteLocalBranches() {
 async function deleteLocalAndRemoteBranches() {
   const selectBranches = await getSelectBranches()
   if (isEmptyArray(selectBranches)) {
+    log.warning('未选择任何分支')
     return
   }
 
   const localPromises = selectBranches.map((branch) => runCommand(`git branch -D ${branch}`))
   const remotePromises = selectBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
 
-  await Promise.allSettled([...localPromises, ...remotePromises])
+  const results = await Promise.allSettled([...localPromises, ...remotePromises])
+
+  results.forEach((result, index) => {
+    if (result.status === 'fulfilled') {
+      const text = index <= selectBranches.length - 1 ? '本地' : '远端'
+      const idx = index <= selectBranches.length - 1 ? index : index - selectBranches.length
+      log.success(`${text} 分支 ${selectBranches[idx]} 删除成功!`)
+    } else if (result.status === 'rejected') {
+      log.error(`分支 ${selectBranches[index]} 删除失败。`)
+    }
+  })
 }
 
 async function runBranchCommand(params) {
@@ -76,12 +88,12 @@ async function runBranchCommand(params) {
     return
   }
 
-  const { a, d, dr } = params
+  const { a, d, Dr } = params
   if (a) {
     await fetchAllBranches()
   } else if (d) {
     await deleteLocalBranches()
-  } else if (dr) {
+  } else if (Dr) {
     await deleteLocalAndRemoteBranches()
   }
 }
