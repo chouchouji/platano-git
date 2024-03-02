@@ -32,7 +32,8 @@ async function runPullCommand(params) {
 
   if (s) {
     const remoteName = await getSelectRemoteName()
-    const currentBranch = await getCurrentBranch()
+    const branch = await runCommand('git branch -a')
+    const currentBranch = await getCurrentBranch(branch)
 
     await runCommand(`git pull ${remoteName} ${currentBranch}`)
     log.success(`拉取 ${remoteName}/${currentBranch} 成功 ⬇️`)
