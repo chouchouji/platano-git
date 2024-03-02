@@ -9,6 +9,11 @@ async function getSelectLocalBranch() {
   const currentBranch = await getCurrentBranch(branch)
   const choices = formatBranch(branch).filter((br) => br !== currentBranch)
 
+  if (!choices.length) {
+    log.warning('暂无可以切换的分支')
+    return
+  }
+
   const { selectLocalBranch } = await inquirer.prompt([
     {
       type: 'list',
