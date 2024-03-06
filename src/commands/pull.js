@@ -5,6 +5,8 @@ const inquirer = require('inquirer')
 const { isEmptyObject } = require('../utils/util')
 
 async function getSelectRemoteName() {
+  await updateBranch()
+  
   const res = await runCommand('git branch -a')
   const choices = getRemoteNames(res)
 

@@ -1,3 +1,5 @@
+const { runCommand } = require('./run')
+
 function formatBranch(branch) {
   if (!branch) {
     return []
@@ -42,8 +44,13 @@ function getRemoteNames(branch) {
   return remoteNames
 }
 
+async function updateBranch() {
+  await runCommand('git fetch -p')
+}
+
 module.exports = {
   formatBranch,
   getCurrentBranch,
   getRemoteNames,
+  updateBranch,
 }

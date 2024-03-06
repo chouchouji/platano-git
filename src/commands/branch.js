@@ -1,5 +1,5 @@
 const { runCommand } = require('../utils/run')
-const { formatBranch } = require('../utils/branch')
+const { formatBranch, updateBranch } = require('../utils/branch')
 const inquirer = require('inquirer')
 const log = require('../utils/log')
 const { isEmptyObject, isEmptyArray } = require('../utils/util')
@@ -28,6 +28,7 @@ async function getSelectBranches() {
 }
 
 async function fetchAllBranches() {
+  await updateBranch()
   const branch = await runCommand('git branch -a')
   log.success(branch.trimEnd())
 }
@@ -52,7 +53,7 @@ async function deleteLocalBranches() {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`分支 ${selectBranches[index]} 删除成功!`)
+      log.success(`分支 ${selectBranches[index]} 删除成功 🗑️`)
     } else if (result.status === 'rejected') {
       log.error(`分支 ${selectBranches[index]} 删除失败。`)
     }
@@ -66,18 +67,24 @@ async function deleteLocalAndRemoteBranches() {
     return
   }
 
+  await updateBranch()
+
+  const allBranch = await runCommand('git branch -a')
   const localPromises = selectBranches.map((branch) => runCommand(`git branch -D ${branch}`))
-  const remotePromises = selectBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
+  const remoteBranches = selectBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
+  const remotePromises = remoteBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
 
   const results = await Promise.allSettled([...localPromises, ...remotePromises])
 
   results.forEach((result, index) => {
+    const idx = index <= selectBranches.length - 1 ? index : index - selectBranches.length
+    const branch = index <= selectBranches.length - 1 ? selectBranches[idx] : remoteBranches[idx]
+
     if (result.status === 'fulfilled') {
       const text = index <= selectBranches.length - 1 ? '本地' : '远端'
-      const idx = index <= selectBranches.length - 1 ? index : index - selectBranches.length
-      log.success(`${text} 分支 ${selectBranches[idx]} 删除成功!`)
+      log.success(`${text} 分支 ${branch} 删除成功 🗑️`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${selectBranches[index]} 删除失败。`)
+      log.error(`分支 ${branch} 删除失败。`)
     }
   })
 }
