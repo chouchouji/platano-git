@@ -1,5 +1,5 @@
 const { runCommand } = require('../utils/run')
-const { formatBranch, updateBranch } = require('../utils/branch')
+const { formatBranch, updateBranch, getCurrentBranch } = require('../utils/branch')
 const inquirer = require('inquirer')
 const log = require('../utils/log')
 const { isEmptyObject, isEmptyArray } = require('../utils/util')
@@ -38,6 +38,13 @@ async function fetchLocalBranches() {
   log.success(branch.trimEnd())
 }
 
+async function getBranchesWithoutOwn(selectBranches) {
+  const branch = await runCommand('git branch')
+  const currentBranch = getCurrentBranch(branch)
+
+  return selectBranches.filter((selectBranch) => currentBranch !== selectBranch)
+}
+
 async function deleteLocalBranches() {
   const selectBranches = await getSelectBranches()
   if (isEmptyArray(selectBranches)) {
@@ -45,9 +52,8 @@ async function deleteLocalBranches() {
     return
   }
 
-  const promises = selectBranches.map((branch) => {
-    runCommand(`git branch -D ${branch}`)
-  })
+  const restBranches = await getBranchesWithoutOwn(selectBranches)
+  const promises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
 
   const results = await Promise.allSettled(promises)
 
@@ -55,9 +61,12 @@ async function deleteLocalBranches() {
     if (result.status === 'fulfilled') {
       log.success(`分支 ${selectBranches[index]} 删除成功 🗑️`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${selectBranches[index]} 删除失败。`)
+      log.error(`分支 ${selectBranches[index]} 删除失败...`)
     }
   })
+
+  log.warning('本地剩余分支如下：')
+  await fetchLocalBranches()
 }
 
 async function deleteLocalAndRemoteBranches() {
@@ -70,23 +79,28 @@ async function deleteLocalAndRemoteBranches() {
   await updateBranch()
 
   const allBranch = await runCommand('git branch -a')
-  const localPromises = selectBranches.map((branch) => runCommand(`git branch -D ${branch}`))
-  const remoteBranches = selectBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
+  const restBranches = await getBranchesWithoutOwn(selectBranches)
+
+  const localPromises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
+  const remoteBranches = restBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
   const remotePromises = remoteBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
 
   const results = await Promise.allSettled([...localPromises, ...remotePromises])
 
   results.forEach((result, index) => {
-    const idx = index <= selectBranches.length - 1 ? index : index - selectBranches.length
-    const branch = index <= selectBranches.length - 1 ? selectBranches[idx] : remoteBranches[idx]
+    const idx = index <= restBranches.length - 1 ? index : index - restBranches.length
+    const branch = index <= restBranches.length - 1 ? restBranches[idx] : remoteBranches[idx]
 
     if (result.status === 'fulfilled') {
-      const text = index <= selectBranches.length - 1 ? '本地' : '远端'
+      const text = index <= restBranches.length - 1 ? '本地' : '远端'
       log.success(`${text} 分支 ${branch} 删除成功 🗑️`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${branch} 删除失败。`)
+      log.error(`分支 ${branch} 删除失败...`)
     }
   })
+
+  log.warning('本地剩余分支如下：')
+  await fetchLocalBranches()
 }
 
 async function runBranchCommand(params) {
