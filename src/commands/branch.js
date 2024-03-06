@@ -59,9 +59,9 @@ async function deleteLocalBranches() {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`分支 ${selectBranches[index]} 删除成功 🗑️`)
+      log.success(`分支 ${restBranches[index]} 删除成功 🗑️`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${selectBranches[index]} 删除失败...`)
+      log.error(`分支 ${restBranches[index]} 删除失败...`)
     }
   })
 
