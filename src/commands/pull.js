@@ -4,11 +4,8 @@ const { getRemoteNames, getCurrentBranch, updateBranch } = require('../utils/bra
 const inquirer = require('inquirer')
 const { isEmptyObject } = require('../utils/util')
 
-async function getSelectRemoteName() {
-  await updateBranch()
-  
-  const res = await runCommand('git branch -a')
-  const choices = getRemoteNames(res)
+async function getSelectRemoteName(branch) {
+  const choices = getRemoteNames(branch)
 
   const { selectName } = await inquirer.prompt([
     {
@@ -33,8 +30,10 @@ async function runPullCommand(params) {
   const { s } = params
 
   if (s) {
-    const remoteName = await getSelectRemoteName()
+    await updateBranch()
+
     const branch = await runCommand('git branch -a')
+    const remoteName = await getSelectRemoteName(branch)
     const currentBranch = await getCurrentBranch(branch)
 
     await runCommand(`git pull ${remoteName} ${currentBranch}`)
