@@ -39,7 +39,8 @@ program
 
 program
   .command('ck')
-  .description('切换分支')
+  .option('-b', '创建新分支')
+  .description('切换或创建分支')
   .action(async (params) => {
     await runCheckoutCommand(params)
   })

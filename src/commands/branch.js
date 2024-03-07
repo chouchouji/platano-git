@@ -59,7 +59,7 @@ async function deleteLocalBranches() {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`分支 ${restBranches[index]} 删除成功 🗑️`)
+      log.success(`分支 ${restBranches[index]} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
       log.error(`分支 ${restBranches[index]} 删除失败...`)
     }
@@ -93,7 +93,7 @@ async function deleteLocalAndRemoteBranches() {
 
     if (result.status === 'fulfilled') {
       const text = index <= restBranches.length - 1 ? '本地' : '远端'
-      log.success(`${text} 分支 ${branch} 删除成功 🗑️`)
+      log.success(`${text} 分支 ${branch} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
       log.error(`分支 ${branch} 删除失败...`)
     }
