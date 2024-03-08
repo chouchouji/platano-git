@@ -2,7 +2,7 @@
 
 > A tool library for simplifying **git** operations
 
-## user's guidance
+## User Guidance
 
 ### Install
 
@@ -22,7 +22,7 @@ yarn global add platano-git
 
 ![Guide](guide-en.png)
 
-## Feedback question
+## Feedback
 
 If you encounter problems or have good ideas and suggestions, please [report](https://github.com/chouchouji/platano-git/issues) here.
 

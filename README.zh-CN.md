@@ -22,7 +22,7 @@ yarn global add platano-git
 
 ![指南](guide.png)
 
-## 反馈问题
+## 反馈
 
 如果遇到了问题或有好的想法和建议，请在此 [报告](https://github.com/chouchouji/platano-git/issues) 。
 
