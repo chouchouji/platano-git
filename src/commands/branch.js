@@ -1,6 +1,6 @@
+const inquirer = require('inquirer')
 const { runCommand } = require('../utils/run')
 const { formatBranch, updateBranch, getCurrentBranch } = require('../utils/branch')
-const inquirer = require('inquirer')
 const log = require('../utils/log')
 const { isEmptyObject, isEmptyArray } = require('../utils/util')
 

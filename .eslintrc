@@ -1,0 +1,26 @@
+{
+  "env": {
+    "es6": true,
+    "commonjs": true
+  },
+  "extends": ["eslint:recommended", "airbnb-base"],
+  "rules": {
+    "semi": ["error", "never"],
+    "no-console": "off",
+    "no-use-before-define": "error",
+    "no-else-return": "error",
+    "no-empty-function": "error",
+    "no-implicit-coercion": "error",
+    "no-invalid-this": "error",
+    "no-loop-func": "error",
+    "no-multi-spaces": "error",
+    "no-new-func": "error",
+    "no-useless-return": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  }
+}

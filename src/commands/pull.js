@@ -1,7 +1,7 @@
+const inquirer = require('inquirer')
 const { runCommand } = require('../utils/run')
 const log = require('../utils/log')
 const { getRemoteNames, getCurrentBranch, updateBranch } = require('../utils/branch')
-const inquirer = require('inquirer')
 const { isEmptyObject } = require('../utils/util')
 
 async function getSelectRemoteName(branch) {

@@ -1,8 +1,8 @@
+const inquirer = require('inquirer')
 const { runCommand } = require('../utils/run')
 const { getCurrentBranch, formatBranch } = require('../utils/branch')
 const log = require('../utils/log')
 const { isEmptyObject } = require('../utils/util')
-const inquirer = require('inquirer')
 
 async function getSelectLocalBranch() {
   const branch = await runCommand('git branch')
