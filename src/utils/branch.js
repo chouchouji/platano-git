@@ -11,7 +11,7 @@ function formatBranch(branch) {
     .filter((br) => !br.includes('->'))
     .map((br) => {
       if (br.includes('*')) {
-        br = br.replace(reg, '')
+        return br.replace(reg, '').trim()
       }
 
       return br.trim()

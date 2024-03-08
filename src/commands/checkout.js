@@ -11,7 +11,7 @@ async function getSelectLocalBranch() {
 
   if (!choices.length) {
     log.warning('暂无可以切换的分支')
-    return
+    return undefined
   }
 
   const { selectLocalBranch } = await inquirer.prompt([
