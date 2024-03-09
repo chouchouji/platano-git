@@ -1,7 +1,7 @@
 const { exec } = require('child_process')
 
 async function runCommand(command) {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     exec(
       command,
       {

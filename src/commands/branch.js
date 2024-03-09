@@ -12,7 +12,7 @@ async function getSelectBranches() {
 
   if (isEmptyArray(choices)) {
     log.warning('没有可以删除的分支了')
-    return []
+    return undefined
   }
 
   const { selectBranches } = await inquirer.prompt([
@@ -47,8 +47,8 @@ async function getBranchesWithoutOwn(selectBranches) {
 
 async function deleteLocalBranches() {
   const selectBranches = await getSelectBranches()
-  if (isEmptyArray(selectBranches)) {
-    log.warning('未选择任何分支')
+
+  if (!selectBranches || isEmptyArray(selectBranches)) {
     return
   }
 
