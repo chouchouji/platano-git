@@ -6,9 +6,8 @@ const { isEmptyObject, isEmptyArray } = require('../utils/util')
 
 const PROTECTED_BRANCHES = ['main', 'dev']
 
-async function getSelectBranches() {
-  const res = await runCommand('git branch')
-  const choices = formatBranch(res).filter((branch) => !PROTECTED_BRANCHES.includes(branch))
+async function getSelectBranches(localBranch) {
+  const choices = formatBranch(localBranch).filter((branch) => !PROTECTED_BRANCHES.includes(branch))
 
   if (isEmptyArray(choices)) {
     log.warning('没有可以删除的分支了')
@@ -33,26 +32,27 @@ async function fetchAllBranches() {
   log.success(branch.trimEnd())
 }
 
-async function fetchLocalBranches() {
+async function logLocalBranches() {
+  log.warning('本地剩余分支如下：')
   const branch = await runCommand('git branch')
   log.success(branch.trimEnd())
 }
 
-async function getBranchesWithoutOwn(selectBranches) {
-  const branch = await runCommand('git branch')
-  const currentBranch = getCurrentBranch(branch)
+function getBranchesWithoutOwn(selectBranches, localBranch) {
+  const currentBranch = getCurrentBranch(localBranch)
 
   return selectBranches.filter((selectBranch) => currentBranch !== selectBranch)
 }
 
-async function deleteLocalBranches() {
-  const selectBranches = await getSelectBranches()
+async function deleteLocalBranches(localBranch) {
+  const selectBranches = await getSelectBranches(localBranch)
 
-  if (!selectBranches || isEmptyArray(selectBranches)) {
+  if (isEmptyArray(selectBranches)) {
+    log.warning('未选择任何分支')
     return
   }
 
-  const restBranches = await getBranchesWithoutOwn(selectBranches)
+  const restBranches = getBranchesWithoutOwn(selectBranches, localBranch)
   const promises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
 
   const results = await Promise.allSettled(promises)
@@ -65,12 +65,11 @@ async function deleteLocalBranches() {
     }
   })
 
-  log.warning('本地剩余分支如下：')
-  await fetchLocalBranches()
+  await logLocalBranches()
 }
 
-async function deleteLocalAndRemoteBranches() {
-  const selectBranches = await getSelectBranches()
+async function deleteLocalAndRemoteBranches(localBranch) {
+  const selectBranches = await getSelectBranches(localBranch)
   if (isEmptyArray(selectBranches)) {
     log.warning('未选择任何分支')
     return
@@ -99,23 +98,25 @@ async function deleteLocalAndRemoteBranches() {
     }
   })
 
-  log.warning('本地剩余分支如下：')
-  await fetchLocalBranches()
+  await logLocalBranches()
 }
 
 async function runBranchCommand(params) {
+  const localBranch = await runCommand('git branch')
+
   if (isEmptyObject(params)) {
-    await fetchLocalBranches()
+    log.success(localBranch.trimEnd())
     return
   }
 
   const { a, d, Dr } = params
+
   if (a) {
     await fetchAllBranches()
   } else if (d) {
-    await deleteLocalBranches()
+    await deleteLocalBranches(localBranch)
   } else if (Dr) {
-    await deleteLocalAndRemoteBranches()
+    await deleteLocalAndRemoteBranches(localBranch)
   }
 }
 

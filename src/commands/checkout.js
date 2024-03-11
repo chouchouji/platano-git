@@ -4,9 +4,8 @@ const { getCurrentBranch, formatBranch } = require('../utils/branch')
 const log = require('../utils/log')
 const { isEmptyObject } = require('../utils/util')
 
-async function getSelectLocalBranch() {
-  const branch = await runCommand('git branch')
-  const currentBranch = await getCurrentBranch(branch)
+async function getSelectLocalBranch(branch) {
+  const currentBranch = getCurrentBranch(branch)
   const choices = formatBranch(branch).filter((br) => br !== currentBranch)
 
   if (!choices.length) {
@@ -56,12 +55,14 @@ async function getBaseBranch(branch) {
 }
 
 async function runCheckoutCommand(params) {
-  if (isEmptyObject(params)) {
-    const branch = await getSelectLocalBranch()
+  const branch = await runCommand('git branch')
 
-    if (branch) {
-      await runCommand(`git checkout ${branch}`)
-      log.success(`成功切换到 ${branch} 🎉`)
+  if (isEmptyObject(params)) {
+    const selectedBranch = await getSelectLocalBranch(branch)
+
+    if (selectedBranch) {
+      await runCommand(`git checkout ${selectedBranch}`)
+      log.success(`成功切换到 ${selectedBranch} 🎉`)
     }
 
     return
@@ -70,7 +71,6 @@ async function runCheckoutCommand(params) {
   const { b } = params
 
   if (b) {
-    const branch = await runCommand('git branch')
     const newBranch = await getInputBranchName()
 
     if (!newBranch) {
