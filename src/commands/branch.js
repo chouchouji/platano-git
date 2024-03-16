@@ -78,7 +78,7 @@ async function deleteLocalAndRemoteBranches(localBranch) {
   await updateBranch()
 
   const allBranch = await runCommand('git branch -a')
-  const restBranches = await getBranchesWithoutOwn(selectBranches)
+  const restBranches = await getBranchesWithoutOwn(selectBranches, localBranch)
 
   const localPromises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
   const remoteBranches = restBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
