@@ -45,9 +45,21 @@ async function updateBranch() {
   await runCommand('git fetch -p')
 }
 
+async function getRemoteBranches() {
+  await updateBranch()
+  const allBranch = await runCommand('git branch -a')
+
+  const allBranches = formatBranch(allBranch)
+    .filter((branch) => branch.includes('origin'))
+    .map((branch) => branch.match(/origin\/(\S*)/)[1])
+
+  return allBranches
+}
+
 module.exports = {
   formatBranch,
   getCurrentBranch,
   getRemoteNames,
+  getRemoteBranches,
   updateBranch,
 }

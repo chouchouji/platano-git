@@ -1,6 +1,7 @@
+/* eslint-disable object-curly-newline */
 const inquirer = require('inquirer')
 const { runCommand } = require('../utils/run')
-const { formatBranch, updateBranch, getCurrentBranch } = require('../utils/branch')
+const { formatBranch, updateBranch, getCurrentBranch, getRemoteBranches } = require('../utils/branch')
 const log = require('../utils/log')
 const { isEmptyObject, isEmptyArray } = require('../utils/util')
 
@@ -18,7 +19,7 @@ async function getSelectBranches(localBranch) {
     {
       type: 'checkbox',
       name: 'selectBranches',
-      message: '请选择你要在本地删除的分支',
+      message: '请选择你要删除的分支',
       choices,
     },
   ])
@@ -68,6 +69,41 @@ async function deleteLocalBranches(localBranch) {
   await logLocalBranches()
 }
 
+async function deleteRemoteBranches() {
+  const remoteBranches = await getRemoteBranches()
+  const choices = remoteBranches.filter((remoteBr) => !PROTECTED_BRANCHES.includes(remoteBr))
+
+  if (isEmptyArray(choices)) {
+    log.warning('没有可以删除的分支了')
+    return
+  }
+
+  const { selectBranches } = await inquirer.prompt([
+    {
+      type: 'checkbox',
+      name: 'selectBranches',
+      message: '请选择你要删除的分支',
+      choices,
+    },
+  ])
+
+  if (isEmptyArray(selectBranches)) {
+    log.warning('未选择任何分支')
+    return
+  }
+
+  const promises = selectBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
+  const results = await Promise.allSettled(promises)
+
+  results.forEach((result, index) => {
+    if (result.status === 'fulfilled') {
+      log.success(`分支 ${selectBranches[index]} 删除成功 ✅`)
+    } else if (result.status === 'rejected') {
+      log.error(`分支 ${selectBranches[index]} 删除失败...`)
+    }
+  })
+}
+
 async function deleteLocalAndRemoteBranches(localBranch) {
   const selectBranches = await getSelectBranches(localBranch)
   if (isEmptyArray(selectBranches)) {
@@ -109,12 +145,14 @@ async function runBranchCommand(params) {
     return
   }
 
-  const { a, d, Dr } = params
+  const { a, d, Dr, r } = params
 
   if (a) {
     await fetchAllBranches()
   } else if (d) {
     await deleteLocalBranches(localBranch)
+  } else if (r) {
+    await deleteRemoteBranches()
   } else if (Dr) {
     await deleteLocalAndRemoteBranches(localBranch)
   }
