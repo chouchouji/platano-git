@@ -16,6 +16,7 @@ program
   .option('-r', '删除远程分支')
   .option('-dr', '删除本地和对应的远端分支')
   .option('-a', '查看所有分支')
+  .option('-m', '修改分支名')
   .description('查看或删除分支')
   .action(async (params) => {
     await runBranchCommand(params)

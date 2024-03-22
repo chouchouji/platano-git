@@ -154,6 +154,45 @@ async function deleteLocalAndRemoteBranches(localBranch) {
   await logLocalBranches()
 }
 
+async function updateBranchName(localBranch) {
+  const choices = formatBranch(localBranch).filter((branch) => !PROTECTED_BRANCHES.includes(branch))
+
+  if (isEmptyArray(choices)) {
+    log.warning('没有可以重命名的分支了')
+    return
+  }
+
+  const { selectBranch } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'selectBranch',
+      message: '请选择你要重命名的分支',
+      choices,
+    },
+  ])
+
+  const { newBranch } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'newBranch',
+      message: '请输入分支新名称',
+    },
+  ])
+
+  const remoteBranches = await getRemoteBranches()
+  const remoteChoices = remoteBranches.filter((remoteBr) => !PROTECTED_BRANCHES.includes(remoteBr))
+
+  if ([...choices, ...remoteChoices].includes(newBranch.trim())) {
+    log.error('已存在同名分支 🔁')
+    return
+  }
+
+  await runCommand(`git branch -m ${selectBranch} ${newBranch.trim()}`)
+  log.success(`${selectBranch} 已经重命名为 ${newBranch.trim()} 🖊️`)
+
+  await logLocalBranches()
+}
+
 async function runBranchCommand(params) {
   const localBranch = await runCommand('git branch')
 
@@ -166,10 +205,12 @@ async function runBranchCommand(params) {
     return
   }
 
-  const { a, d, Dr, r } = params
+  const { a, d, Dr, r, m } = params
 
   if (a) {
     await fetchAllBranches()
+  } else if (m) {
+    await updateBranchName(localBranch)
   } else if (d) {
     await deleteLocalBranches(localBranch)
   } else if (r) {
