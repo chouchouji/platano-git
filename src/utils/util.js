@@ -6,7 +6,12 @@ function isEmptyArray(val) {
   return Array.isArray(val) && val.length === 0
 }
 
+function isNotEmptyArray(val) {
+  return Array.isArray(val) && val.length > 0
+}
+
 module.exports = {
   isEmptyObject,
   isEmptyArray,
+  isNotEmptyArray,
 }

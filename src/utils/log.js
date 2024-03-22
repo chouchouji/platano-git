@@ -12,8 +12,13 @@ function warning(text) {
   console.log(chalk.yellow(text))
 }
 
+function info(text) {
+  console.log(chalk.cyan(text))
+}
+
 module.exports = {
   success,
   error,
   warning,
+  info,
 }

@@ -3,7 +3,7 @@ const inquirer = require('inquirer')
 const { runCommand } = require('../utils/run')
 const { formatBranch, updateBranch, getCurrentBranch, getRemoteBranches } = require('../utils/branch')
 const log = require('../utils/log')
-const { isEmptyObject, isEmptyArray } = require('../utils/util')
+const { isEmptyObject, isEmptyArray, isNotEmptyArray } = require('../utils/util')
 
 const PROTECTED_BRANCHES = ['main', 'dev']
 
@@ -33,10 +33,27 @@ async function fetchAllBranches() {
   log.success(branch.trimEnd())
 }
 
+function getLocalBranches(branch) {
+  const branches = branch
+    .split('\n')
+    .filter((br) => !br.includes('->'))
+    .map((br) => br.trim())
+    .filter(Boolean)
+
+  const [currentBranch] = branches.filter((br) => br.includes('*'))
+  const restBranches = branches.filter((br) => br !== currentBranch).map((br) => `  ${br}`)
+
+  return [currentBranch, ...restBranches]
+}
+
 async function logLocalBranches() {
   log.warning('本地剩余分支如下：')
   const branch = await runCommand('git branch')
-  log.success(branch.trimEnd())
+  const [currentBranch, ...restBranches] = getLocalBranches(branch)
+  log.success(currentBranch)
+  if (isNotEmptyArray(restBranches)) {
+    log.info(restBranches.join('\n').trimEnd())
+  }
 }
 
 function getBranchesWithoutOwn(selectBranches, localBranch) {
@@ -141,7 +158,11 @@ async function runBranchCommand(params) {
   const localBranch = await runCommand('git branch')
 
   if (isEmptyObject(params)) {
-    log.success(localBranch.trimEnd())
+    const [currentBranch, ...restBranches] = getLocalBranches(localBranch)
+    log.success(currentBranch)
+    if (isNotEmptyArray(restBranches)) {
+      log.info(restBranches.join('\n').trimEnd())
+    }
     return
   }
 
