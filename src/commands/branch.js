@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 const inquirer = require('inquirer')
 const { runCommand } = require('../utils/run')
 const { formatBranch, updateBranch, getCurrentBranch, getRemoteBranches } = require('../utils/branch')
@@ -114,9 +113,9 @@ async function deleteRemoteBranches() {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`分支 ${selectBranches[index]} 删除成功 ✅`)
+      log.success(`远端 分支 ${selectBranches[index]} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${selectBranches[index]} 删除失败...`)
+      log.error(`远端 分支 ${selectBranches[index]} 删除失败...`)
     }
   })
 }
