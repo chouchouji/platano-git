@@ -8,14 +8,27 @@
 
 #### Using [npm](https://www.npmjs.com/):
 
-```
+```shell
 npm install platano-git -g
 ```
 
 #### Using [yarn](https://yarnpkg.com/):
 
-```
+```shell
 yarn global add platano-git
+```
+
+### Example
+
+```shell
+# View all local branches
+platano br
+
+# Push code to remote
+platano ps
+
+# Pull the latest remote code
+platano pl
 ```
 
 ### Command
