@@ -26,6 +26,7 @@ program
   .command('ps')
   .option('-u', '推送并关联远程分支')
   .option('-f', '强制推送到远程分支')
+  .option('-o', '推送到远程分支')
   .description('推送分支')
   .action(async (params) => {
     await runPushCommand(params)
