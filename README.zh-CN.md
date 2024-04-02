@@ -18,9 +18,42 @@ npm install platano-git -g
 yarn global add platano-git
 ```
 
-### 指南
+### 命令
 
-![指南](guide.png)
+#### br
+
+| 参数| 描述 | 等价命令|
+| --- | --- | --- |
+| ` ` | 查看所有本地分支 | `git branch` |
+| `-a` | 查看所有分支 | `git branch -a` |
+| `-m` | 重命名本地分支 | `git branch -m xxx yyy` |
+| `-d` | 删除本地分支 | `git branch -D xxx` |
+| `-r` | 删除远程分支 | `git push origin --delete xxx` |
+| `-dr` | 删除本地和关联的远程分支 | `git branch -D xxx & git push origin --delete xxx` |
+
+#### ck
+
+| 参数| 描述 | 等价命令|
+| --- | --- | --- |
+| ` ` | 切换分支 | `git checkout xxx` |
+| `-b` | 创建新分支 | `git checkout -b xxx yyy` |
+
+
+#### pl
+
+| 参数| 描述 | 等价命令 |
+| --- | --- | --- |
+| ` ` | 拉取最新远程代码 | `git pull` |
+| `-s` | 选择远程名称并拉取远程分支| `git pull xxx yyy` |
+
+#### ps
+
+| 参数| 描述 | 等价命令|
+| --- | --- | --- |
+| ` ` | 推送代码| `git push` |
+| `-o` | 将代码推送到远程分支 | `git push origin xxx` |
+| `-f` | 强制推送代码 | `git push -f` |
+| `-u` | 推送并关联远程分支 | `git push --set-upstream origin xxx` |
 
 ## 反馈
 
