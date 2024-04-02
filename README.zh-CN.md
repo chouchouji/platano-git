@@ -1,6 +1,6 @@
 # platano-git
 
-> 一个用于简化 **git** 操作的工具库
+> 一个用于简化 **git** 操作的工具
 
 ## 使用指南
 
@@ -28,4 +28,4 @@ yarn global add platano-git
 
 ## 许可证
 
-MIT 
+[MIT](LICENCE)

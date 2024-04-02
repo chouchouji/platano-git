@@ -1,6 +1,6 @@
 # platano-git
 
-> A tool library for simplifying **git** operations
+> A tool for simplifying **git** operations
 
 ## User Guidance
 
@@ -28,4 +28,4 @@ If you encounter problems or have good ideas and suggestions, please [report](ht
 
 ## License
 
-MIT
+[MIT](LICENCE)
