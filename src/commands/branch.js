@@ -6,32 +6,44 @@ const { isEmptyObject, isEmptyArray, isNotEmptyArray } = require('../utils/util'
 
 const PROTECTED_BRANCHES = ['main', 'dev']
 
+/**
+ * 获取删除的分支列表
+ * @param {string} localBranch 本地分支
+ * @returns {(string[] | undefined)} 如果没有可删除的分支，返回undefined，否则返回删除的分支列表
+ */
 async function getSelectBranches(localBranch) {
   const choices = formatBranch(localBranch).filter((branch) => !PROTECTED_BRANCHES.includes(branch))
 
   if (isEmptyArray(choices)) {
-    log.warning('没有可以删除的分支了')
     return undefined
   }
 
-  const { selectBranches } = await inquirer.prompt([
+  const { selectedBranches } = await inquirer.prompt([
     {
       type: 'checkbox',
-      name: 'selectBranches',
+      name: 'selectedBranches',
       message: '请选择你要删除的分支',
       choices,
     },
   ])
 
-  return selectBranches
+  return selectedBranches
 }
 
+/**
+ * 获取所有分支
+ */
 async function fetchAllBranches() {
   await updateBranch()
   const branch = await runCommand('git branch -a')
   log.success(branch.trimEnd())
 }
 
+/**
+ * 获取本地所有分支
+ * @param {string} branch 本地分支
+ * @returns {string[]}
+ */
 function getLocalBranches(branch) {
   const branches = branch
     .split('\n')
@@ -45,6 +57,9 @@ function getLocalBranches(branch) {
   return [currentBranch, ...restBranches]
 }
 
+/**
+ * 控制台输出本地剩余分支
+ */
 async function logLocalBranches() {
   log.warning('本地剩余分支如下：')
   const branch = await runCommand('git branch')
@@ -55,6 +70,12 @@ async function logLocalBranches() {
   }
 }
 
+/**
+ * 过滤当前分支以外的分支
+ * @param {string[]} selectBranches 选择的分支
+ * @param {string} localBranch 本地分支
+ * @returns {string[]}
+ */
 function getBranchesWithoutOwn(selectBranches, localBranch) {
   const currentBranch = getCurrentBranch(localBranch)
 
@@ -63,6 +84,11 @@ function getBranchesWithoutOwn(selectBranches, localBranch) {
 
 async function deleteLocalBranches(localBranch) {
   const selectBranches = await getSelectBranches(localBranch)
+
+  if (selectBranches === undefined) {
+    log.warning('没有可以删除的分支了')
+    return
+  }
 
   if (isEmptyArray(selectBranches)) {
     log.warning('未选择任何分支')
@@ -122,6 +148,12 @@ async function deleteRemoteBranches() {
 
 async function deleteLocalAndRemoteBranches(localBranch) {
   const selectBranches = await getSelectBranches(localBranch)
+
+  if (selectBranches === undefined) {
+    log.warning('没有可以删除的分支了')
+    return
+  }
+
   if (isEmptyArray(selectBranches)) {
     log.warning('未选择任何分支')
     return
