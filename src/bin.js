@@ -8,7 +8,10 @@ const { runPullCommand } = require('./commands/pull')
 const { runCheckoutCommand } = require('./commands/checkout')
 
 const program = new Command()
-program.version(packageJson.version)
+program
+  .name('platano-git')
+  .description('一个用于简化git操作的工具')
+  .version(packageJson.version, '-v', '查看版本')
 
 program
   .command('br')
@@ -42,7 +45,8 @@ program
 
 program
   .command('ck')
-  .option('-b', '创建新分支')
+  .argument('[branch]', '要切换到的分支')
+  .option('-b [branch]', '创建新分支')
   .description('切换或创建分支')
   .action(async (params) => {
     await runCheckoutCommand(params)
