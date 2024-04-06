@@ -31,7 +31,7 @@ async function getSelectLocalBranch(currentBranch, branches) {
 
 /**
  * 获取输入的新分支
- * @returns {string} 输入的分支名称
+ * @returns {string}
  */
 async function getInputBranchName() {
   const { newBranch } = await inquirer.prompt([
@@ -49,7 +49,7 @@ async function getInputBranchName() {
  * 获取创建分支的基准分支
  * @param {string} currentBranch 当前分支
  * @param {string[]} choices 本地分支列表
- * @returns {string} 基准分支
+ * @returns {string}
  */
 async function getBaseBranch(currentBranch, choices) {
   const { selectedBranch } = await inquirer.prompt([
