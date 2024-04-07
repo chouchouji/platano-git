@@ -1,6 +1,6 @@
 /**
  * 是否为空对象
- * @param {unknown} val 要判断的变量
+ * @param {*} val 要判断的变量
  * @returns {boolean}
  */
 function isEmptyObject(val) {
@@ -9,7 +9,7 @@ function isEmptyObject(val) {
 
 /**
  * 是否为空数组
- * @param {unknown} val 要判断的变量
+ * @param {*} val 要判断的变量
  * @returns {boolean}
  */
 function isEmptyArray(val) {
@@ -18,7 +18,7 @@ function isEmptyArray(val) {
 
 /**
  * 是否为非空数组
- * @param {unknown} val 要判断的变量
+ * @param {*} val 要判断的变量
  * @returns {boolean}
  */
 function isNotEmptyArray(val) {
