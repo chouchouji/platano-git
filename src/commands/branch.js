@@ -9,10 +9,11 @@ const PROTECTED_BRANCHES = ['main', 'dev']
 /**
  * 获取删除的分支列表
  * @param {string} localBranch 本地分支
+ * @param {string} currentBranch 当前分支
  * @returns {(string[] | undefined)} 如果没有可删除的分支，返回undefined，否则返回删除的分支列表
  */
-async function getSelectBranches(localBranch) {
-  const choices = formatBranch(localBranch).filter((branch) => !PROTECTED_BRANCHES.includes(branch))
+async function getSelectBranches(localBranch, currentBranch) {
+  const choices = formatBranch(localBranch).filter((branch) => ![...PROTECTED_BRANCHES, currentBranch].includes(branch))
 
   if (isEmptyArray(choices)) {
     return undefined
@@ -70,19 +71,8 @@ async function logLocalBranches() {
   }
 }
 
-/**
- * 过滤当前分支以外的分支
- * @param {string[]} selectBranches 选择的分支
- * @param {string} localBranch 本地分支
- * @returns {string[]}
- */
-function getBranchesWithoutOwn(selectBranches, localBranch) {
-  const currentBranch = getCurrentBranch(localBranch)
-  return selectBranches.filter((selectBranch) => currentBranch !== selectBranch)
-}
-
-async function deleteLocalBranches(localBranch) {
-  const selectedBranches = await getSelectBranches(localBranch)
+async function deleteLocalBranches(localBranch, currentBranch) {
+  const selectedBranches = await getSelectBranches(localBranch, currentBranch)
 
   if (selectedBranches === undefined) {
     log.warning('没有可以删除的分支了')
@@ -94,16 +84,14 @@ async function deleteLocalBranches(localBranch) {
     return
   }
 
-  const restBranches = getBranchesWithoutOwn(selectedBranches, localBranch)
-  const promises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
-
+  const promises = selectedBranches.map((branch) => runCommand(`git branch -D ${branch}`))
   const results = await Promise.allSettled(promises)
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`分支 ${restBranches[index]} 删除成功 ✅`)
+      log.success(`分支 ${selectedBranches[index]} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${restBranches[index]} 删除失败...`)
+      log.error(`分支 ${selectedBranches[index]} 删除失败...`)
     }
   })
 
@@ -145,8 +133,8 @@ async function deleteRemoteBranches() {
   })
 }
 
-async function deleteLocalAndRemoteBranches(localBranch) {
-  const selectedBranches = await getSelectBranches(localBranch)
+async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
+  const selectedBranches = await getSelectBranches(localBranch, currentBranch)
 
   if (selectedBranches === undefined) {
     log.warning('没有可以删除的分支了')
@@ -159,22 +147,20 @@ async function deleteLocalAndRemoteBranches(localBranch) {
   }
 
   await updateBranch()
-
   const allBranch = await runCommand('git branch -a')
-  const restBranches = await getBranchesWithoutOwn(selectedBranches, localBranch)
 
-  const localPromises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
-  const remoteBranches = restBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
+  const localPromises = selectedBranches.map((branch) => runCommand(`git branch -D ${branch}`))
+  const remoteBranches = selectedBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
   const remotePromises = remoteBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
 
   const results = await Promise.allSettled([...localPromises, ...remotePromises])
 
   results.forEach((result, index) => {
-    const idx = index <= restBranches.length - 1 ? index : index - restBranches.length
-    const branch = index <= restBranches.length - 1 ? restBranches[idx] : remoteBranches[idx]
+    const idx = index <= selectedBranches.length - 1 ? index : index - selectedBranches.length
+    const branch = index <= selectedBranches.length - 1 ? selectedBranches[idx] : remoteBranches[idx]
 
     if (result.status === 'fulfilled') {
-      const text = index <= restBranches.length - 1 ? '本地' : '远端'
+      const text = index <= selectedBranches.length - 1 ? '本地' : '远端'
       log.success(`${text} 分支 ${branch} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
       log.error(`分支 ${branch} 删除失败...`)
@@ -236,17 +222,18 @@ async function runBranchCommand(params) {
   }
 
   const { a, d, Dr, r, m } = params
+  const currentBranch = getCurrentBranch(localBranch)
 
   if (a) {
     await fetchAllBranches()
   } else if (m) {
     await updateBranchName(localBranch)
   } else if (d) {
-    await deleteLocalBranches(localBranch)
+    await deleteLocalBranches(localBranch, currentBranch)
   } else if (r) {
     await deleteRemoteBranches()
   } else if (Dr) {
-    await deleteLocalAndRemoteBranches(localBranch)
+    await deleteLocalAndRemoteBranches(localBranch, currentBranch)
   }
 }
 
