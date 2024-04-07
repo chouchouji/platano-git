@@ -78,24 +78,23 @@ async function logLocalBranches() {
  */
 function getBranchesWithoutOwn(selectBranches, localBranch) {
   const currentBranch = getCurrentBranch(localBranch)
-
   return selectBranches.filter((selectBranch) => currentBranch !== selectBranch)
 }
 
 async function deleteLocalBranches(localBranch) {
-  const selectBranches = await getSelectBranches(localBranch)
+  const selectedBranches = await getSelectBranches(localBranch)
 
-  if (selectBranches === undefined) {
+  if (selectedBranches === undefined) {
     log.warning('没有可以删除的分支了')
     return
   }
 
-  if (isEmptyArray(selectBranches)) {
+  if (isEmptyArray(selectedBranches)) {
     log.warning('未选择任何分支')
     return
   }
 
-  const restBranches = getBranchesWithoutOwn(selectBranches, localBranch)
+  const restBranches = getBranchesWithoutOwn(selectedBranches, localBranch)
   const promises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
 
   const results = await Promise.allSettled(promises)
@@ -120,41 +119,41 @@ async function deleteRemoteBranches() {
     return
   }
 
-  const { selectBranches } = await inquirer.prompt([
+  const { selectedBranches } = await inquirer.prompt([
     {
       type: 'checkbox',
-      name: 'selectBranches',
+      name: 'selectedBranches',
       message: '请选择你要删除的分支',
       choices,
     },
   ])
 
-  if (isEmptyArray(selectBranches)) {
+  if (isEmptyArray(selectedBranches)) {
     log.warning('未选择任何分支')
     return
   }
 
-  const promises = selectBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
+  const promises = selectedBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
   const results = await Promise.allSettled(promises)
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`远端 分支 ${selectBranches[index]} 删除成功 ✅`)
+      log.success(`远端 分支 ${selectedBranches[index]} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      log.error(`远端 分支 ${selectBranches[index]} 删除失败...`)
+      log.error(`远端 分支 ${selectedBranches[index]} 删除失败...`)
     }
   })
 }
 
 async function deleteLocalAndRemoteBranches(localBranch) {
-  const selectBranches = await getSelectBranches(localBranch)
+  const selectedBranches = await getSelectBranches(localBranch)
 
-  if (selectBranches === undefined) {
+  if (selectedBranches === undefined) {
     log.warning('没有可以删除的分支了')
     return
   }
 
-  if (isEmptyArray(selectBranches)) {
+  if (isEmptyArray(selectedBranches)) {
     log.warning('未选择任何分支')
     return
   }
@@ -162,7 +161,7 @@ async function deleteLocalAndRemoteBranches(localBranch) {
   await updateBranch()
 
   const allBranch = await runCommand('git branch -a')
-  const restBranches = await getBranchesWithoutOwn(selectBranches, localBranch)
+  const restBranches = await getBranchesWithoutOwn(selectedBranches, localBranch)
 
   const localPromises = restBranches.map((branch) => runCommand(`git branch -D ${branch}`))
   const remoteBranches = restBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
@@ -193,10 +192,10 @@ async function updateBranchName(localBranch) {
     return
   }
 
-  const { selectBranch } = await inquirer.prompt([
+  const { selectedBranch } = await inquirer.prompt([
     {
       type: 'list',
-      name: 'selectBranch',
+      name: 'selectedBranch',
       message: '请选择你要重命名的分支',
       choices,
     },
@@ -218,8 +217,8 @@ async function updateBranchName(localBranch) {
     return
   }
 
-  await runCommand(`git branch -m ${selectBranch} ${newBranch.trim()}`)
-  log.success(`${selectBranch} 已经重命名为 ${newBranch.trim()} 🖊️`)
+  await runCommand(`git branch -m ${selectedBranch} ${newBranch.trim()}`)
+  log.success(`${selectedBranch} 已经重命名为 ${newBranch.trim()} 🖊️`)
 
   await logLocalBranches()
 }

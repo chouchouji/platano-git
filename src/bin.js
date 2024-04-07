@@ -7,8 +7,9 @@ const { runPushCommand } = require('./commands/push')
 const { runPullCommand } = require('./commands/pull')
 const { runCheckoutCommand } = require('./commands/checkout')
 
+const { name, version, description } = packageJson
 const program = new Command()
-program.name('platano-git').description('一个用于简化git操作的工具').version(packageJson.version, '-v', '查看版本')
+program.name(name).description(description).version(version, '-v', '查看版本')
 
 program
   .command('br')
