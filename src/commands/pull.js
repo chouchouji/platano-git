@@ -4,20 +4,25 @@ const log = require('../utils/log')
 const { getRemoteNames, getCurrentBranch, updateBranch } = require('../utils/branch')
 const { isEmptyObject } = require('../utils/util')
 
-async function getSelectRemoteName(branch) {
+/**
+ * 获取要拉取的远程名
+ * @param {string} branch 所有分支
+ * @returns {string}
+ */
+async function getSelectedRemoteName(branch) {
   const choices = getRemoteNames(branch)
 
-  const { selectName } = await inquirer.prompt([
+  const { selectedName } = await inquirer.prompt([
     {
       type: 'list',
-      name: 'selectName',
+      name: 'selectedName',
       message: '请选择你要拉取的远程名',
       default: 'origin',
       choices,
     },
   ])
 
-  return selectName
+  return selectedName
 }
 
 async function runPullCommand(params) {
@@ -33,8 +38,8 @@ async function runPullCommand(params) {
     await updateBranch()
 
     const branch = await runCommand('git branch -a')
-    const remoteName = await getSelectRemoteName(branch)
-    const currentBranch = await getCurrentBranch(branch)
+    const remoteName = await getSelectedRemoteName(branch)
+    const currentBranch = getCurrentBranch(branch)
 
     await runCommand(`git pull ${remoteName} ${currentBranch}`)
     log.success(`拉取 ${remoteName}/${currentBranch} 成功 ⬇️`)

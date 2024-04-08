@@ -26,6 +26,8 @@ yarn global add platano-git
 pnpm add -g platano-git
 ```
 
+_\* run `platano -v` to check whether to install package successfully_
+
 ### Example
 
 ```shell
