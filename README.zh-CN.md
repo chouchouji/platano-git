@@ -8,16 +8,22 @@
 
 ### 安装
 
-#### 使用 [npm](https://www.npmjs.com/):
+#### 使用 npm
 
 ```shell
 npm install platano-git -g
 ```
 
-#### 使用 [yarn](https://yarnpkg.com/):
+#### 使用 yarn
 
 ```shell
 yarn global add platano-git
+```
+
+#### 适用 pnpm
+
+```shell
+pnpm add -g platano-git
 ```
 
 ### 示例
@@ -31,6 +37,9 @@ platano ps
 
 # 拉取代码
 platano pl
+
+# 切换到main分支
+platano ck main
 ```
 
 ### 命令

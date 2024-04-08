@@ -1,7 +1,7 @@
 {
   "name": "platano-git",
   "version": "0.0.17",
-  "description": "一个用于简化 git 操作的工具库",
+  "description": "a tool for simplifying git operations",
   "main": "index.js",
   "type": "commonjs",
   "bin": {

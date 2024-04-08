@@ -8,16 +8,22 @@ English | [简体中文](README.zh-CN.md)
 
 ### Install
 
-#### Using [npm](https://www.npmjs.com/):
+#### Using npm
 
 ```shell
 npm install platano-git -g
 ```
 
-#### Using [yarn](https://yarnpkg.com/):
+#### Using yarn
 
 ```shell
 yarn global add platano-git
+```
+
+#### Using pnpm
+
+```shell
+pnpm add -g platano-git
 ```
 
 ### Example
@@ -31,6 +37,9 @@ platano ps
 
 # Pull the latest remote code
 platano pl
+
+# Switch to main
+platano ck main
 ```
 
 ### Command
