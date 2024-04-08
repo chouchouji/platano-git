@@ -1,3 +1,5 @@
+简体中文 | [English](README.md)
+
 # platano-git
 
 > 一个用于简化 **git** 操作的工具
