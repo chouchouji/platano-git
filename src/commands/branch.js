@@ -209,10 +209,22 @@ async function updateBranchName(localBranch) {
   await logLocalBranches()
 }
 
-async function runBranchCommand(params) {
+async function runBranchCommand(inputBranch, params) {
   const localBranch = await runCommand('git branch')
+  const branches = formatBranch(localBranch)
 
-  if (isEmptyObject(params)) {
+  if (branches.includes(inputBranch)) {
+    log.warning('本地已存在同名分支 🔁')
+    return
+  }
+
+  if (typeof inputBranch === 'string' && inputBranch.length > 0) {
+    await runCommand(`git branch ${inputBranch}`)
+    log.success(`${inputBranch} 创建成功 🌈`)
+    return
+  }
+
+  if (isEmptyObject(params) && inputBranch === undefined) {
     const [currentBranch, ...restBranches] = getLocalBranches(localBranch)
     log.success(currentBranch)
     if (isNotEmptyArray(restBranches)) {

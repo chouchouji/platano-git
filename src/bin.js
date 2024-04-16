@@ -13,14 +13,15 @@ program.name(name).description(description).version(version, '-v', '查看版本
 
 program
   .command('br')
-  .description('查看或删除分支')
+  .description('查看、创建或删除分支')
+  .argument('[branch]', '要创建的分支')
   .option('-d', '删除本地分支')
   .option('-r', '删除远程分支')
   .option('-dr', '删除本地和对应的远端分支')
   .option('-a', '查看所有分支')
   .option('-m', '修改分支名')
-  .action(async (options) => {
-    await runBranchCommand(options)
+  .action(async (branch, options) => {
+    await runBranchCommand(branch, options)
   })
 
 program
@@ -45,7 +46,7 @@ program
   .command('ck')
   .description('切换或创建分支')
   .argument('[branch]', '要切换到的分支')
-  .option('-b [branch]', '创建新分支')
+  .option('-b [branch]', '创建新分支并切换到此分支')
   .action(async (branch, options) => {
     await runCheckoutCommand(branch, options)
   })

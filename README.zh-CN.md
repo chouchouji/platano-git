@@ -48,9 +48,9 @@ platano ck main
 
 #### br
 
-| 参数| 描述 | 等价命令|
-| --- | --- | --- |
-| ` ` | 查看所有本地分支 | `git branch` |
+| 参数| 描述 | 等价命令| 备注 |
+| --- | --- | --- | --- |
+| `[branch]` | 查看所有本地分支或创建新分支 | `git branch` | 如果不输入任何内容（`platano br`），控制台将输出完整的本地分支信息。 如果输入一个分支（`platano br xxx`），它将创建一个名为`xxx`的新分支。 请注意，此命令不会自动切换到新创建的分支。|
 | `-a` | 查看所有分支 | `git branch -a` |
 | `-m` | 重命名本地分支 | `git branch -m xxx yyy` |
 | `-d` | 删除本地分支 | `git branch -D xxx` |
@@ -62,7 +62,7 @@ platano ck main
 | 参数| 描述 | 等价命令| 备注 |
 | --- | --- | --- | --- |
 | `[branch]` | 切换分支 | `git checkout xxx` | 如果输入分支，如`platano ck main`，将切换到 `main` 分支。 如果不输入任何内容（`platano ck`），将得到一个单选列表，可以在其中选择想要切换到的分支，选择一个分支后将切换到该分支。 |
-| `-b [branch]` | 创建新分支 | `git checkout -b xxx yyy` | 如果输入分支，例如 `platano ck -b feat-xxx`，然后从分支列表中选择基准分支，它将基于选择的基准分支创建一个新分支 `feat-xxx`。 如果不输入任何内容（`platano ck -b`），它会提示需要输入新分支名称，然后选择基准分支，基于选择的基准分支创建一个新分支。 |
+| `-b [branch]` | 创建新分支 | `git checkout -b xxx yyy` | 如果输入分支，例如 `platano ck -b feat-xxx`，然后从分支列表中选择基准分支，它将基于选择的基准分支创建一个新分支 `feat-xxx`。 如果不输入任何内容（`platano ck -b`），它会提示需要输入新分支名称，然后选择基准分支，基于选择的基准分支创建一个新分支并切换到此分支。 |
 
 
 #### pl

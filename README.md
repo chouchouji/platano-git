@@ -48,9 +48,9 @@ platano ck main
 
 #### br
 
-| Param | Description | Equal command |
-| --- | --- | --- |
-| ` ` | View all local branches | `git branch` |
+| Param | Description | Equal command | Remark |
+| --- | --- | --- | --- |
+| `[branch]` | View all local branches or create a new branch | `git branch` | If you don't input anything (`platano br`), the console will log the complete local branch info. Otherwise, you input a branch (`platano br xxx`), it will create a new branch named `xxx`. Please note, it will not switch to the branch you had created. |
 | `-a` | View all branches | `git branch -a` |
 | `-m` | Rename local branch | `git branch -m xxx yyy` |
 | `-d` | Delete local branches | `git branch -D xxx` |
@@ -62,7 +62,7 @@ platano ck main
 | Param | Description | Equal command | Remark |
 | --- | --- | --- | --- |
 | `[branch]` | Switch branch | `git checkout xxx` | If you input the branch, like `platano ck main`, it will switch to `main`. If you don't input anything (`platano ck`), you will get a radio list which you can select the branch, click one then you will switch to that branch. |
-| `-b [branch]` | Create new branch | `git checkout -b xxx yyy` | If you input the branch, like `platano ck -b feat-xxx`, then you select the base branch from rest branch list, it will create a new branch `feat-xxx`. If you don't input anything (`platano ck -b`), it prompts you need input the new branch, select you base branch then you will create a new branch. |
+| `-b [branch]` | Create new branch | `git checkout -b xxx yyy` | If you input the branch, like `platano ck -b feat-xxx`, then you select the base branch from rest branch list, it will create a new branch `feat-xxx`. If you don't input anything (`platano ck -b`), it prompts you need input the new branch, select you base branch then you will create a new branch and switch to this branch. |
 
 
 

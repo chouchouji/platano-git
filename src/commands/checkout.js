@@ -107,13 +107,13 @@ async function runCheckoutCommand(inputBranch, options) {
     }
 
     if (branches.includes(newBranch)) {
-      log.error('本地已存在同名分支！')
+      log.error('本地已存在同名分支 🔁')
       return
     }
 
     const baseBranch = await getBaseBranch(currentBranch, branches)
     await runCommand(`git checkout -b ${newBranch} ${baseBranch}`)
-    log.success(`${newBranch} 创建成功 🔧`)
+    log.success(`成功创建并切换到 ${newBranch} 🌈`)
   }
 }
 
