@@ -1,17 +1,17 @@
-const { exec } = require('child_process')
+import { exec } from 'child_process'
 
 /**
  * 运行命令
  * @param {string} command 命令
  */
-async function runCommand(command) {
+function runCommand(command) {
   return new Promise((resolve, reject) => {
     exec(
       command,
       {
         cwd: process.cwd(),
       },
-      async (err, stdout) => {
+      (err, stdout) => {
         if (err) {
           reject(err)
         } else {
@@ -22,6 +22,4 @@ async function runCommand(command) {
   })
 }
 
-module.exports = {
-  runCommand,
-}
+export default runCommand

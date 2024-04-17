@@ -1,11 +1,11 @@
-const { runCommand } = require('./run')
+import runCommand from './run.js'
 
 /**
  * 获取本地分支列表
  * @param {string} branch 本地分支
  * @returns {string[]}
  */
-function formatBranch(branch) {
+export function formatBranch(branch) {
   if (!branch) {
     return []
   }
@@ -28,7 +28,7 @@ function formatBranch(branch) {
  * @param {string} branch 本地分支
  * @returns {string}
  */
-function getCurrentBranch(branch) {
+export function getCurrentBranch(branch) {
   const currentBranch = branch.split('\n').find((br) => br.includes('*'))
 
   return currentBranch.replace(/\*/g, '').trim()
@@ -39,7 +39,7 @@ function getCurrentBranch(branch) {
  * @param {string} branch 本地分支
  * @returns {string[]}
  */
-function getRemoteNames(branch) {
+export function getRemoteNames(branch) {
   const remoteBranches = branch
     .split('\n')
     .filter((br) => br.includes('remotes/'))
@@ -59,7 +59,7 @@ function getRemoteNames(branch) {
 /**
  * 更新分支
  */
-async function updateBranch() {
+export async function updateBranch() {
   await runCommand('git fetch -p')
 }
 
@@ -67,7 +67,7 @@ async function updateBranch() {
  * 获取远端名为origin的分支名称
  * @returns {string[]}
  */
-async function getRemoteBranches() {
+export async function getRemoteBranches() {
   await updateBranch()
   const allBranch = await runCommand('git branch -a')
 
@@ -76,12 +76,4 @@ async function getRemoteBranches() {
     .map((branch) => branch.match(/origin\/(\S*)/)[1])
 
   return allBranches
-}
-
-module.exports = {
-  formatBranch,
-  getCurrentBranch,
-  getRemoteNames,
-  getRemoteBranches,
-  updateBranch,
 }

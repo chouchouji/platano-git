@@ -8,3 +8,5 @@ package-lock.json
 .eslintignore
 .prettierrc
 .prettierignore
+vite.config.js
+src/

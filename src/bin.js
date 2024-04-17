@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander')
-const packageJson = require('../package.json')
-const { runBranchCommand } = require('./commands/branch')
-const { runPushCommand } = require('./commands/push')
-const { runPullCommand } = require('./commands/pull')
-const { runCheckoutCommand } = require('./commands/checkout')
+import { Command } from 'commander'
+import fs from 'node:fs'
 
-const { name, version, description } = packageJson
+import runBranchCommand from './commands/branch.js'
+import runPushCommand from './commands/push.js'
+import runPullCommand from './commands/pull.js'
+import runCheckoutCommand from './commands/checkout.js'
+
+const packageJson = fs.readFileSync('./package.json', 'utf8')
+const { name, version, description } = JSON.parse(packageJson)
+
 const program = new Command()
 program.name(name).description(description).version(version, '-v', '查看版本')
 

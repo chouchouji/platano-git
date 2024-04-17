@@ -1,8 +1,9 @@
-const inquirer = require('inquirer')
-const { runCommand } = require('../utils/run')
-const { getCurrentBranch, formatBranch } = require('../utils/branch')
-const log = require('../utils/log')
-const { isEmptyObject } = require('../utils/util')
+import inquirer from 'inquirer'
+
+import runCommand from '../utils/run.js'
+import { formatBranch, getCurrentBranch } from '../utils/branch.js'
+import { success, error, warning } from '../utils/log.js'
+import { isEmptyObject } from '../utils/util.js'
 
 /**
  * 获取想要切换到的分支
@@ -74,23 +75,23 @@ async function runCheckoutCommand(inputBranch, options) {
     const switchedBranch = inputBranch === undefined ? await getSelectLocalBranch(currentBranch, branches) : inputBranch
 
     if (switchedBranch === undefined) {
-      log.warning('暂无可以切换的分支')
+      warning('暂无可以切换的分支')
       return
     }
 
     if (switchedBranch === currentBranch) {
-      log.warning('当前分支和要切换的分支名相同！')
+      warning('当前分支和要切换的分支名相同！')
       return
     }
 
     if (!branches.includes(switchedBranch)) {
-      log.error('本地不存在此分支！')
+      error('本地不存在此分支！')
       return
     }
 
     if (switchedBranch) {
       await runCommand(`git checkout ${switchedBranch}`)
-      log.success(`成功切换到 ${switchedBranch} 🎉`)
+      success(`成功切换到 ${switchedBranch} 🎉`)
     }
 
     return
@@ -102,21 +103,19 @@ async function runCheckoutCommand(inputBranch, options) {
     const newBranch = b === true ? await getInputBranchName() : b
 
     if (!newBranch) {
-      log.error('分支名无效！')
+      error('分支名无效！')
       return
     }
 
     if (branches.includes(newBranch)) {
-      log.error('本地已存在同名分支 🔁')
+      error('本地已存在同名分支 🔁')
       return
     }
 
     const baseBranch = await getBaseBranch(currentBranch, branches)
     await runCommand(`git checkout -b ${newBranch} ${baseBranch}`)
-    log.success(`成功创建并切换到 ${newBranch} 🌈`)
+    success(`成功创建并切换到 ${newBranch} 🌈`)
   }
 }
 
-module.exports = {
-  runCheckoutCommand,
-}
+export default runCheckoutCommand
