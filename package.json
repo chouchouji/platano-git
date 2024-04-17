@@ -1,6 +1,6 @@
 {
   "name": "platano-git",
-  "version": "0.0.21",
+  "version": "0.1.0",
   "description": "a tool for simplifying git operations",
   "type": "commonjs",
   "main": "./dist/index.js",
