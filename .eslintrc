@@ -31,6 +31,7 @@
         "ExportDeclaration": { "multiline": true, "minProperties": 3 }
       }
     ],
-    "max-len": "off"
+    "max-len": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }

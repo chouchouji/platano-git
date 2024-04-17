@@ -2,14 +2,18 @@
   "name": "platano-git",
   "version": "0.0.19",
   "description": "a tool for simplifying git operations",
-  "main": "index.js",
   "type": "commonjs",
+  "main": "./dist/index.js",
   "bin": {
     "platano": "/src/bin.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint --fix \"src/**/*.js\""
+    "lint": "eslint --fix \"src/**/*.js\"",
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
@@ -32,6 +36,7 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "vite": "^5.2.9"
   }
 }
