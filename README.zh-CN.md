@@ -50,7 +50,7 @@ platano ck main
 
 | 参数| 描述 | 等价命令| 备注 |
 | --- | --- | --- | --- |
-| `[branch]` | 查看所有本地分支或创建新分支 | `git branch` | 如果不输入任何内容（`platano br`），控制台将输出完整的本地分支信息。 如果输入一个分支（`platano br xxx`），它将创建一个名为`xxx`的新分支。 请注意，此命令不会自动切换到新创建的分支。|
+| `[branch]` | 查看所有本地分支或创建新分支 | `git branch xxx` | 如果不输入任何内容（`platano br`），控制台将输出完整的本地分支信息。 如果输入一个分支（`platano br xxx`），它将创建一个名为`xxx`的新分支。 请注意，此命令不会自动切换到新创建的分支。|
 | `-a` | 查看所有分支 | `git branch -a` |
 | `-m` | 重命名本地分支 | `git branch -m xxx yyy` |
 | `-d` | 删除本地分支 | `git branch -D xxx` |

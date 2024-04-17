@@ -50,7 +50,7 @@ platano ck main
 
 | Param | Description | Equal command | Remark |
 | --- | --- | --- | --- |
-| `[branch]` | View all local branches or create a new branch | `git branch` | If you don't input anything (`platano br`), the console will log the complete local branch info. Otherwise, you input a branch (`platano br xxx`), it will create a new branch named `xxx`. Please note, it will not switch to the branch you had created. |
+| `[branch]` | View all local branches or create a new branch | `git branch xxx` | If you don't input anything (`platano br`), the console will log the complete local branch info. Otherwise, you input a branch (`platano br xxx`), it will create a new branch named `xxx`. Please note, it will not switch to the branch you had created. |
 | `-a` | View all branches | `git branch -a` |
 | `-m` | Rename local branch | `git branch -m xxx yyy` |
 | `-d` | Delete local branches | `git branch -D xxx` |
