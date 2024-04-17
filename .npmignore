@@ -9,4 +9,4 @@ package-lock.json
 .prettierrc
 .prettierignore
 vite.config.js
-src/
+/src/*
