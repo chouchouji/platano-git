@@ -170,14 +170,12 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
   await logLocalBranches()
 }
 
-async function updateBranchName(localBranch) {
-  const choices = formatBranch(localBranch).filter((branch) => !PROTECTED_BRANCHES.includes(branch))
-
-  if (isEmptyArray(choices)) {
-    log.warning('没有可以重命名的分支了')
-    return
-  }
-
+/**
+ * 获取基准分支和目标分支
+ * @param {string[]} choices 本地分支列表
+ * @returns {string[]} 返回基准分支和目标分支组成的数组
+ */
+async function getBaseAndTargetBranch(choices) {
   const { selectedBranch } = await inquirer.prompt([
     {
       type: 'list',
@@ -195,16 +193,42 @@ async function updateBranchName(localBranch) {
     },
   ])
 
-  const remoteBranches = await getRemoteBranches()
-  const remoteChoices = remoteBranches.filter((remoteBr) => !PROTECTED_BRANCHES.includes(remoteBr))
+  return [selectedBranch, newBranch.trim()]
+}
 
-  if ([...choices, ...remoteChoices].includes(newBranch.trim())) {
-    log.error('已存在同名分支 🔁')
+/**
+ * 重命名分支
+ * @param {string[]} branches 本地分支列表
+ * @param {string | boolean} value m命名的值
+ * @param {string} currentBranch 当前分支
+ */
+async function updateBranchName(branches, value, currentBranch) {
+  const choices = branches.filter((branch) => !PROTECTED_BRANCHES.includes(branch))
+  if (isEmptyArray(choices)) {
+    log.warning('没有可以重命名的分支了')
     return
   }
 
-  await runCommand(`git branch -m ${selectedBranch} ${newBranch.trim()}`)
-  log.success(`${selectedBranch} 已经重命名为 ${newBranch.trim()} 🖊️`)
+  const [baseBranch, targetBranch] = value === true ? await getBaseAndTargetBranch(choices) : [currentBranch, value]
+
+  if (PROTECTED_BRANCHES.includes(baseBranch)) {
+    log.error('保护分支不能重命名 ❌')
+    return
+  }
+
+  if (branches.includes(targetBranch)) {
+    log.error('本地已存在同名分支 🔁')
+    return
+  }
+
+  const remoteBranches = await getRemoteBranches()
+  if (remoteBranches.includes(targetBranch)) {
+    log.error('远端已存在同名分支 🔁')
+    return
+  }
+
+  await runCommand(`git branch -m ${baseBranch} ${targetBranch}`)
+  log.success(`${baseBranch} 已经重命名为 ${targetBranch} 🆕`)
 
   await logLocalBranches()
 }
@@ -239,7 +263,7 @@ async function runBranchCommand(inputBranch, params) {
   if (a) {
     await fetchAllBranches()
   } else if (m) {
-    await updateBranchName(localBranch)
+    await updateBranchName(branches, m, currentBranch)
   } else if (d) {
     await deleteLocalBranches(localBranch, currentBranch)
   } else if (r) {
