@@ -6,6 +6,7 @@ const { runBranchCommand } = require('./commands/branch')
 const { runPushCommand } = require('./commands/push')
 const { runPullCommand } = require('./commands/pull')
 const { runCheckoutCommand } = require('./commands/checkout')
+const { runSwitchCommand } = require('./commands/switch')
 
 const { name, version, description } = packageJson
 const program = new Command()
@@ -49,6 +50,15 @@ program
   .option('-b [branch]', '创建新分支并切换到此分支')
   .action(async (branch, options) => {
     await runCheckoutCommand(branch, options)
+  })
+
+program
+  .command('sw')
+  .description('切换或创建分支')
+  .argument('[branch]', '要切换到的分支')
+  .option('-c [branch]', '创建新分支并切换到此分支')
+  .action(async (branch, options) => {
+    await runSwitchCommand(branch, options)
   })
 
 program.parse()
