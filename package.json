@@ -15,7 +15,10 @@
     "pre-commit": "npm exec lint-staged --allow-empty --concurrent false"
   },
   "lint-staged": {
-    "*.js": ["npm run lint", "npm run format"]
+    "*.js": [
+      "npm run lint",
+      "npm run format"
+    ]
   },
   "repository": {
     "type": "git",
@@ -27,7 +30,7 @@
     "nodejs",
     "git"
   ],
-  "author": "chouchouji",
+  "author": "chouchouji <1305974212@qq.com>",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",
