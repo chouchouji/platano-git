@@ -11,6 +11,12 @@
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "eslint --fix \"src/**/*.js\""
   },
+  "simple-git-hooks": {
+    "pre-commit": "npm exec lint-staged --allow-empty --concurrent false"
+  },
+  "lint-staged": {
+    "*.js": ["npm run lint", "npm run format"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chouchouji/platano-git"
@@ -32,6 +38,8 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "prettier": "^3.2.5"
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "simple-git-hooks": "^2.11.1"
   }
 }
