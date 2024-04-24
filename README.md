@@ -87,7 +87,7 @@ _\* The lowest supported git version is **2.23**_
 | --- | --- | --- | 
 | ` ` | Push code | `git push` | 
 | `-o` | Push code to remote branch | `git push origin xxx` | 
-| `-f` | Force push code | `git push -f` | 
+| `-f` | Force push code | `git push origin xxx -f` | 
 | `-u` | Push and associate remote branch | `git push --set-upstream origin xxx` | 
 
 

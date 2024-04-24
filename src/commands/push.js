@@ -18,7 +18,7 @@ async function runPushCommand(params) {
     await runCommand(`git push --set-upstream origin ${currentBranch}`)
     log.success('关联远端并推送成功 🚀')
   } else if (f) {
-    await runCommand('git push -f')
+    await runCommand(`git push origin ${currentBranch} -f`)
     log.success('强制推送成功 🚀')
   } else if (o) {
     await runCommand(`git push origin ${currentBranch}`)
