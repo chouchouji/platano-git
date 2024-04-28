@@ -233,6 +233,22 @@ async function updateBranchName(branches, value, currentBranch) {
   await logLocalBranches()
 }
 
+async function logDetailedBranch(currentBranch) {
+  const branch = await runCommand('git branch -v')
+
+  if (!branch) {
+    log.info('没有任何分支')
+    return
+  }
+
+  const branches = branch.split('\n').filter(Boolean)
+  const currentBranchInfo = branches.find((branchInfo) => branchInfo.includes(`* ${currentBranch}`))
+  const restBranches = branches.filter((branchInfo) => branchInfo !== currentBranchInfo)
+
+  log.success(currentBranchInfo)
+  restBranches.forEach(log.info)
+}
+
 async function runBranchCommand(inputBranch, params) {
   const localBranch = await runCommand('git branch')
   const branches = formatBranch(localBranch)
@@ -257,7 +273,7 @@ async function runBranchCommand(inputBranch, params) {
     return
   }
 
-  const { a, d, Dr, r, m } = params
+  const { a, d, Dr, r, m, v } = params
   const currentBranch = getCurrentBranch(localBranch)
 
   if (a) {
@@ -270,6 +286,8 @@ async function runBranchCommand(inputBranch, params) {
     await deleteRemoteBranches()
   } else if (Dr) {
     await deleteLocalAndRemoteBranches(localBranch, currentBranch)
+  } else if (v) {
+    await logDetailedBranch(currentBranch)
   }
 }
 

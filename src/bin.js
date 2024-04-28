@@ -10,7 +10,7 @@ const { runSwitchCommand } = require('./commands/switch')
 
 const { name, version, description } = packageJson
 const program = new Command()
-program.name(name).description(description).version(version, '-v', '查看版本')
+program.name(name).description(description).version(version)
 
 program
   .command('br')
@@ -20,6 +20,7 @@ program
   .option('-r', '删除远程分支')
   .option('-dr', '删除本地和对应的远端分支')
   .option('-a', '查看所有分支')
+  .option('-v', '查看本地仓库中所有分支的详细信息')
   .option('-m [branch]', '修改分支名')
   .action(async (branch, options) => {
     await runBranchCommand(branch, options)
