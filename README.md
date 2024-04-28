@@ -53,9 +53,9 @@ platano ck main
 | `[branch]` | View all local branches or create a new branch | `git branch` | If you don't input anything (`platano br`), the console will log the complete local branch info. Otherwise, you input a branch (`platano br xxx`), it will create a new branch named `xxx`. Please note, it will not switch to the branch you had created. |
 | `-a` | View all branches | `git branch -a` |
 | `-m [branch]` | Rename local branch | `git branch -m xxx yyy` | If you enter nothing (`platano br -m`), you will be prompted to select the base branch and enter a new branch name. If you enter a branch (`platano br -m xxx`), the current branch will be renamed to `xxx` |
-| `-d` | Delete local branches | `git branch -D xxx` |
+| `-d` | Delete local branches | `git branch -D xxx` | It will **forcefully** delete branch |
 | `-r` | Delete remote branches | `git push origin --delete xxx` |
-| `-dr` | Delete local and associated remote branches | `git branch -D xxx & git push origin --delete xxx` |
+| `-dr` | Delete local and associated remote branches | `git branch -D xxx && git push origin --delete xxx` |
 
 #### ck
 
