@@ -1,3 +1,12 @@
+## [0.1.4](https://github.com/chouchouji/platano-git/compare/v0.1.3...v0.1.4) (2024-05-05)
+
+
+### Features
+
+* support -v param for branch command ([536bfd0](https://github.com/chouchouji/platano-git/commit/536bfd0c58bdcfe5375d60ae9fb6d94bc6239540))
+
+
+
 ## [0.1.3](https://github.com/chouchouji/platano-git/compare/v0.1.2...v0.1.3) (2024-04-26)
 
 
