@@ -35,25 +35,15 @@ function getCurrentBranch(branch) {
 }
 
 /**
- * 获取远端名称，如：origin、upstream
- * @param {string} branch 本地分支
+ * 格式化远端名称为数组形式，远端名称如：origin、upstream
+ * @param {string} remoteNames 远端名称
  * @returns {string[]}
  */
-function getRemoteNames(branch) {
-  const remoteBranches = branch
-    .split('\n')
-    .filter((br) => br.includes('remotes/'))
-    .map((br) => br.trim().replace(/remotes\//g, ''))
-  const remoteNames = ['origin']
-
-  remoteBranches.forEach((remoteBranch) => {
-    const [remoteName, _rest] = remoteBranch.split('/')
-    if (remoteName && !remoteNames.includes(remoteName)) {
-      remoteNames.push(remoteName)
-    }
-  })
-
+function formatRemoteNames(remoteNames) {
   return remoteNames
+    .split('\n')
+    .filter(Boolean)
+    .map((br) => br.trim())
 }
 
 /**
@@ -81,7 +71,7 @@ async function getRemoteBranches() {
 module.exports = {
   formatBranch,
   getCurrentBranch,
-  getRemoteNames,
+  formatRemoteNames,
   getRemoteBranches,
   updateBranch,
 }
