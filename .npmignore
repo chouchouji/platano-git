@@ -2,11 +2,10 @@ node_modules
 .DS_store
 .vscode
 .idea
-package-lock.json
+pnpm-lock.yaml
 .gitignore
 .eslintrc
 .eslintignore
 .prettierrc
 .prettierignore
-commitlint.config.js
 scripts/

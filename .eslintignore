@@ -3,6 +3,6 @@ node_modules/
 .gitignore
 .npmignore
 .prettierrc
-LICENCE
+LICENSE
 package.json
-package-lock.json
+pnpm-lock.yaml
