@@ -1,4 +1,5 @@
 const { runCommand } = require('./run')
+const { ORIGIN } = require('../constants/remote')
 
 /**
  * 获取本地分支列表
@@ -62,7 +63,7 @@ async function getRemoteBranches() {
   const allBranch = await runCommand('git branch -a')
 
   const allBranches = formatBranch(allBranch)
-    .filter((branch) => branch.includes('origin'))
+    .filter((branch) => branch.includes(ORIGIN))
     .map((branch) => branch.match(/origin\/(\S*)/)[1])
 
   return allBranches

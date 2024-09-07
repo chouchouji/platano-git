@@ -16,6 +16,9 @@
     "no-multi-spaces": "error",
     "no-new-func": "error",
     "no-useless-return": "error",
+    "no-plusplus": "off",
+    "no-continue": "off",
+    "no-param-reassign": "off",
     "no-unused-vars": [
       "error",
       {
