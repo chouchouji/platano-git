@@ -96,4 +96,4 @@ _\* 此命令的最低 git 版本为 **2.23**_
 
 ## 许可证
 
-[MIT](LICENCE)
+[MIT](LICENSE)

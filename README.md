@@ -98,4 +98,4 @@ If you encounter problems or have good ideas and suggestions, please [report](ht
 
 ## License
 
-[MIT](LICENCE)
+[MIT](LICENSE)
