@@ -1,3 +1,12 @@
+## [0.1.8](https://github.com/chouchouji/platano-git/compare/v0.1.7...v0.1.8) (2024-09-08)
+
+
+### Features
+
+* support create branch from origin ([52b2d86](https://github.com/chouchouji/platano-git/commit/52b2d86f6afb29f6cae7db6833d85f7f922e9eb8))
+
+
+
 ## [0.1.7](https://github.com/chouchouji/platano-git/compare/v0.1.6...v0.1.7) (2024-09-08)
 
 
