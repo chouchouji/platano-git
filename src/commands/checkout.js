@@ -111,7 +111,11 @@ async function runCheckoutCommand(inputBranch, options) {
       return
     }
 
-    const baseBranch = await getBaseBranch(currentBranch, branches)
+    await runCommand('git fetch origin')
+    const originBranch = await runCommand('git branch -r')
+    const originBranches = formatBranch(originBranch)
+
+    const baseBranch = await getBaseBranch(currentBranch, [...branches, ...originBranches])
     await runCommand(`git checkout -b ${newBranch} ${baseBranch}`)
     log.success(`成功创建并切换到 ${newBranch} 🌈`)
   }
