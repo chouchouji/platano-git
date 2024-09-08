@@ -47,7 +47,6 @@ async function getSelectedRemoteName(remoteNames) {
       type: 'list',
       name: 'selectedName',
       message: '请选择你要拉取的远程名',
-      default: ORIGIN,
       choices,
     },
   ])
