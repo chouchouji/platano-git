@@ -23,7 +23,7 @@ async function getSelectBranches(localBranch, currentBranch) {
     {
       type: 'checkbox',
       name: 'selectedBranches',
-      message: '请选择你要删除的分支',
+      message: '请选择你要删除的本地分支',
       choices,
     },
   ])
@@ -111,7 +111,7 @@ async function deleteRemoteBranches() {
     {
       type: 'checkbox',
       name: 'selectedBranches',
-      message: '请选择你要删除的分支',
+      message: '请选择你要删除的远端分支',
       choices,
     },
   ])
@@ -180,7 +180,7 @@ async function getBaseAndTargetBranch(choices) {
     {
       type: 'list',
       name: 'selectedBranch',
-      message: '请选择你要重命名的分支',
+      message: '请选择你要重命名的本地分支',
       choices,
     },
   ])
@@ -278,15 +278,20 @@ async function runBranchCommand(inputBranch, params) {
 
   if (a) {
     await fetchAllBranches()
-  } else if (m) {
+  }
+  if (m) {
     await updateBranchName(branches, m, currentBranch)
-  } else if (d) {
+  }
+  if (d) {
     await deleteLocalBranches(localBranch, currentBranch)
-  } else if (r) {
+  }
+  if (r) {
     await deleteRemoteBranches()
-  } else if (Dr) {
+  }
+  if (Dr) {
     await deleteLocalAndRemoteBranches(localBranch, currentBranch)
-  } else if (v) {
+  }
+  if (v) {
     await logDetailedBranch(currentBranch)
   }
 }
