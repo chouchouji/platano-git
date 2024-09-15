@@ -1,3 +1,12 @@
+## [0.1.9](https://github.com/chouchouji/platano-git/compare/v0.1.8...v0.1.9) (2024-09-15)
+
+
+### Features
+
+* support combination option ([46d5ee2](https://github.com/chouchouji/platano-git/commit/46d5ee20a9836163a60b3c8a9dddc6787b052719))
+
+
+
 ## [0.1.8](https://github.com/chouchouji/platano-git/compare/v0.1.7...v0.1.8) (2024-09-08)
 
 
