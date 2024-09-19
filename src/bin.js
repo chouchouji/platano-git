@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs'
-import { program } from 'commander'
+import { Command } from 'commander'
 import { runBranchCommand } from './commands/branch.js'
 import { runPushCommand } from './commands/push.js'
 import { runPullCommand } from './commands/pull.js'
@@ -8,6 +8,8 @@ import { runCheckoutCommand } from './commands/checkout.js'
 import { runSwitchCommand } from './commands/switch.js'
 
 const packageJson = JSON.parse(readFileSync('package.json', 'utf8'))
+
+const program = new Command()
 
 const { name, version, description } = packageJson
 program.name(name).description(description).version(version)

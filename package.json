@@ -4,13 +4,15 @@
   "description": "A tool for simplifying git operations",
   "type": "module",
   "bin": {
-    "platano": "/src/bin.js"
+    "platano": "/dist/bin.js"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "rollup -c",
     "clean": "rimraf ./node_modules",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "eslint --fix \"src/**/*.js\"",
-    "release": "npx vr release"
+    "release": "pnpm build && npx vr release"
   },
   "repository": {
     "type": "git",
@@ -30,11 +32,15 @@
     "commander": "^12.1.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@varlet/release": "^0.2.11",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "prettier": "^3.2.5",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "rollup": "^4.22.0"
   }
 }
