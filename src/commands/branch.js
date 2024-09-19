@@ -1,8 +1,8 @@
-const inquirer = require('inquirer')
-const { runCommand } = require('../utils/run')
-const { formatBranch, updateBranch, getCurrentBranch, getRemoteBranches } = require('../utils/branch')
-const log = require('../utils/log')
-const { isEmptyObject, isEmptyArray, isNotEmptyArray } = require('../utils/util')
+import { checkbox, input, rawlist } from '@inquirer/prompts'
+import { runCommand } from '../utils/run.js'
+import { formatBranch, updateBranch, getCurrentBranch, getRemoteBranches } from '../utils/branch.js'
+import { success, warning, info, error } from '../utils/log.js'
+import { isEmptyObject, isEmptyArray, isNotEmptyArray, formatChoices } from '../utils/util.js'
 
 const PROTECTED_BRANCHES = ['main', 'dev']
 
@@ -19,14 +19,10 @@ async function getSelectBranches(localBranch, currentBranch) {
     return undefined
   }
 
-  const { selectedBranches } = await inquirer.prompt([
-    {
-      type: 'checkbox',
-      name: 'selectedBranches',
-      message: '请选择你要删除的本地分支',
-      choices,
-    },
-  ])
+  const selectedBranches = await checkbox({
+    message: '请选择你要删除的本地分支',
+    choices: formatChoices(choices),
+  })
 
   return selectedBranches
 }
@@ -37,7 +33,7 @@ async function getSelectBranches(localBranch, currentBranch) {
 async function fetchAllBranches() {
   await updateBranch()
   const branch = await runCommand('git branch -a')
-  log.success(branch.trimEnd())
+  success(branch.trimEnd())
 }
 
 /**
@@ -62,12 +58,12 @@ function getLocalBranches(branch) {
  * 控制台输出本地剩余分支
  */
 async function logLocalBranches() {
-  log.warning('本地剩余分支如下：')
+  warning('本地剩余分支如下：')
   const branch = await runCommand('git branch')
   const [currentBranch, ...restBranches] = getLocalBranches(branch)
-  log.success(currentBranch)
+  success(currentBranch)
   if (isNotEmptyArray(restBranches)) {
-    log.info(restBranches.join('\n').trimEnd())
+    info(restBranches.join('\n').trimEnd())
   }
 }
 
@@ -75,12 +71,12 @@ async function deleteLocalBranches(localBranch, currentBranch) {
   const selectedBranches = await getSelectBranches(localBranch, currentBranch)
 
   if (selectedBranches === undefined) {
-    log.warning('没有可以删除的分支了')
+    warning('没有可以删除的分支了')
     return
   }
 
   if (isEmptyArray(selectedBranches)) {
-    log.warning('未选择任何分支')
+    warning('未选择任何分支')
     return
   }
 
@@ -89,9 +85,9 @@ async function deleteLocalBranches(localBranch, currentBranch) {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`分支 ${selectedBranches[index]} 删除成功 ✅`)
+      success(`分支 ${selectedBranches[index]} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${selectedBranches[index]} 删除失败...`)
+      error(`分支 ${selectedBranches[index]} 删除失败...`)
     }
   })
 
@@ -103,21 +99,17 @@ async function deleteRemoteBranches() {
   const choices = remoteBranches.filter((remoteBr) => !PROTECTED_BRANCHES.includes(remoteBr))
 
   if (isEmptyArray(choices)) {
-    log.warning('没有可以删除的分支了')
+    warning('没有可以删除的分支了')
     return
   }
 
-  const { selectedBranches } = await inquirer.prompt([
-    {
-      type: 'checkbox',
-      name: 'selectedBranches',
-      message: '请选择你要删除的远端分支',
-      choices,
-    },
-  ])
+  const selectedBranches = await checkbox({
+    message: '请选择你要删除的远端分支',
+    choices: formatChoices(choices),
+  })
 
   if (isEmptyArray(selectedBranches)) {
-    log.warning('未选择任何分支')
+    warning('未选择任何分支')
     return
   }
 
@@ -126,9 +118,9 @@ async function deleteRemoteBranches() {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      log.success(`远端 分支 ${selectedBranches[index]} 删除成功 ✅`)
+      success(`远端 分支 ${selectedBranches[index]} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      log.error(`远端 分支 ${selectedBranches[index]} 删除失败...`)
+      error(`远端 分支 ${selectedBranches[index]} 删除失败...`)
     }
   })
 }
@@ -137,12 +129,12 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
   const selectedBranches = await getSelectBranches(localBranch, currentBranch)
 
   if (selectedBranches === undefined) {
-    log.warning('没有可以删除的分支了')
+    warning('没有可以删除的分支了')
     return
   }
 
   if (isEmptyArray(selectedBranches)) {
-    log.warning('未选择任何分支')
+    warning('未选择任何分支')
     return
   }
 
@@ -161,9 +153,9 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
 
     if (result.status === 'fulfilled') {
       const text = index <= selectedBranches.length - 1 ? '本地' : '远端'
-      log.success(`${text} 分支 ${branch} 删除成功 ✅`)
+      success(`${text} 分支 ${branch} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      log.error(`分支 ${branch} 删除失败...`)
+      error(`分支 ${branch} 删除失败...`)
     }
   })
 
@@ -176,22 +168,14 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
  * @returns {string[]} 返回基准分支和目标分支组成的数组
  */
 async function getBaseAndTargetBranch(choices) {
-  const { selectedBranch } = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'selectedBranch',
-      message: '请选择你要重命名的本地分支',
-      choices,
-    },
-  ])
+  const selectedBranch = await rawlist({
+    message: '请选择你要重命名的本地分支',
+    choices: formatChoices(choices),
+  })
 
-  const { newBranch } = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'newBranch',
-      message: '请输入分支新名称',
-    },
-  ])
+  const newBranch = await input({
+    message: '请输入分支新名称',
+  })
 
   return [selectedBranch, newBranch.trim()]
 }
@@ -205,30 +189,30 @@ async function getBaseAndTargetBranch(choices) {
 async function updateBranchName(branches, value, currentBranch) {
   const choices = branches.filter((branch) => !PROTECTED_BRANCHES.includes(branch))
   if (isEmptyArray(choices)) {
-    log.warning('没有可以重命名的分支了')
+    warning('没有可以重命名的分支了')
     return
   }
 
   const [baseBranch, targetBranch] = value === true ? await getBaseAndTargetBranch(choices) : [currentBranch, value]
 
   if (PROTECTED_BRANCHES.includes(baseBranch)) {
-    log.error('保护分支不能重命名 ❌')
+    error('保护分支不能重命名 ❌')
     return
   }
 
   if (branches.includes(targetBranch)) {
-    log.error('本地已存在同名分支 🔁')
+    error('本地已存在同名分支 🔁')
     return
   }
 
   const remoteBranches = await getRemoteBranches()
   if (remoteBranches.includes(targetBranch)) {
-    log.error('远端已存在同名分支 🔁')
+    error('远端已存在同名分支 🔁')
     return
   }
 
   await runCommand(`git branch -m ${baseBranch} ${targetBranch}`)
-  log.success(`${baseBranch} 已经重命名为 ${targetBranch} 🆕`)
+  success(`${baseBranch} 已经重命名为 ${targetBranch} 🆕`)
 
   await logLocalBranches()
 }
@@ -237,7 +221,7 @@ async function logDetailedBranch(currentBranch) {
   const branch = await runCommand('git branch -v')
 
   if (!branch) {
-    log.info('没有任何分支')
+    info('没有任何分支')
     return
   }
 
@@ -245,30 +229,30 @@ async function logDetailedBranch(currentBranch) {
   const currentBranchInfo = branches.find((branchInfo) => branchInfo.includes(`* ${currentBranch}`))
   const restBranches = branches.filter((branchInfo) => branchInfo !== currentBranchInfo)
 
-  log.success(currentBranchInfo)
-  restBranches.forEach(log.info)
+  success(currentBranchInfo)
+  restBranches.forEach(info)
 }
 
-async function runBranchCommand(inputBranch, params) {
+export async function runBranchCommand(inputBranch, params) {
   const localBranch = await runCommand('git branch')
   const branches = formatBranch(localBranch)
 
   if (branches.includes(inputBranch)) {
-    log.warning('本地已存在同名分支 🔁')
+    warning('本地已存在同名分支 🔁')
     return
   }
 
   if (typeof inputBranch === 'string' && inputBranch.length > 0) {
     await runCommand(`git branch ${inputBranch}`)
-    log.success(`${inputBranch} 创建成功 🌈`)
+    success(`${inputBranch} 创建成功 🌈`)
     return
   }
 
   if (isEmptyObject(params) && inputBranch === undefined) {
     const [currentBranch, ...restBranches] = getLocalBranches(localBranch)
-    log.success(currentBranch)
+    success(currentBranch)
     if (isNotEmptyArray(restBranches)) {
-      log.info(restBranches.join('\n').trimEnd())
+      info(restBranches.join('\n').trimEnd())
     }
     return
   }
@@ -294,8 +278,4 @@ async function runBranchCommand(inputBranch, params) {
   if (v) {
     await logDetailedBranch(currentBranch)
   }
-}
-
-module.exports = {
-  runBranchCommand,
 }

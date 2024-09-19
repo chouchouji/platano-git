@@ -1,9 +1,9 @@
-const inquirer = require('inquirer')
-const { runCommand } = require('../utils/run')
-const log = require('../utils/log')
-const { formatRemoteNames, getCurrentBranch, updateBranch } = require('../utils/branch')
-const { isEmptyObject } = require('../utils/util')
-const { ORIGIN } = require('../constants/remote')
+import { rawlist } from '@inquirer/prompts'
+import { runCommand } from '../utils/run.js'
+import { success } from '../utils/log.js'
+import { formatRemoteNames, getCurrentBranch, updateBranch } from '../utils/branch.js'
+import { isEmptyObject, formatChoices } from '../utils/util.js'
+import { ORIGIN } from '../constants/remote.js'
 
 /**
  * 把 `origin` 移动到数组末尾
@@ -42,22 +42,18 @@ function moveOriginToEnd(remoteNames) {
 async function getSelectedRemoteName(remoteNames) {
   const choices = moveOriginToEnd(formatRemoteNames(remoteNames))
 
-  const { selectedName } = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'selectedName',
-      message: '请选择你要拉取的远程名',
-      choices,
-    },
-  ])
+  const selectedName = await rawlist({
+    message: '请选择你要拉取的远程名',
+    choices: formatChoices(choices),
+  })
 
   return selectedName
 }
 
-async function runPullCommand(params) {
+export async function runPullCommand(params) {
   if (isEmptyObject(params)) {
     await runCommand('git pull')
-    log.success('拉取成功 ⬇️')
+    success('拉取成功 ⬇️')
     return
   }
 
@@ -72,10 +68,6 @@ async function runPullCommand(params) {
     const currentBranch = getCurrentBranch(branch)
 
     await runCommand(`git pull ${remoteName} ${currentBranch}`)
-    log.success(`拉取 ${remoteName}/${currentBranch} 成功 ⬇️`)
+    success(`拉取 ${remoteName}/${currentBranch} 成功 ⬇️`)
   }
-}
-
-module.exports = {
-  runPullCommand,
 }

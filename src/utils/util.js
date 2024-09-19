@@ -3,7 +3,7 @@
  * @param {*} val 要判断的变量
  * @returns {boolean}
  */
-function isEmptyObject(val) {
+export function isEmptyObject(val) {
   return Object.prototype.toString.call(val) === '[object Object]' && Object.keys(val).length === 0
 }
 
@@ -12,7 +12,7 @@ function isEmptyObject(val) {
  * @param {*} val 要判断的变量
  * @returns {boolean}
  */
-function isEmptyArray(val) {
+export function isEmptyArray(val) {
   return Array.isArray(val) && val.length === 0
 }
 
@@ -21,12 +21,18 @@ function isEmptyArray(val) {
  * @param {*} val 要判断的变量
  * @returns {boolean}
  */
-function isNotEmptyArray(val) {
+export function isNotEmptyArray(val) {
   return Array.isArray(val) && val.length > 0
 }
 
-module.exports = {
-  isEmptyObject,
-  isEmptyArray,
-  isNotEmptyArray,
+/**
+ * 格式化选项
+ * @param {string[]} choices 选项
+ * @returns {{name: string, value:string}[]}
+ */
+export function formatChoices(choices) {
+  return choices.map((choice) => ({
+    name: choice,
+    value: choice,
+  }))
 }

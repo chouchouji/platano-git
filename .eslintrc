@@ -1,7 +1,6 @@
 {
   "env": {
-    "es6": true,
-    "commonjs": true
+    "es6": true
   },
   "extends": ["eslint:recommended", "airbnb-base"],
   "rules": {
@@ -34,6 +33,8 @@
         "ExportDeclaration": { "multiline": true, "minProperties": 3 }
       }
     ],
-    "max-len": "off"
+    "max-len": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off"
   }
 }

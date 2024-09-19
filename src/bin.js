@@ -1,15 +1,15 @@
 #!/usr/bin/env node
+import { readFileSync } from 'node:fs'
+import { program } from 'commander'
+import { runBranchCommand } from './commands/branch.js'
+import { runPushCommand } from './commands/push.js'
+import { runPullCommand } from './commands/pull.js'
+import { runCheckoutCommand } from './commands/checkout.js'
+import { runSwitchCommand } from './commands/switch.js'
 
-const { Command } = require('commander')
-const packageJson = require('../package.json')
-const { runBranchCommand } = require('./commands/branch')
-const { runPushCommand } = require('./commands/push')
-const { runPullCommand } = require('./commands/pull')
-const { runCheckoutCommand } = require('./commands/checkout')
-const { runSwitchCommand } = require('./commands/switch')
+const packageJson = JSON.parse(readFileSync('package.json', 'utf8'))
 
 const { name, version, description } = packageJson
-const program = new Command()
 program.name(name).description(description).version(version)
 
 program

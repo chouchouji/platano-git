@@ -1,5 +1,1 @@
-const ORIGIN = 'origin'
-
-module.exports = {
-  ORIGIN,
-}
+export const ORIGIN = 'origin'
