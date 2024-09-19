@@ -7,7 +7,6 @@
     "platano": "/dist/bin.js"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "build": "rollup -c",
     "clean": "rimraf ./node_modules",
     "format": "prettier --write \"src/**/*.js\"",
@@ -23,6 +22,10 @@
     "cli",
     "nodejs",
     "git"
+  ],
+  "files": [
+    "dist",
+    "README.zh-CN.md"
   ],
   "author": "chouchouji <1305974212@qq.com>",
   "license": "MIT",
