@@ -16,7 +16,9 @@ const packageJson = readJSONSync(resolve(fileURLToPath(new URL('.', import.meta.
 const program = new Command()
 
 const { name, version, description } = packageJson
-program.name(name).description(description).version(version)
+program.name(name).description(description)
+
+program.version(version, '-v, --version')
 
 program
   .command('br')
