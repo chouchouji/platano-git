@@ -29,6 +29,9 @@
   ],
   "author": "chouchouji <1305974212@qq.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "@inquirer/prompts": "^6.0.1",
     "chalk": "^5.3.0",
