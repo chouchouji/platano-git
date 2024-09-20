@@ -26,7 +26,7 @@ yarn global add platano-git
 pnpm add -g platano-git
 ```
 
-_\* 通过运行 `platano -V` 或者 `platano --version` 查看是否安装成功_
+_\* 通过运行 `platano -v` ***0.2.0+*** 或者 `platano --version` 查看是否安装成功_
 
 ### 示例
 
