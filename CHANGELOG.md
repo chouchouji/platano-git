@@ -1,3 +1,18 @@
+# [0.2.0](https://github.com/chouchouji/platano-git/compare/v0.1.9...v0.2.0) (2024-09-20)
+
+
+### Bug Fixes
+
+* replace rawlist with select for prompt with default value ([231c4dd](https://github.com/chouchouji/platano-git/commit/231c4dd63b4c043033fc4d15329a13d7ba04482a))
+* use correct package.json path ([7a19667](https://github.com/chouchouji/platano-git/commit/7a1966716e76d6d77018ec2cff197251b5e4addc))
+
+
+### Performance Improvements
+
+* improve version command experience ([69e185a](https://github.com/chouchouji/platano-git/commit/69e185a5b1f0341a6db59ef535a4743cc5e88db8))
+
+
+
 ## [0.1.9](https://github.com/chouchouji/platano-git/compare/v0.1.8...v0.1.9) (2024-09-15)
 
 
