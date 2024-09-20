@@ -1,4 +1,4 @@
-import { input, rawlist } from '@inquirer/prompts'
+import { input, select, rawlist } from '@inquirer/prompts'
 import { runCommand } from '../utils/run.js'
 import { getCurrentBranch, formatBranch } from '../utils/branch.js'
 import { warning, error, success } from '../utils/log.js'
@@ -44,7 +44,7 @@ async function getInputBranchName() {
  * @returns {string}
  */
 async function getBaseBranch(currentBranch, choices) {
-  const selectedBranch = await rawlist({
+  const selectedBranch = await select({
     message: '请选择你的基准分支',
     default: currentBranch,
     choices: formatChoices(choices),
