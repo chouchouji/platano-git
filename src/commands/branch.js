@@ -13,7 +13,7 @@ const PROTECTED_BRANCHES = ['main', 'dev']
  * @returns {(string[] | undefined)} 如果没有可删除的分支，返回undefined，否则返回删除的分支列表
  */
 async function getSelectBranches(localBranch, currentBranch) {
-  const choices = formatBranch(localBranch).filter((branch) => ![...PROTECTED_BRANCHES, currentBranch].includes(branch))
+  const choices = formatBranch(localBranch).filter((branch) => ![currentBranch].includes(branch))
 
   if (isEmptyArray(choices)) {
     return undefined
