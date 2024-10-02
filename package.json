@@ -9,8 +9,8 @@
   "scripts": {
     "build": "rollup -c",
     "clean": "rimraf ./node_modules",
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint --fix \"src/**/*.js\"",
+    "format": "prettier --write .",
+    "lint": "eslint --fix .",
     "release": "pnpm build && npx vr release"
   },
   "repository": {

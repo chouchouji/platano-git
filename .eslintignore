@@ -1,9 +1,7 @@
-node_modules/
-.eslintrc
+node_modules/**
 .gitignore
 .npmignore
-.prettierrc
 LICENSE
 package.json
 pnpm-lock.yaml
-dist/
+dist/*
