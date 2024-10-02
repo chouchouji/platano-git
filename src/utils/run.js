@@ -1,4 +1,5 @@
-import { exec } from 'node:child_process'
+import { exec } from 'child_process'
+import { cwd } from 'process'
 
 /**
  * 运行命令
@@ -9,9 +10,9 @@ export async function runCommand(command) {
     exec(
       command,
       {
-        cwd: process.cwd(),
+        cwd: cwd(),
       },
-      async (err, stdout) => {
+      (err, stdout) => {
         if (err) {
           reject(err)
         } else {

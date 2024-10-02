@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 import { Command } from 'commander'
-import { readJSONSync } from 'fs-extra/esm'
-import { resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import fse from 'fs-extra'
+import { resolve } from 'path'
+import { fileURLToPath } from 'url'
 import { runBranchCommand } from './commands/branch.js'
 import { runPushCommand } from './commands/push.js'
 import { runPullCommand } from './commands/pull.js'
 import { runCheckoutCommand } from './commands/checkout.js'
 import { runSwitchCommand } from './commands/switch.js'
+
+const { readJSONSync } = fse
 
 const packageJson = readJSONSync(resolve(fileURLToPath(new URL('.', import.meta.url)), '../package.json'))
 

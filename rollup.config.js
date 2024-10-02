@@ -10,7 +10,7 @@ export default {
     format: 'es',
   },
   // external chalk because its content (supports-color/browser.js) includes navigator
-  external: ['node:child_process', 'node:fs', 'chalk'],
+  external: ['chalk'],
   plugins: [
     commonjs(),
     json(),

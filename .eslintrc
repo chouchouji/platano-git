@@ -36,5 +36,11 @@
     "max-len": "off",
     "import/prefer-default-export": "off",
     "import/extensions": "off"
+  },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "ecmaVersion": 2015,
+    "sourceType": "module"
   }
 }
