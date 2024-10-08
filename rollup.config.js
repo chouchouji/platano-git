@@ -1,7 +1,4 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-import json from '@rollup/plugin-json'
-import terser from '@rollup/plugin-terser'
 
 export default {
   input: 'src/bin.js',
@@ -9,14 +6,10 @@ export default {
     dir: 'dist',
     format: 'es',
   },
-  // external chalk because its content (supports-color/browser.js) includes navigator
-  external: ['chalk'],
+  external: ['chalk', 'tinyexec', 'fs-extra', 'commander', '@inquirer/prompts'],
   plugins: [
-    commonjs(),
-    json(),
     nodeResolve({
       preferBuiltins: true,
     }),
-    terser(),
   ],
 }
