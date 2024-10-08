@@ -20,6 +20,9 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
+      tinyexec:
+        specifier: ^0.3.0
+        version: 0.3.0
     devDependencies:
       '@babel/eslint-parser':
         specifier: ^7.25.1
@@ -1726,6 +1729,9 @@ packages:
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
+
+  tinyexec@0.3.0:
+    resolution: {integrity: sha512-tVGE0mVJPGb0chKhqmsoosjsS+qUnJVGJpZgsHYQcGoPlG3B51R3PouqTgEGH2Dc9jjFyOqOpix6ZHNMXp1FZg==}
 
   tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -3701,6 +3707,8 @@ snapshots:
   text-table@0.2.0: {}
 
   through@2.3.8: {}
+
+  tinyexec@0.3.0: {}
 
   tmp@0.0.33:
     dependencies:

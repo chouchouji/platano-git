@@ -1,5 +1,5 @@
 import { checkbox, input, rawlist } from '@inquirer/prompts'
-import { runCommand } from '../utils/run.js'
+import { x } from 'tinyexec'
 import { formatBranch, updateBranch, getCurrentBranch, getRemoteBranches } from '../utils/branch.js'
 import { success, warning, info, error } from '../utils/log.js'
 import { isEmptyObject, isEmptyArray, isNotEmptyArray, formatChoices } from '../utils/util.js'
@@ -32,8 +32,16 @@ async function getSelectBranches(localBranch, currentBranch) {
  */
 async function fetchAllBranches() {
   await updateBranch()
-  const branch = await runCommand('git branch -a')
-  success(branch.trimEnd())
+  const { stdout, stderr } = await x('git', ['branch', '-a'])
+  const out = stdout.trimEnd()
+  if (out) {
+    success(out)
+  }
+
+  const err = stderr.trim()
+  if (err) {
+    error(err)
+  }
 }
 
 /**
@@ -59,7 +67,7 @@ function getLocalBranches(branch) {
  */
 async function logLocalBranches() {
   warning('本地剩余分支如下：')
-  const branch = await runCommand('git branch')
+  const { stdout: branch } = await x('git', ['branch'])
   const [currentBranch, ...restBranches] = getLocalBranches(branch)
   success(currentBranch)
   if (isNotEmptyArray(restBranches)) {
@@ -80,7 +88,7 @@ async function deleteLocalBranches(localBranch, currentBranch) {
     return
   }
 
-  const promises = selectedBranches.map((branch) => runCommand(`git branch -D ${branch}`))
+  const promises = selectedBranches.map((branch) => x('git', ['branch', '-D', branch]))
   const results = await Promise.allSettled(promises)
 
   results.forEach((result, index) => {
@@ -113,7 +121,7 @@ async function deleteRemoteBranches() {
     return
   }
 
-  const promises = selectedBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
+  const promises = selectedBranches.map((branch) => x('git', ['push', 'origin', '--delete', branch]))
   const results = await Promise.allSettled(promises)
 
   results.forEach((result, index) => {
@@ -139,11 +147,11 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
   }
 
   await updateBranch()
-  const allBranch = await runCommand('git branch -a')
+  const { stdout: allBranch } = await x('git', ['branch', '-a'])
 
-  const localPromises = selectedBranches.map((branch) => runCommand(`git branch -D ${branch}`))
+  const localPromises = selectedBranches.map((branch) => x('git', ['branch', '-D', branch]))
   const remoteBranches = selectedBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
-  const remotePromises = remoteBranches.map((branch) => runCommand(`git push origin --delete ${branch}`))
+  const remotePromises = remoteBranches.map((branch) => x('git', ['push', 'origin', '--delete', branch]))
 
   const results = await Promise.allSettled([...localPromises, ...remotePromises])
 
@@ -211,30 +219,22 @@ async function updateBranchName(branches, value, currentBranch) {
     return
   }
 
-  await runCommand(`git branch -m ${baseBranch} ${targetBranch}`)
-  success(`${baseBranch} 已经重命名为 ${targetBranch} 🆕`)
+  const { stdout, stderr } = await x('git', ['branch', '-m', baseBranch, targetBranch])
+  const out = stdout.trim()
+  if (out) {
+    success(out)
+  }
+
+  const err = stderr.trim()
+  if (err) {
+    error(err)
+  }
 
   await logLocalBranches()
 }
 
-async function logDetailedBranch(currentBranch) {
-  const branch = await runCommand('git branch -v')
-
-  if (!branch) {
-    info('没有任何分支')
-    return
-  }
-
-  const branches = branch.split('\n').filter(Boolean)
-  const currentBranchInfo = branches.find((branchInfo) => branchInfo.includes(`* ${currentBranch}`))
-  const restBranches = branches.filter((branchInfo) => branchInfo !== currentBranchInfo)
-
-  success(currentBranchInfo)
-  restBranches.forEach(info)
-}
-
 export async function runBranchCommand(inputBranch, params) {
-  const localBranch = await runCommand('git branch')
+  const { stdout: localBranch } = await x('git', ['branch'])
   const branches = formatBranch(localBranch)
 
   if (branches.includes(inputBranch)) {
@@ -243,8 +243,16 @@ export async function runBranchCommand(inputBranch, params) {
   }
 
   if (typeof inputBranch === 'string' && inputBranch.length > 0) {
-    await runCommand(`git branch ${inputBranch}`)
-    success(`${inputBranch} 创建成功 🌈`)
+    const { stdout, stderr } = await x('git', ['branch', inputBranch])
+    const out = stdout.trim()
+    if (out) {
+      success(out)
+    }
+
+    const err = stderr.trim()
+    if (err) {
+      error(err)
+    }
     return
   }
 
@@ -257,7 +265,7 @@ export async function runBranchCommand(inputBranch, params) {
     return
   }
 
-  const { a, d, Dr, r, m, v } = params
+  const { a, d, Dr, r, m } = params
   const currentBranch = getCurrentBranch(localBranch)
 
   if (a) {
@@ -274,8 +282,5 @@ export async function runBranchCommand(inputBranch, params) {
   }
   if (Dr) {
     await deleteLocalAndRemoteBranches(localBranch, currentBranch)
-  }
-  if (v) {
-    await logDetailedBranch(currentBranch)
   }
 }

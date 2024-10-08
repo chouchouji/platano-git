@@ -1,8 +1,8 @@
 import { rawlist } from '@inquirer/prompts'
-import { runCommand } from '../utils/run.js'
-import { success } from '../utils/log.js'
+import { x } from 'tinyexec'
+import { success, error } from '../utils/log.js'
 import { formatRemoteNames, getCurrentBranch, updateBranch } from '../utils/branch.js'
-import { isEmptyObject, formatChoices } from '../utils/util.js'
+import { formatChoices } from '../utils/util.js'
 import { ORIGIN } from '../constants/remote.js'
 
 /**
@@ -51,23 +51,30 @@ async function getSelectedRemoteName(remoteNames) {
 }
 
 export async function runPullCommand(params) {
-  if (isEmptyObject(params)) {
-    await runCommand('git pull')
-    success('拉取成功 ⬇️')
-    return
-  }
+  const args = ['pull']
 
   const { s } = params
 
   if (s) {
     await updateBranch()
 
-    const branch = await runCommand('git branch')
-    const remoteNames = await runCommand('git remote')
+    const { stdout: branch } = await x('git', ['branch'])
+    const { stdout: remoteNames } = await x('git', ['remote'])
     const remoteName = await getSelectedRemoteName(remoteNames)
     const currentBranch = getCurrentBranch(branch)
 
-    await runCommand(`git pull ${remoteName} ${currentBranch}`)
-    success(`拉取 ${remoteName}/${currentBranch} 成功 ⬇️`)
+    args.push(remoteName, currentBranch)
+  }
+
+  const { stdout, stderr } = await x('git', args)
+
+  const out = stdout.trim()
+  if (out) {
+    success(out)
+  }
+
+  const err = stderr.trim()
+  if (err) {
+    error(err)
   }
 }

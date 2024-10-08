@@ -52,7 +52,6 @@ platano ck main
 | --- | --- | --- | --- |
 | `[branch]` | View all local branches or create a new branch | `git branch` | If you don't input anything (`platano br`), the console will log the complete local branch info. Otherwise, you input a branch (`platano br xxx`), it will create a new branch named `xxx`. Please note, it will not switch to the branch you had created. |
 | `-a` | View all branches | `git branch -a` |
-| `-v` | View details of all branches in the local repository | `git branch -v` |
 | `-m [branch]` | Rename local branch | `git branch -m xxx yyy` | If you enter nothing (`platano br -m`), you will be prompted to select the base branch and enter a new branch name. If you enter a branch (`platano br -m xxx`), the current branch will be renamed to `xxx` |
 | `-d` | Delete local branches | `git branch -D xxx` | It will **forcefully** delete branch |
 | `-r` | Delete remote branches | `git push origin --delete xxx` |
@@ -87,9 +86,9 @@ _\* The lowest supported git version is **2.23**_
 | Param | Description | Equal command |  
 | --- | --- | --- | 
 | ` ` | Push code | `git push` | 
-| `-o` | Push code to remote branch | `git push origin xxx` | 
-| `-f` | Force push code | `git push origin xxx -f` | 
-| `-u` | Push and associate remote branch | `git push --set-upstream origin xxx` | 
+| `-s` | Push code to remote branch, the default remote name is `origin` | `git push xxx yyy` | 
+| `-f` | Force push code | `git push xxx yyy -f` | 
+| `-u` | Push and associate remote branch | `git push --set-upstream xxx yyy` | 
 
 
 ## Feedback

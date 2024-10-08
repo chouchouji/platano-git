@@ -52,7 +52,6 @@ platano ck main
 | --- | --- | --- | --- |
 | `[branch]` | 查看所有本地分支或创建新分支 | `git branch` | 如果不输入任何内容（`platano br`），控制台将输出完整的本地分支信息。 如果输入一个分支（`platano br xxx`），它将创建一个名为`xxx`的新分支。 请注意，此命令不会自动切换到新创建的分支。|
 | `-a` | 查看所有分支 | `git branch -a` |
-| `-v` | 查看本地仓库中所有分支的详细信息 | `git branch -v` |
 | `-m [branch]` | 重命名本地分支 | `git branch -m xxx yyy` | 如果不输入任何内容（`platano br -m`），会提示您选择基准分支，输入新分支名。 如果输入一个分支（`platano br -m xxx`），会将当前分支重命名为`xxx` |
 | `-d` | 删除本地分支 | `git branch -D xxx` | 会**强制**删除分支 |
 | `-r` | 删除远程分支 | `git push origin --delete xxx` |
@@ -86,9 +85,9 @@ _\* 此命令的最低 git 版本为 **2.23**_
 | 参数| 描述 | 等价命令|
 | --- | --- | --- |
 | ` ` | 推送代码| `git push` |
-| `-o` | 将代码推送到远程分支 | `git push origin xxx` |
-| `-f` | 强制推送代码 | `git push origin xxx -f` |
-| `-u` | 推送并关联远程分支 | `git push --set-upstream origin xxx` |
+| `-s` | 将代码推送到远程分支，默认是 `origin` | `git push xxx yyy` |
+| `-f` | 强制推送代码 | `git push xxx yyy -f` |
+| `-u` | 推送并关联远程分支 | `git push --set-upstream xxx yyy` |
 
 ## 反馈
 
