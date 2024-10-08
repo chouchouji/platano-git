@@ -1,4 +1,4 @@
-import { runCommand } from './run.js'
+import { x } from 'tinyexec'
 import { ORIGIN } from '../constants/remote.js'
 
 /**
@@ -51,7 +51,7 @@ export function formatRemoteNames(remoteNames) {
  * 更新分支
  */
 export async function updateBranch() {
-  await runCommand('git fetch -p')
+  await x('git', ['fetch', '-p'])
 }
 
 /**
@@ -60,7 +60,7 @@ export async function updateBranch() {
  */
 export async function getRemoteBranches() {
   await updateBranch()
-  const allBranch = await runCommand('git branch -a')
+  const { stdout: allBranch } = await x('git', ['branch', '-a'])
 
   const allBranches = formatBranch(allBranch)
     .filter((branch) => branch.includes(ORIGIN))

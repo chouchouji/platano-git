@@ -1,5 +1,5 @@
 import { input, select, rawlist } from '@inquirer/prompts'
-import { runCommand } from '../utils/run.js'
+import { x } from 'tinyexec'
 import { getCurrentBranch, formatBranch } from '../utils/branch.js'
 import { warning, error, success } from '../utils/log.js'
 import { isEmptyObject, formatChoices } from '../utils/util.js'
@@ -54,7 +54,7 @@ async function getBaseBranch(currentBranch, choices) {
 }
 
 export async function runCheckoutCommand(inputBranch, options) {
-  const branch = await runCommand('git branch')
+  const { stdout: branch } = await x('git', ['branch'])
   const branches = formatBranch(branch)
   const currentBranch = getCurrentBranch(branch)
 
@@ -77,8 +77,16 @@ export async function runCheckoutCommand(inputBranch, options) {
     }
 
     if (switchedBranch) {
-      await runCommand(`git checkout ${switchedBranch}`)
-      success(`成功切换到 ${switchedBranch} 🎉`)
+      const { stdout, stderr } = await x('git', ['checkout', switchedBranch])
+      const out = stdout.trim()
+      if (out) {
+        success(out)
+      }
+
+      const err = stderr.trim()
+      if (err) {
+        error(err)
+      }
     }
 
     return
@@ -99,12 +107,20 @@ export async function runCheckoutCommand(inputBranch, options) {
       return
     }
 
-    await runCommand('git fetch origin')
-    const originBranch = await runCommand('git branch -r')
+    await x('git', ['fetch', 'origin'])
+    const { stdout: originBranch } = await x('git', ['branch', '-r'])
     const originBranches = formatBranch(originBranch)
 
     const baseBranch = await getBaseBranch(currentBranch, [...branches, ...originBranches])
-    await runCommand(`git checkout -b ${newBranch} ${baseBranch}`)
-    success(`成功创建并切换到 ${newBranch} 🌈`)
+    const { stdout, stderr } = await x('git', ['checkout', '-b', newBranch, baseBranch])
+    const out = stdout.trim()
+    if (out) {
+      success(out)
+    }
+
+    const err = stderr.trim()
+    if (err) {
+      error(err)
+    }
   }
 }

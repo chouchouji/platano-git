@@ -1,27 +1,60 @@
-import { runCommand } from '../utils/run.js'
-import { getCurrentBranch } from '../utils/branch.js'
-import { success } from '../utils/log.js'
-import { isEmptyObject } from '../utils/util.js'
+import { x } from 'tinyexec'
+import { rawlist } from '@inquirer/prompts'
+import { getCurrentBranch, updateBranch, formatRemoteNames } from '../utils/branch.js'
+import { formatChoices } from '../utils/util.js'
+import { success, error } from '../utils/log.js'
+
+/**
+ * 获取要推送的远程名
+ * @param {string} remoteNames 远端名称
+ * @returns {string}
+ */
+async function getSelectedRemoteName(remoteNames) {
+  const choices = formatRemoteNames(remoteNames)
+
+  const selectedName = await rawlist({
+    message: '请选择你要推送的远程名',
+    choices: formatChoices(choices),
+  })
+
+  return selectedName
+}
 
 export async function runPushCommand(params) {
-  const branch = await runCommand('git branch')
+  const { stdout: branch } = await x('git', ['branch'])
   const currentBranch = getCurrentBranch(branch)
 
-  if (isEmptyObject(params)) {
-    await runCommand('git push')
-    success('推送成功 🚀')
-    return
+  const args = ['push']
+
+  const { u, f, s } = params
+  if (u) {
+    args.push('--set-upstream')
   }
 
-  const { u, f, o } = params
-  if (u) {
-    await runCommand(`git push --set-upstream origin ${currentBranch}`)
-    success('关联远端并推送成功 🚀')
-  } else if (f) {
-    await runCommand(`git push origin ${currentBranch} -f`)
-    success('强制推送成功 🚀')
-  } else if (o) {
-    await runCommand(`git push origin ${currentBranch}`)
-    success('推送到远端成功 🚀')
+  if (s) {
+    await updateBranch()
+
+    const { stdout: remoteNames } = await x('git', ['remote'])
+    const remoteName = await getSelectedRemoteName(remoteNames)
+
+    args.push(remoteName, currentBranch)
+  } else {
+    args.push('origin', currentBranch)
+  }
+
+  if (f) {
+    args.push('-f')
+  }
+
+  const { stdout, stderr } = await x('git', args)
+
+  const out = stdout.trim()
+  if (out) {
+    success(out)
+  }
+
+  const err = stderr.trim()
+  if (err) {
+    error(err)
   }
 }

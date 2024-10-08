@@ -39,7 +39,7 @@ program
   .description('推送分支')
   .option('-u', '推送并关联远程分支')
   .option('-f', '强制推送到远程分支')
-  .option('-o', '推送到远程分支')
+  .option('-s', '推送到远程分支')
   .action(async (options) => {
     await runPushCommand(options)
   })
