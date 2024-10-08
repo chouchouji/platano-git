@@ -1,3 +1,17 @@
+## [0.2.3](https://github.com/chouchouji/platano-git/compare/v0.2.2...v0.2.3) (2024-10-08)
+
+
+### Features
+
+* support select remote name for push command and migrate to tinyexec ([#4](https://github.com/chouchouji/platano-git/issues/4)) ([f983585](https://github.com/chouchouji/platano-git/commit/f9835853a9b8a655b188c30ea723d9758711ea8d))
+
+
+### Performance Improvements
+
+* reduce chunk size ([410d4b2](https://github.com/chouchouji/platano-git/commit/410d4b28f23b051a4a46328fd956d2b04a730773))
+
+
+
 ## [0.2.2](https://github.com/chouchouji/platano-git/compare/v0.2.1...v0.2.2) (2024-10-02)
 
 
