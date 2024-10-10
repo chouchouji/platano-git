@@ -4,6 +4,11 @@ English | [简体中文](README.zh-CN.md)
 
 > A tool for simplifying **git** operations
 
+## Notes
+
+> [!TIP]
+> If you use ***0.2+***, the lowest node version should be more than ***18+***.
+
 ## User Guidance
 
 ### Install
