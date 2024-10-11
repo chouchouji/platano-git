@@ -59,8 +59,9 @@ platano ck main
 | `-a` | View all branches | `git branch -a` |
 | `-m [branch]` | Rename local branch | `git branch -m xxx yyy` | If you enter nothing (`platano br -m`), you will be prompted to select the base branch and enter a new branch name. If you enter a branch (`platano br -m xxx`), the current branch will be renamed to `xxx` |
 | `-d` | Delete local branches | `git branch -D xxx` | It will **forcefully** delete branch |
-| `-r` | Delete remote branches | `git push origin --delete xxx` |
-| `-dr` | Delete local and associated remote branches | `git branch -D xxx && git push origin --delete xxx` |
+| `-s` | Select remote name when delete remote branches. The default value is `origin` | `-` |
+| `-r` | Delete remote branches | `git push xxx --delete yyy` |
+| `-dr` | Delete local and associated remote branches | `git branch -D yyy && git push xxx --delete yyy` |
 
 #### ck
 
