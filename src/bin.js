@@ -3,11 +3,11 @@ import { Command } from 'commander'
 import fse from 'fs-extra'
 import { resolve } from 'path'
 import { fileURLToPath } from 'url'
-import { runBranchCommand } from './commands/branch.js'
-import { runPushCommand } from './commands/push.js'
-import { runPullCommand } from './commands/pull.js'
-import { runCheckoutCommand } from './commands/checkout.js'
-import { runSwitchCommand } from './commands/switch.js'
+import { runBranchCommand } from '@/commands/branch.js'
+import { runPushCommand } from '@/commands/push.js'
+import { runPullCommand } from '@/commands/pull.js'
+import { runCheckoutCommand } from '@/commands/checkout.js'
+import { runSwitchCommand } from '@/commands/switch.js'
 
 const { readJSONSync } = fse
 

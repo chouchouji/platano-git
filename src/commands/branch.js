@@ -1,10 +1,10 @@
 import { checkbox, input, rawlist } from '@inquirer/prompts'
 import { x } from 'tinyexec'
-import { formatBranch, updateBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches } from '../utils/branch.js'
-import { success, warning, info, error } from '../utils/log.js'
-import { isEmptyObject, isEmptyArray, isNotEmptyArray, formatChoices } from '../utils/util.js'
-import { getSelectedRemoteName } from '../utils/remote.js'
-import { ORIGIN } from '../constants/remote.js'
+import { formatBranch, updateBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches } from '@/utils/branch.js'
+import { success, warning, info, error } from '@/utils/log.js'
+import { isEmptyObject, isEmptyArray, isNotEmptyArray, formatChoices } from '@/utils/util.js'
+import { getSelectedRemoteName } from '@/utils/remote.js'
+import { ORIGIN } from '@/constants/remote.js'
 
 const PROTECTED_BRANCHES = ['main', 'dev']
 

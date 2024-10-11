@@ -42,5 +42,15 @@
     "requireConfigFile": false,
     "ecmaVersion": 2015,
     "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@", "./src"]
+        ],
+        "extensions": [".js"]
+      }
+    }
   }
 }

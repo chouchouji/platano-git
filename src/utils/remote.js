@@ -1,5 +1,5 @@
 import { rawlist } from '@inquirer/prompts'
-import { formatChoices } from './util.js'
+import { formatChoices } from '@/utils/util.js'
 
 /**
  * 获取要推送的远程名

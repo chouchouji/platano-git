@@ -1,8 +1,7 @@
 import { x } from 'tinyexec'
-import { getCurrentBranch, updateBranch } from '../utils/branch.js'
-import { success, error } from '../utils/log.js'
-import { getSelectedRemoteName } from '../utils/remote.js'
-import { formatRemoteNames } from '../utils/branch.js'
+import { getCurrentBranch, updateBranch, formatRemoteNames } from '@/utils/branch.js'
+import { success, error } from '@/utils/log.js'
+import { getSelectedRemoteName } from '@/utils/remote.js'
 
 export async function runPushCommand(params) {
   const { stdout: branch } = await x('git', ['branch'])
