@@ -1,8 +1,10 @@
 import { checkbox, input, rawlist } from '@inquirer/prompts'
 import { x } from 'tinyexec'
-import { formatBranch, updateBranch, getCurrentBranch, getRemoteBranches } from '../utils/branch.js'
+import { formatBranch, updateBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches } from '../utils/branch.js'
 import { success, warning, info, error } from '../utils/log.js'
 import { isEmptyObject, isEmptyArray, isNotEmptyArray, formatChoices } from '../utils/util.js'
+import { getSelectedRemoteName } from '../utils/remote.js'
+import { ORIGIN } from '../constants/remote.js'
 
 const PROTECTED_BRANCHES = ['main', 'dev']
 
@@ -102,8 +104,8 @@ async function deleteLocalBranches(localBranch, currentBranch) {
   await logLocalBranches()
 }
 
-async function deleteRemoteBranches() {
-  const remoteBranches = await getRemoteBranches()
+async function deleteRemoteBranches(remoteName) {
+  const remoteBranches = await getRemoteBranches(remoteName)
   const choices = remoteBranches.filter((remoteBr) => !PROTECTED_BRANCHES.includes(remoteBr))
 
   if (isEmptyArray(choices)) {
@@ -121,7 +123,7 @@ async function deleteRemoteBranches() {
     return
   }
 
-  const promises = selectedBranches.map((branch) => x('git', ['push', 'origin', '--delete', branch]))
+  const promises = selectedBranches.map((branch) => x('git', ['push', remoteName, '--delete', branch]))
   const results = await Promise.allSettled(promises)
 
   results.forEach((result, index) => {
@@ -133,7 +135,7 @@ async function deleteRemoteBranches() {
   })
 }
 
-async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
+async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteName) {
   const selectedBranches = await getSelectBranches(localBranch, currentBranch)
 
   if (selectedBranches === undefined) {
@@ -150,8 +152,8 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch) {
   const { stdout: allBranch } = await x('git', ['branch', '-a'])
 
   const localPromises = selectedBranches.map((branch) => x('git', ['branch', '-D', branch]))
-  const remoteBranches = selectedBranches.filter((branch) => allBranch.includes(`origin/${branch}`))
-  const remotePromises = remoteBranches.map((branch) => x('git', ['push', 'origin', '--delete', branch]))
+  const remoteBranches = selectedBranches.filter((branch) => allBranch.includes(`${remoteName}/${branch}`))
+  const remotePromises = remoteBranches.map((branch) => x('git', ['push', remoteName, '--delete', branch]))
 
   const results = await Promise.allSettled([...localPromises, ...remotePromises])
 
@@ -265,8 +267,15 @@ export async function runBranchCommand(inputBranch, params) {
     return
   }
 
-  const { a, d, Dr, r, m } = params
+  const { a, d, Dr, r, m, s } = params
   const currentBranch = getCurrentBranch(localBranch)
+
+  let remoteName = ORIGIN
+
+  if (s) {
+    const { stdout: remoteNames } = await x('git', ['remote'])
+    remoteName = await getSelectedRemoteName(formatRemoteNames(remoteNames))
+  }
 
   if (a) {
     await fetchAllBranches()
@@ -278,9 +287,9 @@ export async function runBranchCommand(inputBranch, params) {
     await deleteLocalBranches(localBranch, currentBranch)
   }
   if (r) {
-    await deleteRemoteBranches()
+    await deleteRemoteBranches(remoteName)
   }
   if (Dr) {
-    await deleteLocalAndRemoteBranches(localBranch, currentBranch)
+    await deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteName)
   }
 }

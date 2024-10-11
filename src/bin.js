@@ -28,6 +28,7 @@ program
   .option('-r', '删除远程分支')
   .option('-dr', '删除本地和对应的远端分支')
   .option('-a', '查看所有分支')
+  .option('-s', '选择远端名称')
   .option('-v', '查看本地仓库中所有分支的详细信息')
   .option('-m [branch]', '修改分支名')
   .action(async (branch, options) => {
