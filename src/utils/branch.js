@@ -55,16 +55,17 @@ export async function updateBranch() {
 }
 
 /**
- * 获取远端名为origin的分支名称
+ * 获取指定远端的分支名称
+ * @param {string} remoteName 远端名称
  * @returns {string[]}
  */
-export async function getRemoteBranches() {
+export async function getRemoteBranches(remoteName) {
   await updateBranch()
   const { stdout: allBranch } = await x('git', ['branch', '-a'])
 
   const allBranches = formatBranch(allBranch)
     .filter((branch) => branch.includes(ORIGIN))
-    .map((branch) => branch.match(/origin\/(\S*)/)[1])
+    .map((branch) => branch.match(new RegExp(`${remoteName}/(\\S*)`))[1])
 
   return allBranches
 }
