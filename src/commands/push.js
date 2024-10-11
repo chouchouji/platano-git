@@ -1,24 +1,8 @@
 import { x } from 'tinyexec'
-import { rawlist } from '@inquirer/prompts'
-import { getCurrentBranch, updateBranch, formatRemoteNames } from '../utils/branch.js'
-import { formatChoices } from '../utils/util.js'
+import { getCurrentBranch, updateBranch } from '../utils/branch.js'
 import { success, error } from '../utils/log.js'
-
-/**
- * 获取要推送的远程名
- * @param {string} remoteNames 远端名称
- * @returns {string}
- */
-async function getSelectedRemoteName(remoteNames) {
-  const choices = formatRemoteNames(remoteNames)
-
-  const selectedName = await rawlist({
-    message: '请选择你要推送的远程名',
-    choices: formatChoices(choices),
-  })
-
-  return selectedName
-}
+import { getSelectedRemoteName } from '../utils/remote.js'
+import { formatRemoteNames } from '../utils/branch.js'
 
 export async function runPushCommand(params) {
   const { stdout: branch } = await x('git', ['branch'])
@@ -35,7 +19,7 @@ export async function runPushCommand(params) {
     await updateBranch()
 
     const { stdout: remoteNames } = await x('git', ['remote'])
-    const remoteName = await getSelectedRemoteName(remoteNames)
+    const remoteName = await getSelectedRemoteName(formatRemoteNames(remoteNames))
 
     args.push(remoteName, currentBranch)
   } else {
