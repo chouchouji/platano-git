@@ -1,3 +1,12 @@
+## [0.2.4](https://github.com/chouchouji/platano-git/compare/v0.2.3...v0.2.4) (2024-10-11)
+
+
+### Features
+
+* support select remote name for branch command when delete remote branches ([#6](https://github.com/chouchouji/platano-git/issues/6)) ([8ba925b](https://github.com/chouchouji/platano-git/commit/8ba925bbf2247e34a76c566cc2b69bb7aaa40724))
+
+
+
 ## [0.2.3](https://github.com/chouchouji/platano-git/compare/v0.2.2...v0.2.3) (2024-10-08)
 
 
