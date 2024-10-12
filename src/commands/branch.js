@@ -128,9 +128,9 @@ async function deleteRemoteBranches(remoteName) {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      success(`远端 分支 ${selectedBranches[index]} 删除成功 ✅`)
+      success(`${remoteName}/${selectedBranches[index]} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      error(`远端 分支 ${selectedBranches[index]} 删除失败...`)
+      error(`${remoteName}/${selectedBranches[index]} 删除失败...`)
     }
   })
 }
@@ -161,11 +161,12 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
     const idx = index <= selectedBranches.length - 1 ? index : index - selectedBranches.length
     const branch = index <= selectedBranches.length - 1 ? selectedBranches[idx] : remoteBranches[idx]
 
+    const text = index <= selectedBranches.length - 1 ? `本地 分支 ${branch}` : `${remoteName}/${branch}`
+
     if (result.status === 'fulfilled') {
-      const text = index <= selectedBranches.length - 1 ? '本地' : '远端'
-      success(`${text} 分支 ${branch} 删除成功 ✅`)
+      success(`${text} 删除成功 ✅`)
     } else if (result.status === 'rejected') {
-      error(`分支 ${branch} 删除失败...`)
+      error(`${text} 删除失败...`)
     }
   })
 
