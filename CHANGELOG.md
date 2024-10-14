@@ -1,3 +1,12 @@
+## [0.2.6](https://github.com/chouchouji/platano-git/compare/v0.2.5...v0.2.6) (2024-10-14)
+
+
+### Features
+
+* support merge command ([9f16c39](https://github.com/chouchouji/platano-git/commit/9f16c3973afd75147916b737e7dca32f838f008e))
+
+
+
 ## [0.2.5](https://github.com/chouchouji/platano-git/compare/v0.2.4...v0.2.5) (2024-10-12)
 
 
