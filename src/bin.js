@@ -8,6 +8,7 @@ import { runPushCommand } from '@/commands/push.js'
 import { runPullCommand } from '@/commands/pull.js'
 import { runCheckoutCommand } from '@/commands/checkout.js'
 import { runSwitchCommand } from '@/commands/switch.js'
+import { runMergeCommand } from '@/commands/merge.js'
 
 const { readJSONSync } = fse
 
@@ -68,6 +69,14 @@ program
   .option('-c [branch]', '创建新分支并切换到此分支')
   .action(async (branch, options) => {
     await runSwitchCommand(branch, options)
+  })
+
+program
+  .command('mr')
+  .description('合并分支')
+  .argument('[branch]', '要合并的分支')
+  .action(async (branch, options) => {
+    await runMergeCommand(branch, options)
   })
 
 program.parse()

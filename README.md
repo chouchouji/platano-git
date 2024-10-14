@@ -96,6 +96,11 @@ _\* The lowest supported git version is **2.23**_
 | `-f` | Force push code | `git push xxx yyy -f` | 
 | `-u` | Push and associate remote branch | `git push --set-upstream xxx yyy` | 
 
+#### mr
+
+| Param | Description | Equal command | Remark |
+| --- | --- | --- | --- |
+| `[branch]` | Merge branch | `git merge xxx` | If you input the branch, like `platano mr feat-xxx`, it will merge `feat-xxx`. If you don't input anything (`platano mr`), you will get a radio list which you can select the branch, click one then you will merge that branch. |
 
 ## Feedback
 

@@ -22,7 +22,7 @@ async function getSelectBranches(localBranch, currentBranch) {
   }
 
   const selectedBranches = await checkbox({
-    message: '请选择你要删除的本地分支',
+    message: '请选择你要删除的分支',
     choices: formatChoices(choices),
   })
 
@@ -114,7 +114,7 @@ async function deleteRemoteBranches(remoteName) {
   }
 
   const selectedBranches = await checkbox({
-    message: '请选择你要删除的远端分支',
+    message: '请选择你要删除的分支',
     choices: formatChoices(choices),
   })
 

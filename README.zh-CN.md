@@ -95,6 +95,12 @@ _\* 此命令的最低 git 版本为 **2.23**_
 | `-f` | 强制推送代码 | `git push xxx yyy -f` |
 | `-u` | 推送并关联远程分支 | `git push --set-upstream xxx yyy` |
 
+#### mr
+
+| 参数| 描述 | 等价命令| 备注 |
+| --- | --- | --- | --- |
+| `[branch]` | 合并分支 | `git merge xxx` | 如果输入分支，如`platano mr feat-xxx`，将合并`feat-xxx` 分支。 如果不输入任何内容（`platano mr`），将得到一个单选列表，可以在其中选择想要合并的分支，选择一个分支后将合并该分支。 |
+
 ## 反馈
 
 如果遇到了问题或有好的想法和建议，请在此 [报告](https://github.com/chouchouji/platano-git/issues) 。
