@@ -7,7 +7,6 @@
     "platano": "/dist/bin.js"
   },
   "scripts": {
-    "postinstall": "simple-git-hooks",
     "dev": "rollup -c --watch",
     "build": "rollup -c",
     "clean": "rimraf ./node_modules",
