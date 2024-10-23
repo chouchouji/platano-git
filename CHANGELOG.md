@@ -1,3 +1,12 @@
+## [0.2.7](https://github.com/chouchouji/platano-git/compare/v0.2.6...v0.2.7) (2024-10-23)
+
+
+### Performance Improvements
+
+* replace rawlist with select to improve experience ([d9879ea](https://github.com/chouchouji/platano-git/commit/d9879eaedfb642efa52bce17d028bdfedbd415ff))
+
+
+
 ## [0.2.6](https://github.com/chouchouji/platano-git/compare/v0.2.5...v0.2.6) (2024-10-14)
 
 
