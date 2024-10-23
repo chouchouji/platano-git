@@ -2,7 +2,7 @@ import { input, select, rawlist } from '@inquirer/prompts'
 import { x } from 'tinyexec'
 import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
 import { warning, error, success } from '@/utils/log.js'
-import { isEmptyObject, formatChoices } from '@/utils/util.js'
+import { isEmptyObject, formatChoices, isEmptyArray } from '@/utils/util.js'
 
 /**
  * 获取想要切换到的分支
@@ -13,7 +13,7 @@ import { isEmptyObject, formatChoices } from '@/utils/util.js'
 async function getSelectLocalBranch(currentBranch, branches) {
   const choices = branches.filter((br) => br !== currentBranch)
 
-  if (!choices.length) {
+  if (isEmptyArray(choices)) {
     return undefined
   }
 
