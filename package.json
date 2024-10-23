@@ -37,7 +37,8 @@
     "pre-commit": "pnpm exec nano-staged --allow-empty"
   },
   "nano-staged": {
-    "*.{js}": "prettier --write"
+    "*.{js}": "prettier --write",
+    "*.js": "eslint --fix"
   },
   "dependencies": {
     "@inquirer/prompts": "^6.0.1",
