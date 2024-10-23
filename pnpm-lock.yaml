@@ -48,6 +48,9 @@ importers:
       eslint-plugin-import:
         specifier: ^2.29.1
         version: 2.30.0(eslint@8.57.0)
+      nano-staged:
+        specifier: ^0.8.0
+        version: 0.8.0
       prettier:
         specifier: ^3.2.5
         version: 3.3.3
@@ -57,6 +60,9 @@ importers:
       rollup:
         specifier: ^4.22.0
         version: 4.22.0
+      simple-git-hooks:
+        specifier: ^2.11.1
+        version: 2.11.1
 
 packages:
 
@@ -1333,6 +1339,11 @@ packages:
     resolution: {integrity: sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
+  nano-staged@0.8.0:
+    resolution: {integrity: sha512-QSEqPGTCJbkHU2yLvfY6huqYPjdBrOaTMKatO1F8nCSrkQGXeKwtCiCnsdxnuMhbg3DTVywKaeWLGCE5oJpq0g==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    hasBin: true
+
   nanospinner@1.1.0:
     resolution: {integrity: sha512-yFvNYMig4AthKYfHFl1sLj7B2nkHL4lzdig4osvl9/LdGbXwrdFRoqBS98gsEsOakr0yH+r5NZ/1Y9gdVB8trA==}
 
@@ -1595,6 +1606,10 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  simple-git-hooks@2.11.1:
+    resolution: {integrity: sha512-tgqwPUMDcNDhuf1Xf6KTUsyeqGdgKMhzaH4PAZZuzguOgTl5uuyeYe/8mWgAr6IBxB5V06uqEf6Dy37gIWDtDg==}
+    hasBin: true
 
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
@@ -3224,6 +3239,10 @@ snapshots:
 
   mute-stream@1.0.0: {}
 
+  nano-staged@0.8.0:
+    dependencies:
+      picocolors: 1.1.0
+
   nanospinner@1.1.0:
     dependencies:
       picocolors: 1.1.0
@@ -3516,6 +3535,8 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
+
+  simple-git-hooks@2.11.1: {}
 
   source-map@0.6.1: {}
 
