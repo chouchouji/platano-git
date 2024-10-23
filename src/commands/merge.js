@@ -1,4 +1,4 @@
-import { rawlist } from '@inquirer/prompts'
+import { select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
 import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
 import { isEmptyObject, formatChoices, isEmptyArray } from '@/utils/util.js'
@@ -17,7 +17,7 @@ async function getSelectLocalBranch(currentBranch, branches) {
     return undefined
   }
 
-  const selectLocalBranch = await rawlist({
+  const selectLocalBranch = await select({
     message: '请选择你要合并的分支名',
     choices: formatChoices(choices),
   })

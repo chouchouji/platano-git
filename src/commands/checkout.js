@@ -1,4 +1,4 @@
-import { input, select, rawlist } from '@inquirer/prompts'
+import { input, select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
 import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
 import { warning, error, success } from '@/utils/log.js'
@@ -17,7 +17,7 @@ async function getSelectLocalBranch(currentBranch, branches) {
     return undefined
   }
 
-  const selectLocalBranch = await rawlist({
+  const selectLocalBranch = await select({
     message: '请选择你要切换的分支名',
     choices: formatChoices(choices),
   })

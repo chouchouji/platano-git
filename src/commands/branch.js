@@ -1,4 +1,4 @@
-import { checkbox, input, rawlist } from '@inquirer/prompts'
+import { checkbox, input, select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
 import { formatBranch, updateBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches } from '@/utils/branch.js'
 import { success, warning, info, error } from '@/utils/log.js'
@@ -179,7 +179,7 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
  * @returns {string[]} 返回基准分支和目标分支组成的数组
  */
 async function getBaseAndTargetBranch(choices) {
-  const selectedBranch = await rawlist({
+  const selectedBranch = await select({
     message: '请选择你要重命名的本地分支',
     choices: formatChoices(choices),
   })
