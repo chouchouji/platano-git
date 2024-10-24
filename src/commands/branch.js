@@ -216,12 +216,6 @@ async function updateBranchName(branches, value, currentBranch) {
     return
   }
 
-  const remoteBranches = await getRemoteBranches()
-  if (remoteBranches.includes(targetBranch)) {
-    error('远端已存在同名分支 🔁')
-    return
-  }
-
   const { stdout, stderr } = await x('git', ['branch', '-m', baseBranch, targetBranch])
   const out = stdout.trim()
   if (out) {
