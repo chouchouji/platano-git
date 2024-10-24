@@ -1,3 +1,12 @@
+## [0.2.9](https://github.com/chouchouji/platano-git/compare/v0.2.8...v0.2.9) (2024-10-24)
+
+
+### Bug Fixes
+
+* don't validate same remote branch name when update branch name ([162d0cc](https://github.com/chouchouji/platano-git/commit/162d0cc1995413824bf1bdb03bf6b8a57e7513d9))
+
+
+
 ## [0.2.8](https://github.com/chouchouji/platano-git/compare/v0.2.7...v0.2.8) (2024-10-23)
 
 
