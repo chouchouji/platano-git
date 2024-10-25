@@ -1,3 +1,12 @@
+## [0.2.10](https://github.com/chouchouji/platano-git/compare/v0.2.9...v0.2.10) (2024-10-25)
+
+
+### Performance Improvements
+
+* improve the experience of creating new branch by checkout and switch command ([a95d8c1](https://github.com/chouchouji/platano-git/commit/a95d8c1c5fe993992cb259c22cae2f0fb62ea6ad))
+
+
+
 ## [0.2.9](https://github.com/chouchouji/platano-git/compare/v0.2.8...v0.2.9) (2024-10-24)
 
 
@@ -106,25 +115,17 @@
 
 
 
-## [0.1.6](https://github.com/chouchouji/platano-git/compare/v0.1.5...v0.1.6) (2024-09-07)
-
-
-### Performance Improvements
-
-* put origin to last when pull remote branch ([085d06b](https://github.com/chouchouji/platano-git/commit/085d06bb082cd762f31f165a30290d3fad12c0f2))
-
-
-
-## [0.1.5](https://github.com/chouchouji/platano-git/compare/v0.1.4...v0.1.5) (2024-07-16)
-
-
-
-## [0.1.4](https://github.com/chouchouji/platano-git/compare/v0.1.3...v0.1.4) (2024-05-05)
+## [0.1.6](https://github.com/chouchouji/platano-git/compare/v0.1.3...v0.1.6) (2024-09-07)
 
 
 ### Features
 
 * support -v param for branch command ([536bfd0](https://github.com/chouchouji/platano-git/commit/536bfd0c58bdcfe5375d60ae9fb6d94bc6239540))
+
+
+### Performance Improvements
+
+* put origin to last when pull remote branch ([085d06b](https://github.com/chouchouji/platano-git/commit/085d06bb082cd762f31f165a30290d3fad12c0f2))
 
 
 
@@ -187,21 +188,13 @@
 
 
 
-## [0.0.15](https://github.com/chouchouji/platano-git/compare/v0.0.14...v0.0.15) (2024-04-06)
-
-
-### Features
-
-* support to process optional input branch for checkout command ([e03c8bb](https://github.com/chouchouji/platano-git/commit/e03c8bbae4c6fa6232162a17ab860015d48a4dc8))
-
-
-
-## [0.0.14](https://github.com/chouchouji/platano-git/compare/v0.0.13...v0.0.14) (2024-04-02)
+## [0.0.15](https://github.com/chouchouji/platano-git/compare/v0.0.13...v0.0.15) (2024-04-06)
 
 
 ### Features
 
 * support push branch to remote ([7a96b3e](https://github.com/chouchouji/platano-git/commit/7a96b3e989fd8caa4a72c57ec95fddfdabe7e9da))
+* support to process optional input branch for checkout command ([e03c8bb](https://github.com/chouchouji/platano-git/commit/e03c8bbae4c6fa6232162a17ab860015d48a4dc8))
 
 
 
@@ -250,11 +243,7 @@
 
 
 
-## [0.0.8](https://github.com/chouchouji/platano-git/compare/v0.0.7...v0.0.8) (2024-03-09)
-
-
-
-## [0.0.7](https://github.com/chouchouji/platano-git/compare/v0.0.6...v0.0.7) (2024-03-08)
+## [0.0.8](https://github.com/chouchouji/platano-git/compare/v0.0.6...v0.0.8) (2024-03-09)
 
 
 
