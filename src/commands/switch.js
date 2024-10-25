@@ -95,8 +95,13 @@ export async function runSwitchCommand(inputBranch, options) {
   const { c } = options
 
   if (c) {
-    const newBranch = c === true ? await getInputBranchName() : c
+    await x('git', ['fetch', 'origin'])
+    const { stdout: originBranch } = await x('git', ['branch', '-r'])
+    const originBranches = formatBranch(originBranch)
 
+    const baseBranch = await getBaseBranch(currentBranch, [...branches, ...originBranches])
+
+    const newBranch = c === true ? await getInputBranchName() : c
     if (!newBranch) {
       error('分支名无效！')
       return
@@ -107,11 +112,6 @@ export async function runSwitchCommand(inputBranch, options) {
       return
     }
 
-    await x('git', ['fetch', 'origin'])
-    const { stdout: originBranch } = await x('git', ['branch', '-r'])
-    const originBranches = formatBranch(originBranch)
-
-    const baseBranch = await getBaseBranch(currentBranch, [...branches, ...originBranches])
     const { stdout, stderr } = await x('git', ['switch', '-c', newBranch, baseBranch])
     const out = stdout.trim()
     if (out) {

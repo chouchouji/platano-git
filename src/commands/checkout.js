@@ -95,8 +95,13 @@ export async function runCheckoutCommand(inputBranch, options) {
   const { b } = options
 
   if (b) {
-    const newBranch = b === true ? await getInputBranchName() : b
+    await x('git', ['fetch', 'origin'])
+    const { stdout: originBranch } = await x('git', ['branch', '-r'])
+    const originBranches = formatBranch(originBranch)
 
+    const baseBranch = await getBaseBranch(currentBranch, [...branches, ...originBranches])
+
+    const newBranch = b === true ? await getInputBranchName() : b
     if (!newBranch) {
       error('分支名无效！')
       return
@@ -107,11 +112,6 @@ export async function runCheckoutCommand(inputBranch, options) {
       return
     }
 
-    await x('git', ['fetch', 'origin'])
-    const { stdout: originBranch } = await x('git', ['branch', '-r'])
-    const originBranches = formatBranch(originBranch)
-
-    const baseBranch = await getBaseBranch(currentBranch, [...branches, ...originBranches])
     const { stdout, stderr } = await x('git', ['checkout', '-b', newBranch, baseBranch])
     const out = stdout.trim()
     if (out) {
