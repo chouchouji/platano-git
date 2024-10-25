@@ -90,7 +90,7 @@ _\* 此命令的最低 git 版本为 **2.23**_
 
 | 参数| 描述 | 等价命令|
 | --- | --- | --- |
-| ` ` | 推送代码| `git push` |
+| ` ` | 推送代码到远端，如果远端没有当前分支，会默认创建该分支 | `git push origin currentBranch` |
 | `-s` | 将代码推送到远程分支，默认是 `origin` | `git push xxx yyy` |
 | `-f` | 强制推送代码 | `git push xxx yyy -f` |
 | `-u` | 推送并关联远程分支 | `git push --set-upstream xxx yyy` |

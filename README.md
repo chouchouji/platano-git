@@ -91,7 +91,7 @@ _\* The lowest supported git version is **2.23**_
 
 | Param | Description | Equal command |  
 | --- | --- | --- | 
-| ` ` | Push code | `git push` | 
+| ` ` | Push code to origin, if current branch doesn't exists, it will create same remote branch  | `git push origin currentBranch` | 
 | `-s` | Push code to remote branch, the default remote name is `origin` | `git push xxx yyy` | 
 | `-f` | Force push code | `git push xxx yyy -f` | 
 | `-u` | Push and associate remote branch | `git push --set-upstream xxx yyy` | 
