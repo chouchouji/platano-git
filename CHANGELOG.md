@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/chouchouji/platano-git/compare/v0.2.10...v0.3.0) (2024-10-28)
+
+
+### Features
+
+* support whether to fetch remote branches by r params for checkout and switch command ([2d8a5da](https://github.com/chouchouji/platano-git/commit/2d8a5da42bad31e38fbec90359ce1747060b5fa8))
+
+
+
 ## [0.2.10](https://github.com/chouchouji/platano-git/compare/v0.2.9...v0.2.10) (2024-10-25)
 
 
