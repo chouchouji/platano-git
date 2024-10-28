@@ -1,8 +1,6 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import alias from '@rollup/plugin-alias'
 import { fileURLToPath } from 'url'
-import path from 'path'
 
 export default {
   input: 'src/bin.js',
@@ -14,7 +12,7 @@ export default {
   plugins: [
     alias({
       entries: {
-        '@': path.resolve(path.dirname(fileURLToPath(import.meta.url)), './src'),
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     }),
     nodeResolve({
