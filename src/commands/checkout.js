@@ -18,7 +18,7 @@ async function getSelectLocalBranch(currentBranch, branches) {
   }
 
   const selectLocalBranch = await select({
-    message: '请选择你要切换的分支名',
+    message: 'Please select the branch you want to switch to',
     choices: formatChoices(choices),
   })
 
@@ -31,7 +31,7 @@ async function getSelectLocalBranch(currentBranch, branches) {
  */
 async function getInputBranchName() {
   const newBranch = await input({
-    message: '请输入新分支名称',
+    message: 'Please enter a new branch name',
   })
 
   return newBranch.trim()
@@ -45,7 +45,7 @@ async function getInputBranchName() {
  */
 async function getBaseBranch(currentBranch, choices) {
   const selectedBranch = await select({
-    message: '请选择你的基准分支',
+    message: 'Please select the base branch',
     default: currentBranch,
     choices: formatChoices(choices),
   })
@@ -62,17 +62,17 @@ export async function runCheckoutCommand(inputBranch, options) {
     const switchedBranch = inputBranch === undefined ? await getSelectLocalBranch(currentBranch, branches) : inputBranch
 
     if (switchedBranch === undefined) {
-      warning('暂无可以切换的分支')
+      warning('There is no branch to switch to')
       return
     }
 
     if (switchedBranch === currentBranch) {
-      warning('当前分支和要切换的分支名相同！')
+      warning('The current branch and the branch to be switched have the same name!')
       return
     }
 
     if (!branches.includes(switchedBranch)) {
-      error('本地不存在此分支！')
+      error('This branch does not exist locally!')
       return
     }
 
@@ -85,6 +85,7 @@ export async function runCheckoutCommand(inputBranch, options) {
 
       const err = stderr.trim()
       if (err) {
+        warning(`The exec command is: git checkout ${switchedBranch}`)
         error(err)
       }
     }
@@ -92,23 +93,26 @@ export async function runCheckoutCommand(inputBranch, options) {
     return
   }
 
-  const { b } = options
+  const { b, r } = options
 
   if (b) {
-    await x('git', ['fetch', 'origin'])
-    const { stdout: originBranch } = await x('git', ['branch', '-r'])
-    const originBranches = formatBranch(originBranch)
+    let originBranches = []
+    if (r) {
+      await x('git', ['fetch', 'origin'])
+      const { stdout: originBranch } = await x('git', ['branch', '-r'])
+      originBranches = formatBranch(originBranch)
+    }
 
     const baseBranch = await getBaseBranch(currentBranch, [...branches, ...originBranches])
 
     const newBranch = b === true ? await getInputBranchName() : b
     if (!newBranch) {
-      error('分支名无效！')
+      error('Invalid branch name!')
       return
     }
 
     if (branches.includes(newBranch)) {
-      error('本地已存在同名分支 🔁')
+      error('A branch with the same name already exists locally 🔁')
       return
     }
 
@@ -120,6 +124,7 @@ export async function runCheckoutCommand(inputBranch, options) {
 
     const err = stderr.trim()
     if (err) {
+      warning(`The exec command is: git checkout -b ${newBranch} ${baseBranch}`)
       error(err)
     }
   }

@@ -22,58 +22,60 @@ program.version(version, '-v, --version')
 
 program
   .command('br')
-  .description('查看、创建或删除分支')
-  .argument('[branch]', '要创建的分支')
-  .option('-d', '删除本地分支')
-  .option('-r', '删除远程分支')
-  .option('-dr', '删除本地和对应的远端分支')
-  .option('-a', '查看所有分支')
-  .option('-s', '选择远端名称')
-  .option('-m [branch]', '修改分支名')
+  .description('View, create or delete a branch')
+  .argument('[branch]', 'Branch to create')
+  .option('-d', 'Delete local branch')
+  .option('-r', 'Delete remote branch')
+  .option('-dr', 'Delete local and corresponding remote branch')
+  .option('-a', 'View all branches')
+  .option('-s', 'Select remote name')
+  .option('-m [branch]', 'Rename branch')
   .action(async (branch, options) => {
     await runBranchCommand(branch, options)
   })
 
 program
   .command('ps')
-  .description('推送分支')
-  .option('-u', '推送并关联远程分支')
-  .option('-f', '强制推送到远程分支')
-  .option('-s', '推送到远程分支')
+  .description('Push branch')
+  .option('-u', 'Push and set upstream')
+  .option('-f', 'Force push to remote branch')
+  .option('-s', 'Push to remote branch')
   .action(async (options) => {
     await runPushCommand(options)
   })
 
 program
   .command('pl')
-  .description('拉取分支')
-  .option('-s', '选择远端并拉取远端分支')
+  .description('Pull branch')
+  .option('-s', 'Select and pull remote branch')
   .action(async (options) => {
     await runPullCommand(options)
   })
 
 program
   .command('ck')
-  .description('切换或创建分支')
-  .argument('[branch]', '要切换到的分支')
-  .option('-b [branch]', '创建新分支并切换到此分支')
+  .description('Switch or create branch')
+  .argument('[branch]', 'The branch to switch to')
+  .option('-b [branch]', 'Create a new branch and switch to it')
+  .option('-r', 'Fetch remote branch when creating a new branch')
   .action(async (branch, options) => {
     await runCheckoutCommand(branch, options)
   })
 
 program
   .command('sw')
-  .description('切换或创建分支')
-  .argument('[branch]', '要切换到的分支')
-  .option('-c [branch]', '创建新分支并切换到此分支')
+  .description('Switch or create branch')
+  .argument('[branch]', 'The branch to switch to')
+  .option('-c [branch]', 'Create a new branch and switch to it')
+  .option('-r', 'Fetch remote branch when creating a new branch')
   .action(async (branch, options) => {
     await runSwitchCommand(branch, options)
   })
 
 program
   .command('mr')
-  .description('合并分支')
-  .argument('[branch]', '要合并的分支')
+  .description('Merge branch')
+  .argument('[branch]', 'Branch to merge')
   .action(async (branch, options) => {
     await runMergeCommand(branch, options)
   })

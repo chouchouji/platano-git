@@ -18,7 +18,7 @@ async function getSelectLocalBranch(currentBranch, branches) {
   }
 
   const selectLocalBranch = await select({
-    message: '请选择你要合并的分支名',
+    message: 'Please select the branch name you want to merge',
     choices: formatChoices(choices),
   })
 
@@ -34,17 +34,17 @@ export async function runMergeCommand(inputBranch, options) {
     const mergedBranch = inputBranch === undefined ? await getSelectLocalBranch(currentBranch, branches) : inputBranch
 
     if (mergedBranch === undefined) {
-      warning('暂无可以合并的分支')
+      warning('There are currently no branches that can be merged')
       return
     }
 
     if (mergedBranch === currentBranch) {
-      warning('当前分支和要合并的分支名相同！')
+      warning('The current branch and the branch to be merged have the same name!')
       return
     }
 
     if (!branches.includes(mergedBranch)) {
-      error('本地不存在此分支！')
+      error('This branch does not exist locally!')
       return
     }
 
@@ -57,6 +57,7 @@ export async function runMergeCommand(inputBranch, options) {
 
       const err = stderr.trim()
       if (err) {
+        warning(`The exec command is: git merge ${mergedBranch}`)
         error(err)
       }
     }

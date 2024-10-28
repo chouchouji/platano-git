@@ -1,5 +1,5 @@
 import { x } from 'tinyexec'
-import { success, error } from '@/utils/log.js'
+import { success, error, warning } from '@/utils/log.js'
 import { formatRemoteNames, getCurrentBranch, updateBranch } from '@/utils/branch.js'
 import { getSelectedRemoteName } from '@/utils/remote.js'
 import { ORIGIN } from '@/constants/remote.js'
@@ -58,6 +58,7 @@ export async function runPullCommand(params) {
 
   const err = stderr.trim()
   if (err) {
+    warning(`The exec command is: git ${args.join(' ')}`)
     error(err)
   }
 }

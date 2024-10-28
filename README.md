@@ -68,6 +68,7 @@ platano ck main
 | Param | Description | Equal command | Remark |
 | --- | --- | --- | --- |
 | `[branch]` | Switch branch | `git checkout xxx` | If you input the branch, like `platano ck main`, it will switch to `main`. If you don't input anything (`platano ck`), you will get a radio list which you can select the branch, click one then you will switch to that branch. |
+| `-r` | Fetch remote branch when creating a new branch | | It will only take effect when used with `-b`  |
 | `-b [branch]` | Create new branch and switch to this branch | `git checkout -b xxx yyy` | If you input the branch, like `platano ck -b feat-xxx`, then you select the base branch from rest branch list, it will create a new branch `feat-xxx`. If you don't input anything (`platano ck -b`), it prompts you need input the new branch, select you base branch then you will create a new branch and switch to this branch. |
 
 #### sw
@@ -75,6 +76,7 @@ platano ck main
 | Param | Description | Equal command | Remark | Example |
 | --- | --- | --- | --- | --- | 
 | `[branch]` | Switch branch | `git switch xxx` | If you input the branch, like `platano sw main`, it will switch to `main`. If you don't input anything (`platano sw`), you will get a radio list which you can select the branch, click one then you will switch to that branch. | ![sw](https://github.com/user-attachments/assets/b3d7bcfe-16fb-4c74-95be-302e7d7de744) |
+| `-r` | Fetch remote branch when creating a new branch | | It will only take effect when used with `-c`  |
 | `-c [branch]` | Create new branch and switch to this branch | `git switch -c xxx yyy` | If you input the branch, like `platano sw -c feat-xxx`, then you select the base branch from rest branch list, it will create a new branch `feat-xxx`. If you don't input anything (`platano sw -c`), it prompts you need input the new branch, select you base branch then you will create a new branch and switch to this branch. | ![sw-c](https://github.com/user-attachments/assets/6f51274f-90e5-4cf8-8e40-cc826cc2f3f0) |
 
 _\* The lowest supported git version is **2.23**_

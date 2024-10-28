@@ -1,6 +1,6 @@
 import { x } from 'tinyexec'
 import { getCurrentBranch, updateBranch, formatRemoteNames } from '@/utils/branch.js'
-import { success, error } from '@/utils/log.js'
+import { success, error, warning } from '@/utils/log.js'
 import { getSelectedRemoteName } from '@/utils/remote.js'
 
 export async function runPushCommand(params) {
@@ -38,6 +38,7 @@ export async function runPushCommand(params) {
 
   const err = stderr.trim()
   if (err) {
+    warning(`The exec command is: git ${args.join(' ')}`)
     error(err)
   }
 }

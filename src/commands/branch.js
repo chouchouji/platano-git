@@ -22,7 +22,7 @@ async function getSelectBranches(localBranch, currentBranch) {
   }
 
   const selectedBranches = await checkbox({
-    message: '请选择你要删除的分支',
+    message: 'Please select the branch you want to delete',
     choices: formatChoices(choices),
   })
 
@@ -42,6 +42,7 @@ async function fetchAllBranches() {
 
   const err = stderr.trim()
   if (err) {
+    warning('The exec command is: git branch -a')
     error(err)
   }
 }
@@ -68,7 +69,7 @@ function getLocalBranches(branch) {
  * 控制台输出本地剩余分支
  */
 async function logLocalBranches() {
-  warning('本地剩余分支如下：')
+  warning('The remaining local branches are as follows:')
   const { stdout: branch } = await x('git', ['branch'])
   const [currentBranch, ...restBranches] = getLocalBranches(branch)
   success(currentBranch)
@@ -81,12 +82,12 @@ async function deleteLocalBranches(localBranch, currentBranch) {
   const selectedBranches = await getSelectBranches(localBranch, currentBranch)
 
   if (selectedBranches === undefined) {
-    warning('没有可以删除的分支了')
+    warning('There are no branches to delete.')
     return
   }
 
   if (isEmptyArray(selectedBranches)) {
-    warning('未选择任何分支')
+    warning('No branch selected')
     return
   }
 
@@ -95,9 +96,10 @@ async function deleteLocalBranches(localBranch, currentBranch) {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      success(`分支 ${selectedBranches[index]} 删除成功 ✅`)
+      success(`Branch ${selectedBranches[index]} deleted successfully ✅`)
     } else if (result.status === 'rejected') {
-      error(`分支 ${selectedBranches[index]} 删除失败...`)
+      warning(`The exec command is: git branch -D ${selectedBranches[index]}`)
+      error(`Branch ${selectedBranches[index]} deleted failed...`)
     }
   })
 
@@ -109,17 +111,17 @@ async function deleteRemoteBranches(remoteName) {
   const choices = remoteBranches.filter((remoteBr) => !PROTECTED_BRANCHES.includes(remoteBr))
 
   if (isEmptyArray(choices)) {
-    warning('没有可以删除的分支了')
+    warning('There are no branches to delete.')
     return
   }
 
   const selectedBranches = await checkbox({
-    message: '请选择你要删除的分支',
+    message: 'Please select the branch you want to delete',
     choices: formatChoices(choices),
   })
 
   if (isEmptyArray(selectedBranches)) {
-    warning('未选择任何分支')
+    warning('No branch selected')
     return
   }
 
@@ -128,9 +130,10 @@ async function deleteRemoteBranches(remoteName) {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
-      success(`${remoteName}/${selectedBranches[index]} 删除成功 ✅`)
+      success(`${remoteName}/${selectedBranches[index]} deleted successfully ✅`)
     } else if (result.status === 'rejected') {
-      error(`${remoteName}/${selectedBranches[index]} 删除失败...`)
+      warning(`The exec command is: git push ${remoteName} --delete ${selectedBranches[index]}`)
+      error(`${remoteName}/${selectedBranches[index]} deleted failed...`)
     }
   })
 }
@@ -139,12 +142,12 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
   const selectedBranches = await getSelectBranches(localBranch, currentBranch)
 
   if (selectedBranches === undefined) {
-    warning('没有可以删除的分支了')
+    warning('There are no branches to delete.')
     return
   }
 
   if (isEmptyArray(selectedBranches)) {
-    warning('未选择任何分支')
+    warning('No branch selected')
     return
   }
 
@@ -158,15 +161,18 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
   const results = await Promise.allSettled([...localPromises, ...remotePromises])
 
   results.forEach((result, index) => {
-    const idx = index <= selectedBranches.length - 1 ? index : index - selectedBranches.length
-    const branch = index <= selectedBranches.length - 1 ? selectedBranches[idx] : remoteBranches[idx]
+    const isLocal = index <= selectedBranches.length - 1
+    const idx = isLocal ? index : index - selectedBranches.length
+    const branch = isLocal ? selectedBranches[idx] : remoteBranches[idx]
 
-    const text = index <= selectedBranches.length - 1 ? `本地 分支 ${branch}` : `${remoteName}/${branch}`
+    const text = isLocal ? `Local branch ${branch}` : `${remoteName}/${branch}`
 
     if (result.status === 'fulfilled') {
-      success(`${text} 删除成功 ✅`)
+      success(`${text} deleted successfully ✅`)
     } else if (result.status === 'rejected') {
-      error(`${text} 删除失败...`)
+      const warningText = isLocal ? `git branch -D ${branch}` : `git push ${remoteName} --delete ${branch}`
+      warning(`The exec command is: ${warningText}`)
+      error(`${text} deleted failed...`)
     }
   })
 
@@ -180,12 +186,12 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
  */
 async function getBaseAndTargetBranch(choices) {
   const selectedBranch = await select({
-    message: '请选择你要重命名的本地分支',
+    message: 'Please select the local branch you want to rename',
     choices: formatChoices(choices),
   })
 
   const newBranch = await input({
-    message: '请输入分支新名称',
+    message: 'Please enter a new branch name',
   })
 
   return [selectedBranch, newBranch.trim()]
@@ -200,19 +206,19 @@ async function getBaseAndTargetBranch(choices) {
 async function updateBranchName(branches, value, currentBranch) {
   const choices = branches.filter((branch) => !PROTECTED_BRANCHES.includes(branch))
   if (isEmptyArray(choices)) {
-    warning('没有可以重命名的分支了')
+    warning('There are no more branches to rename.')
     return
   }
 
   const [baseBranch, targetBranch] = value === true ? await getBaseAndTargetBranch(choices) : [currentBranch, value]
 
   if (PROTECTED_BRANCHES.includes(baseBranch)) {
-    error('保护分支不能重命名 ❌')
+    error('Protect branches from being renamed ❌')
     return
   }
 
   if (branches.includes(targetBranch)) {
-    error('本地已存在同名分支 🔁')
+    error('A branch with the same name already exists locally 🔁')
     return
   }
 
@@ -224,6 +230,7 @@ async function updateBranchName(branches, value, currentBranch) {
 
   const err = stderr.trim()
   if (err) {
+    warning(`The exec command is git branch -m ${baseBranch} ${targetBranch}`)
     error(err)
   }
 
@@ -235,7 +242,7 @@ export async function runBranchCommand(inputBranch, params) {
   const branches = formatBranch(localBranch)
 
   if (branches.includes(inputBranch)) {
-    warning('本地已存在同名分支 🔁')
+    warning('A branch with the same name already exists locally 🔁')
     return
   }
 
@@ -248,6 +255,7 @@ export async function runBranchCommand(inputBranch, params) {
 
     const err = stderr.trim()
     if (err) {
+      warning(`The exec command is git branch ${inputBranch}`)
       error(err)
     }
     return

@@ -8,7 +8,7 @@ import { formatChoices } from '@/utils/util.js'
  */
 export async function getSelectedRemoteName(choices) {
   const selectedName = await select({
-    message: '请选择远程名',
+    message: 'Please select remote name',
     choices: formatChoices(choices),
   })
 

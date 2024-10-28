@@ -68,6 +68,7 @@ platano ck main
 | 参数| 描述 | 等价命令| 备注 |
 | --- | --- | --- | --- |
 | `[branch]` | 切换分支 | `git checkout xxx` | 如果输入分支，如`platano ck main`，将切换到 `main` 分支。 如果不输入任何内容（`platano ck`），将得到一个单选列表，可以在其中选择想要切换到的分支，选择一个分支后将切换到该分支。 |
+| `-r` | 获取远端分支当创建分支时 | | 只有和 `-b` 一起使用时才生效  |
 | `-b [branch]` | 创建新分支并切换到此分支 | `git checkout -b xxx yyy` | 如果输入分支，例如 `platano ck -b feat-xxx`，然后从分支列表中选择基准分支，它将基于选择的基准分支创建一个新分支 `feat-xxx`。 如果不输入任何内容（`platano ck -b`），它会提示需要输入新分支名称，然后选择基准分支，基于选择的基准分支创建一个新分支并切换到此分支。 |
 
 #### sw
@@ -75,6 +76,7 @@ platano ck main
 | 参数| 描述 | 等价命令| 备注 | 示例 |
 | --- | --- | --- | --- | --- |
 | `[branch]` | 切换分支 | `git switch xxx` | 如果输入分支，如`platano sw main`，将切换到 `main` 分支。 如果不输入任何内容（`platano sw`），将得到一个单选列表，可以在其中选择想要切换到的分支，选择一个分支后将切换到该分支。 | ![sw](https://github.com/user-attachments/assets/b3d7bcfe-16fb-4c74-95be-302e7d7de744) |
+| `-r` | 获取远端分支当创建分支时 | | 只有和 `-c` 一起使用时才生效  |
 | `-c [branch]` | 创建新分支并切换到此分支 | `git switch -c xxx yyy` | 如果输入分支，例如 `platano sw -c feat-xxx`，然后从分支列表中选择基准分支，它将基于选择的基准分支创建一个新分支 `feat-xxx`。 如果不输入任何内容（`platano sw -c`），它会提示需要输入新分支名称，然后选择基准分支，基于选择的基准分支创建一个新分支并切换到此分支。 | ![sw-c](https://github.com/user-attachments/assets/6f51274f-90e5-4cf8-8e40-cc826cc2f3f0) |
 
 _\* 此命令的最低 git 版本为 **2.23**_
