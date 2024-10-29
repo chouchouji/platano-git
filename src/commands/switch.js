@@ -80,12 +80,13 @@ export async function runSwitchCommand(inputBranch, options) {
       const { stdout, stderr } = await x('git', ['switch', switchedBranch])
       const out = stdout.trim()
       if (out) {
+        success(`The exec command is: git switch ${switchedBranch}`)
         success(out)
       }
 
       const err = stderr.trim()
       if (err) {
-        warning(`The exec command is: git checkout ${switchedBranch}`)
+        warning(`The exec command is: git switch ${switchedBranch}`)
         error(err)
       }
     }
@@ -119,6 +120,7 @@ export async function runSwitchCommand(inputBranch, options) {
     const { stdout, stderr } = await x('git', ['switch', '-c', newBranch, baseBranch])
     const out = stdout.trim()
     if (out) {
+      success(`The exec command is: git switch -c ${newBranch} ${baseBranch}`)
       success(out)
     }
 

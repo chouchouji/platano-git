@@ -33,6 +33,7 @@ export async function runPushCommand(params) {
 
   const out = stdout.trim()
   if (out) {
+    success(`The exec command is: git ${args.join(' ')}`)
     success(out)
   }
 

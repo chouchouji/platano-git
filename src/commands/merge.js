@@ -52,6 +52,7 @@ export async function runMergeCommand(inputBranch, options) {
       const { stdout, stderr } = await x('git', ['merge', mergedBranch])
       const out = stdout.trim()
       if (out) {
+        success(`The exec command is: git merge ${mergedBranch}`)
         success(out)
       }
 

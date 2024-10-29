@@ -80,6 +80,7 @@ export async function runCheckoutCommand(inputBranch, options) {
       const { stdout, stderr } = await x('git', ['checkout', switchedBranch])
       const out = stdout.trim()
       if (out) {
+        success(`The exec command is: git checkout ${switchedBranch}`)
         success(out)
       }
 
@@ -119,6 +120,7 @@ export async function runCheckoutCommand(inputBranch, options) {
     const { stdout, stderr } = await x('git', ['checkout', '-b', newBranch, baseBranch])
     const out = stdout.trim()
     if (out) {
+      success(`The exec command is: git checkout -b ${newBranch} ${baseBranch}`)
       success(out)
     }
 

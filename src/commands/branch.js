@@ -37,6 +37,7 @@ async function fetchAllBranches() {
   const { stdout, stderr } = await x('git', ['branch', '-a'])
   const out = stdout.trimEnd()
   if (out) {
+    success('The exec command is: git branch -a')
     success(out)
   }
 
@@ -96,6 +97,7 @@ async function deleteLocalBranches(localBranch, currentBranch) {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
+      success(`The exec command is: git branch -D ${selectedBranches[index]}`)
       success(`Branch ${selectedBranches[index]} deleted successfully ✅`)
     } else if (result.status === 'rejected') {
       warning(`The exec command is: git branch -D ${selectedBranches[index]}`)
@@ -130,6 +132,7 @@ async function deleteRemoteBranches(remoteName) {
 
   results.forEach((result, index) => {
     if (result.status === 'fulfilled') {
+      success(`The exec command is: git push ${remoteName} --delete ${selectedBranches[index]}`)
       success(`${remoteName}/${selectedBranches[index]} deleted successfully ✅`)
     } else if (result.status === 'rejected') {
       warning(`The exec command is: git push ${remoteName} --delete ${selectedBranches[index]}`)
@@ -166,12 +169,13 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
     const branch = isLocal ? selectedBranches[idx] : remoteBranches[idx]
 
     const text = isLocal ? `Local branch ${branch}` : `${remoteName}/${branch}`
+    const commandText = isLocal ? `git branch -D ${branch}` : `git push ${remoteName} --delete ${branch}`
 
     if (result.status === 'fulfilled') {
+      success(`The exec command is: ${commandText}`)
       success(`${text} deleted successfully ✅`)
     } else if (result.status === 'rejected') {
-      const warningText = isLocal ? `git branch -D ${branch}` : `git push ${remoteName} --delete ${branch}`
-      warning(`The exec command is: ${warningText}`)
+      warning(`The exec command is: ${commandText}`)
       error(`${text} deleted failed...`)
     }
   })
@@ -225,6 +229,7 @@ async function updateBranchName(branches, value, currentBranch) {
   const { stdout, stderr } = await x('git', ['branch', '-m', baseBranch, targetBranch])
   const out = stdout.trim()
   if (out) {
+    success(`The exec command is git branch -m ${baseBranch} ${targetBranch}`)
     success(out)
   }
 
@@ -250,6 +255,7 @@ export async function runBranchCommand(inputBranch, params) {
     const { stdout, stderr } = await x('git', ['branch', inputBranch])
     const out = stdout.trim()
     if (out) {
+      success(`The exec command is git branch ${inputBranch}`)
       success(out)
     }
 
