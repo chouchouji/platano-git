@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/chouchouji/platano-git/compare/v0.3.0...v0.3.1) (2024-10-29)
+
+
+### Features
+
+* add default branch when renaming branch name ([#11](https://github.com/chouchouji/platano-git/issues/11)) ([b98cbcb](https://github.com/chouchouji/platano-git/commit/b98cbcbe892ad170748e595d37b8cdf82f235640))
+
+
+
 # [0.3.0](https://github.com/chouchouji/platano-git/compare/v0.2.10...v0.3.0) (2024-10-28)
 
 
