@@ -185,12 +185,14 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
 
 /**
  * 获取基准分支和目标分支
+ * @param {string} currentBranch 当前分支
  * @param {string[]} choices 本地分支列表
  * @returns {string[]} 返回基准分支和目标分支组成的数组
  */
-async function getBaseAndTargetBranch(choices) {
+async function getBaseAndTargetBranch(currentBranch, choices) {
   const selectedBranch = await select({
     message: 'Please select the local branch you want to rename',
+    default: currentBranch,
     choices: formatChoices(choices),
   })
 
@@ -204,7 +206,7 @@ async function getBaseAndTargetBranch(choices) {
 /**
  * 重命名分支
  * @param {string[]} branches 本地分支列表
- * @param {string | boolean} value m命名的值
+ * @param {string | boolean} value 命名的值
  * @param {string} currentBranch 当前分支
  */
 async function updateBranchName(branches, value, currentBranch) {
@@ -214,7 +216,8 @@ async function updateBranchName(branches, value, currentBranch) {
     return
   }
 
-  const [baseBranch, targetBranch] = value === true ? await getBaseAndTargetBranch(choices) : [currentBranch, value]
+  const [baseBranch, targetBranch] =
+    value === true ? await getBaseAndTargetBranch(currentBranch, choices) : [currentBranch, value]
 
   if (PROTECTED_BRANCHES.includes(baseBranch)) {
     error('Protect branches from being renamed ❌')
