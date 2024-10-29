@@ -34,7 +34,9 @@ async function getSelectBranches(localBranch, currentBranch) {
  */
 async function fetchAllBranches() {
   await updateBranch()
-  const { stdout, stderr } = await x('git', ['branch', '-a'])
+  const { stdout, stderr } = await x('git', ['branch', '-a'], {
+    throwOnError: true,
+  })
   const out = stdout.trimEnd()
   if (out) {
     success('The exec command is: git branch -a')
@@ -71,7 +73,9 @@ function getLocalBranches(branch) {
  */
 async function logLocalBranches() {
   warning('The remaining local branches are as follows:')
-  const { stdout: branch } = await x('git', ['branch'])
+  const { stdout: branch } = await x('git', ['branch'], {
+    throwOnError: true,
+  })
   const [currentBranch, ...restBranches] = getLocalBranches(branch)
   success(currentBranch)
   if (isNotEmptyArray(restBranches)) {
@@ -92,7 +96,12 @@ async function deleteLocalBranches(localBranch, currentBranch) {
     return
   }
 
-  const promises = selectedBranches.map((branch) => x('git', ['branch', '-D', branch]))
+  const promises = selectedBranches.map((branch) => {
+    const args = ['branch', '-D', branch]
+    return x('git', args, {
+      throwOnError: true,
+    })
+  })
   const results = await Promise.allSettled(promises)
 
   results.forEach((result, index) => {
@@ -127,7 +136,12 @@ async function deleteRemoteBranches(remoteName) {
     return
   }
 
-  const promises = selectedBranches.map((branch) => x('git', ['push', remoteName, '--delete', branch]))
+  const promises = selectedBranches.map((branch) => {
+    const args = ['push', remoteName, '--delete', branch]
+    return x('git', args, {
+      throwOnError: true,
+    })
+  })
   const results = await Promise.allSettled(promises)
 
   results.forEach((result, index) => {
@@ -155,11 +169,23 @@ async function deleteLocalAndRemoteBranches(localBranch, currentBranch, remoteNa
   }
 
   await updateBranch()
-  const { stdout: allBranch } = await x('git', ['branch', '-a'])
+  const { stdout: allBranch } = await x('git', ['branch', '-a'], {
+    throwOnError: true,
+  })
 
-  const localPromises = selectedBranches.map((branch) => x('git', ['branch', '-D', branch]))
+  const localPromises = selectedBranches.map((branch) => {
+    const args = ['branch', '-D', branch]
+    return x('git', args, {
+      throwOnError: true,
+    })
+  })
   const remoteBranches = selectedBranches.filter((branch) => allBranch.includes(`${remoteName}/${branch}`))
-  const remotePromises = remoteBranches.map((branch) => x('git', ['push', remoteName, '--delete', branch]))
+  const remotePromises = remoteBranches.map((branch) => {
+    const args = ['push', remoteName, '--delete', branch]
+    return x('git', args, {
+      throwOnError: true,
+    })
+  })
 
   const results = await Promise.allSettled([...localPromises, ...remotePromises])
 
@@ -229,7 +255,9 @@ async function updateBranchName(branches, value, currentBranch) {
     return
   }
 
-  const { stdout, stderr } = await x('git', ['branch', '-m', baseBranch, targetBranch])
+  const { stdout, stderr } = await x('git', ['branch', '-m', baseBranch, targetBranch], {
+    throwOnError: true,
+  })
   const out = stdout.trim()
   if (out) {
     success(`The exec command is git branch -m ${baseBranch} ${targetBranch}`)
@@ -246,7 +274,9 @@ async function updateBranchName(branches, value, currentBranch) {
 }
 
 export async function runBranchCommand(inputBranch, params) {
-  const { stdout: localBranch } = await x('git', ['branch'])
+  const { stdout: localBranch } = await x('git', ['branch'], {
+    throwOnError: true,
+  })
   const branches = formatBranch(localBranch)
 
   if (branches.includes(inputBranch)) {
@@ -255,7 +285,9 @@ export async function runBranchCommand(inputBranch, params) {
   }
 
   if (typeof inputBranch === 'string' && inputBranch.length > 0) {
-    const { stdout, stderr } = await x('git', ['branch', inputBranch])
+    const { stdout, stderr } = await x('git', ['branch', inputBranch], {
+      throwOnError: true,
+    })
     const out = stdout.trim()
     if (out) {
       success(`The exec command is git branch ${inputBranch}`)
@@ -285,7 +317,9 @@ export async function runBranchCommand(inputBranch, params) {
   let remoteName = ORIGIN
 
   if (s) {
-    const { stdout: remoteNames } = await x('git', ['remote'])
+    const { stdout: remoteNames } = await x('git', ['remote'], {
+      throwOnError: true,
+    })
     remoteName = await getSelectedRemoteName(formatRemoteNames(remoteNames))
   }
 

@@ -26,7 +26,9 @@ async function getSelectLocalBranch(currentBranch, branches) {
 }
 
 export async function runMergeCommand(inputBranch, options) {
-  const { stdout: branch } = await x('git', ['branch'])
+  const { stdout: branch } = await x('git', ['branch'], {
+    throwOnError: true,
+  })
   const branches = formatBranch(branch)
   const currentBranch = getCurrentBranch(branch)
 
@@ -49,7 +51,9 @@ export async function runMergeCommand(inputBranch, options) {
     }
 
     if (mergedBranch) {
-      const { stdout, stderr } = await x('git', ['merge', mergedBranch])
+      const { stdout, stderr } = await x('git', ['merge', mergedBranch], {
+        throwOnError: true,
+      })
       const out = stdout.trim()
       if (out) {
         success(`The exec command is: git merge ${mergedBranch}`)

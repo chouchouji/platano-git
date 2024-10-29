@@ -54,7 +54,9 @@ async function getBaseBranch(currentBranch, choices) {
 }
 
 export async function runCheckoutCommand(inputBranch, options) {
-  const { stdout: branch } = await x('git', ['branch'])
+  const { stdout: branch } = await x('git', ['branch'], {
+    throwOnError: true,
+  })
   const branches = formatBranch(branch)
   const currentBranch = getCurrentBranch(branch)
 
@@ -77,7 +79,9 @@ export async function runCheckoutCommand(inputBranch, options) {
     }
 
     if (switchedBranch) {
-      const { stdout, stderr } = await x('git', ['checkout', switchedBranch])
+      const { stdout, stderr } = await x('git', ['checkout', switchedBranch], {
+        throwOnError: true,
+      })
       const out = stdout.trim()
       if (out) {
         success(`The exec command is: git checkout ${switchedBranch}`)
@@ -99,8 +103,12 @@ export async function runCheckoutCommand(inputBranch, options) {
   if (b) {
     let originBranches = []
     if (r) {
-      await x('git', ['fetch', 'origin'])
-      const { stdout: originBranch } = await x('git', ['branch', '-r'])
+      await x('git', ['fetch', 'origin'], {
+        throwOnError: true,
+      })
+      const { stdout: originBranch } = await x('git', ['branch', '-r'], {
+        throwOnError: true,
+      })
       originBranches = formatBranch(originBranch)
     }
 
@@ -117,7 +125,9 @@ export async function runCheckoutCommand(inputBranch, options) {
       return
     }
 
-    const { stdout, stderr } = await x('git', ['checkout', '-b', newBranch, baseBranch])
+    const { stdout, stderr } = await x('git', ['checkout', '-b', newBranch, baseBranch], {
+      throwOnError: true,
+    })
     const out = stdout.trim()
     if (out) {
       success(`The exec command is: git checkout -b ${newBranch} ${baseBranch}`)

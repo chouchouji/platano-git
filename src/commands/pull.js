@@ -41,15 +41,21 @@ export async function runPullCommand(params) {
   if (s) {
     await updateBranch()
 
-    const { stdout: branch } = await x('git', ['branch'])
-    const { stdout: remoteNames } = await x('git', ['remote'])
+    const { stdout: branch } = await x('git', ['branch'], {
+      throwOnError: true,
+    })
+    const { stdout: remoteNames } = await x('git', ['remote'], {
+      throwOnError: true,
+    })
     const remoteName = await getSelectedRemoteName(moveOriginToEnd(formatRemoteNames(remoteNames)))
     const currentBranch = getCurrentBranch(branch)
 
     args.push(remoteName, currentBranch)
   }
 
-  const { stdout, stderr } = await x('git', args)
+  const { stdout, stderr } = await x('git', args, {
+    throwOnError: true,
+  })
 
   const out = stdout.trim()
   if (out) {

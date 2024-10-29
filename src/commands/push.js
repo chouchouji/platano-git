@@ -4,7 +4,9 @@ import { success, error, warning } from '@/utils/log.js'
 import { getSelectedRemoteName } from '@/utils/remote.js'
 
 export async function runPushCommand(params) {
-  const { stdout: branch } = await x('git', ['branch'])
+  const { stdout: branch } = await x('git', ['branch'], {
+    throwOnError: true,
+  })
   const currentBranch = getCurrentBranch(branch)
 
   const args = ['push']
@@ -17,7 +19,9 @@ export async function runPushCommand(params) {
   if (s) {
     await updateBranch()
 
-    const { stdout: remoteNames } = await x('git', ['remote'])
+    const { stdout: remoteNames } = await x('git', ['remote'], {
+      throwOnError: true,
+    })
     const remoteName = await getSelectedRemoteName(formatRemoteNames(remoteNames))
 
     args.push(remoteName, currentBranch)
@@ -29,7 +33,9 @@ export async function runPushCommand(params) {
     args.push('-f')
   }
 
-  const { stdout, stderr } = await x('git', args)
+  const { stdout, stderr } = await x('git', args, {
+    throwOnError: true,
+  })
 
   const out = stdout.trim()
   if (out) {
