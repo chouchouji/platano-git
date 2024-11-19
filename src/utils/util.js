@@ -17,15 +17,6 @@ export function isEmptyArray(val) {
 }
 
 /**
- * 是否为非空数组
- * @param {*} val 要判断的变量
- * @returns {boolean}
- */
-export function isNotEmptyArray(val) {
-  return Array.isArray(val) && val.length > 0
-}
-
-/**
  * 格式化选项
  * @param {string[]} choices 选项
  * @returns {{name: string, value:string}[]}

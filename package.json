@@ -48,6 +48,7 @@
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
+    "rattail": "^1.0.12",
     "tinyexec": "^0.3.0"
   },
   "devDependencies": {
