@@ -2,7 +2,7 @@ English | [简体中文](README.zh-CN.md)
 
 # platano-git
 
-> A tool for simplifying **git** operations
+> A cli for simplifying **git** operations
 
 ## Notes
 

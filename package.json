@@ -1,7 +1,7 @@
 {
   "name": "platano-git",
   "version": "0.3.2",
-  "description": "A tool for simplifying git operations",
+  "description": "A cli for simplifying git operations",
   "type": "module",
   "bin": {
     "platano": "/dist/bin.js"
