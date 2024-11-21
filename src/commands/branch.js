@@ -1,9 +1,9 @@
 import { checkbox, input, select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
-import { isNonEmptyArray } from 'rattail'
+import { isNonEmptyArray, isEmptyObject } from 'rattail'
 import { formatBranch, updateBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches } from '@/utils/branch.js'
 import { success, warning, info, error } from '@/utils/log.js'
-import { isEmptyObject, isEmptyArray, formatChoices } from '@/utils/util.js'
+import { isEmptyArray, formatChoices } from '@/utils/util.js'
 import { getSelectedRemoteName } from '@/utils/remote.js'
 import { ORIGIN } from '@/constants/remote.js'
 

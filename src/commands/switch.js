@@ -1,8 +1,9 @@
 import { input, select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
+import { isEmptyObject } from 'rattail'
 import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
 import { warning, error, success } from '@/utils/log.js'
-import { isEmptyObject, formatChoices, isEmptyArray } from '@/utils/util.js'
+import { formatChoices, isEmptyArray } from '@/utils/util.js'
 
 /**
  * 获取想要切换到的分支

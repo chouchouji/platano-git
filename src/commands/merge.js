@@ -1,7 +1,8 @@
 import { select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
+import { isEmptyObject } from 'rattail'
 import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
-import { isEmptyObject, formatChoices, isEmptyArray } from '@/utils/util.js'
+import { formatChoices, isEmptyArray } from '@/utils/util.js'
 import { warning, error, success } from '@/utils/log.js'
 
 /**
