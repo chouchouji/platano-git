@@ -1,6 +1,6 @@
 import { select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
-import { isEmptyObject } from 'rattail'
+import { isEmptyPlainObject } from 'rattail'
 import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
 import { formatChoices, isEmptyArray } from '@/utils/util.js'
 import { warning, error, success } from '@/utils/log.js'
@@ -33,7 +33,7 @@ export async function runMergeCommand(inputBranch, options) {
   const branches = formatBranch(branch)
   const currentBranch = getCurrentBranch(branch)
 
-  if (isEmptyObject(options)) {
+  if (isEmptyPlainObject(options)) {
     const mergedBranch = inputBranch === undefined ? await getSelectLocalBranch(currentBranch, branches) : inputBranch
 
     if (mergedBranch === undefined) {

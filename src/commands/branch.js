@@ -1,6 +1,6 @@
 import { checkbox, input, select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
-import { isNonEmptyArray, isEmptyObject } from 'rattail'
+import { isNonEmptyArray, isEmptyPlainObject } from 'rattail'
 import { formatBranch, updateBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches } from '@/utils/branch.js'
 import { success, warning, info, error } from '@/utils/log.js'
 import { isEmptyArray, formatChoices } from '@/utils/util.js'
@@ -303,7 +303,7 @@ export async function runBranchCommand(inputBranch, params) {
     return
   }
 
-  if (isEmptyObject(params) && inputBranch === undefined) {
+  if (isEmptyPlainObject(params) && inputBranch === undefined) {
     const [currentBranch, ...restBranches] = getLocalBranches(localBranch)
     success(currentBranch)
     if (isNonEmptyArray(restBranches)) {

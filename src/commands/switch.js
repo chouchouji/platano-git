@@ -1,6 +1,6 @@
 import { input, select } from '@inquirer/prompts'
 import { x } from 'tinyexec'
-import { isEmptyObject } from 'rattail'
+import { isEmptyPlainObject } from 'rattail'
 import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
 import { warning, error, success } from '@/utils/log.js'
 import { formatChoices, isEmptyArray } from '@/utils/util.js'
@@ -61,7 +61,7 @@ export async function runSwitchCommand(inputBranch, options) {
   const branches = formatBranch(branch)
   const currentBranch = getCurrentBranch(branch)
 
-  if (isEmptyObject(options)) {
+  if (isEmptyPlainObject(options)) {
     const switchedBranch = inputBranch === undefined ? await getSelectLocalBranch(currentBranch, branches) : inputBranch
 
     if (switchedBranch === undefined) {
