@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chouchouji/platano-git"
+    "url": "git+https://github.com/chouchouji/platano-git.git"
   },
   "homepage": "https://github.com/chouchouji/platano-git",
   "keywords": [
