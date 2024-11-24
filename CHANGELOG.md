@@ -1,3 +1,12 @@
+## [0.3.5](https://github.com/chouchouji/platano-git/compare/v0.3.4...v0.3.5) (2024-11-24)
+
+
+### Reverts
+
+* Revert "chore: remove files field" ([ff0ba10](https://github.com/chouchouji/platano-git/commit/ff0ba10248c4e466dc04aa291c84ba4ff9d169c9))
+
+
+
 ## [0.3.4](https://github.com/chouchouji/platano-git/compare/v0.3.3...v0.3.4) (2024-11-24)
 
 
