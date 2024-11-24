@@ -24,6 +24,10 @@
     "nodejs",
     "git"
   ],
+  "files": [
+    "dist",
+    "README.zh-CN.md"
+  ],
   "author": "chouchouji <1305974212@qq.com>",
   "license": "MIT",
   "engines": {
