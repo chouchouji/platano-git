@@ -3,6 +3,8 @@
 .vscode
 .DS_Store
 dist
+*.tgz
+*.gz
 
 # Dependency directories
 node_modules/
