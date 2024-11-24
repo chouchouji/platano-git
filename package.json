@@ -25,8 +25,7 @@
     "git"
   ],
   "files": [
-    "dist",
-    "README.zh-CN.md"
+    "dist"
   ],
   "author": "chouchouji <1305974212@qq.com>",
   "license": "MIT",
