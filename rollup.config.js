@@ -1,6 +1,6 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import alias from '@rollup/plugin-alias'
 import { fileURLToPath } from 'url'
+import alias from '@rollup/plugin-alias'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 /**
  * @type {import('rollup').RollupOptions}

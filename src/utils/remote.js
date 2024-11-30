@@ -1,5 +1,5 @@
-import { select } from '@inquirer/prompts'
 import { formatChoices } from '@/utils/util.js'
+import { select } from '@inquirer/prompts'
 
 /**
  * 获取远程名

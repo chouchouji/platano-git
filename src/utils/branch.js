@@ -1,5 +1,5 @@
-import { x } from 'tinyexec'
 import { ORIGIN } from '@/constants/remote.js'
+import { x } from 'tinyexec'
 
 /**
  * 获取本地分支列表

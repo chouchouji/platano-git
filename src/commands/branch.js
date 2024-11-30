@@ -1,11 +1,11 @@
-import { checkbox, input, select } from '@inquirer/prompts'
-import { x } from 'tinyexec'
-import { isNonEmptyArray, isEmptyPlainObject } from 'rattail'
-import { formatBranch, updateBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches } from '@/utils/branch.js'
-import { success, warning, info, error } from '@/utils/log.js'
-import { isEmptyArray, formatChoices } from '@/utils/util.js'
-import { getSelectedRemoteName } from '@/utils/remote.js'
 import { ORIGIN } from '@/constants/remote.js'
+import { formatBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches, updateBranch } from '@/utils/branch.js'
+import { error, info, success, warning } from '@/utils/log.js'
+import { getSelectedRemoteName } from '@/utils/remote.js'
+import { formatChoices, isEmptyArray } from '@/utils/util.js'
+import { checkbox, input, select } from '@inquirer/prompts'
+import { isEmptyPlainObject, isNonEmptyArray } from 'rattail'
+import { x } from 'tinyexec'
 
 const PROTECTED_BRANCHES = ['main', 'dev']
 

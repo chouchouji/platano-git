@@ -1,9 +1,9 @@
-import { select } from '@inquirer/prompts'
-import { x } from 'tinyexec'
-import { isEmptyPlainObject } from 'rattail'
-import { getCurrentBranch, formatBranch } from '@/utils/branch.js'
+import { formatBranch, getCurrentBranch } from '@/utils/branch.js'
+import { error, success, warning } from '@/utils/log.js'
 import { formatChoices, isEmptyArray } from '@/utils/util.js'
-import { warning, error, success } from '@/utils/log.js'
+import { select } from '@inquirer/prompts'
+import { isEmptyPlainObject } from 'rattail'
+import { x } from 'tinyexec'
 
 /**
  * 获取想要合并的分支

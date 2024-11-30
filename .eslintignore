@@ -1,7 +1,0 @@
-node_modules/**
-.gitignore
-.npmignore
-LICENSE
-package.json
-pnpm-lock.yaml
-dist/*

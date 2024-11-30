@@ -1,8 +1,8 @@
-import { x } from 'tinyexec'
-import { success, error, warning } from '@/utils/log.js'
-import { formatRemoteNames, getCurrentBranch, updateBranch } from '@/utils/branch.js'
-import { getSelectedRemoteName } from '@/utils/remote.js'
 import { ORIGIN } from '@/constants/remote.js'
+import { formatRemoteNames, getCurrentBranch, updateBranch } from '@/utils/branch.js'
+import { error, success, warning } from '@/utils/log.js'
+import { getSelectedRemoteName } from '@/utils/remote.js'
+import { x } from 'tinyexec'
 
 /**
  * 把 `origin` 移动到数组末尾

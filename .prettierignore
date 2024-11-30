@@ -1,5 +1,0 @@
-.eslintignore
-dist/*
-*.md
-package.json
-pnpm-lock.yaml
