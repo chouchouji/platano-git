@@ -30,7 +30,7 @@ export function formatBranch(branch: string) {
  */
 export async function getCurrentBranch() {
   const { stdout } = await x('git', ['branch', '--show-current'])
-  return stdout
+  return stdout.trim()
 }
 
 /**
