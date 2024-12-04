@@ -18,17 +18,9 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false
+      "recommended": true
     },
-    "ignore": [
-      "node_modules/**",
-      "**/.gitignore",
-      "**/.npmignore",
-      "**/LICENSE",
-      "**/package.json",
-      "**/pnpm-lock.yaml",
-      "dist/*"
-    ]
+    "ignore": ["node_modules/**", ".gitignore", "package.json", "pnpm-lock.yaml", "dist/*"]
   },
   "javascript": {
     "formatter": {

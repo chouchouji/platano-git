@@ -63,7 +63,7 @@ export async function getRemoteBranches(remoteName: string) {
 
   const allBranches = formatBranch(allBranch)
     .filter((branch) => branch.includes(ORIGIN))
-    .map((branch) => branch.match(new RegExp(`${remoteName}/(\\S*)`))![1])
+    .map((branch) => branch.match(new RegExp(`${remoteName}/(\\S*)`))?.[1] ?? '')
 
   return allBranches
 }

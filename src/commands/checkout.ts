@@ -1,7 +1,7 @@
 import { input, search, select } from '@inquirer/prompts'
 import { isEmptyPlainObject } from 'rattail'
 import { x } from 'tinyexec'
-import { CheckoutOptions } from '../types'
+import type { CheckoutOptions } from '../types'
 import { formatBranch, getCurrentBranch } from '../utils/branch'
 import { error, success, warning } from '../utils/log'
 import { formatChoices, isEmptyArray } from '../utils/util'

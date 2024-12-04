@@ -1,6 +1,6 @@
 import { x } from 'tinyexec'
 import { ORIGIN } from '../constants'
-import { PullOptions } from '../types'
+import type { PullOptions } from '../types'
 import { formatRemoteNames, getCurrentBranch, updateBranch } from '../utils/branch'
 import { error, success, warning } from '../utils/log'
 import { getSelectedRemoteName } from '../utils/remote'
@@ -16,7 +16,7 @@ function moveOriginToEnd(remoteNames: string[]) {
     return remoteNames
   }
 
-  let idx
+  let idx: number | undefined = undefined
   for (let i = 0; i < len; i++) {
     if (remoteNames[i] === ORIGIN) {
       idx = i

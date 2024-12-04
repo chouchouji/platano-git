@@ -1,5 +1,5 @@
 import { x } from 'tinyexec'
-import { PushOptions } from '../types'
+import type { PushOptions } from '../types'
 import { formatRemoteNames, getCurrentBranch, updateBranch } from '../utils/branch'
 import { error, success, warning } from '../utils/log'
 import { getSelectedRemoteName } from '../utils/remote'
