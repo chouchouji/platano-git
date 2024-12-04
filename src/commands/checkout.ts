@@ -1,4 +1,4 @@
-import { input, select, search } from '@inquirer/prompts'
+import { input, search, select } from '@inquirer/prompts'
 import { isEmptyPlainObject } from 'rattail'
 import { x } from 'tinyexec'
 import { CheckoutOptions } from '../types'
