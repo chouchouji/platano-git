@@ -1,21 +1,22 @@
-import { ORIGIN } from '@/constants/remote.js'
-import { formatRemoteNames, getCurrentBranch, updateBranch } from '@/utils/branch.js'
-import { error, success, warning } from '@/utils/log.js'
-import { getSelectedRemoteName } from '@/utils/remote.js'
 import { x } from 'tinyexec'
+import { ORIGIN } from '../constants'
+import type { PullOptions } from '../types'
+import { formatRemoteNames, getCurrentBranch, updateBranch } from '../utils/branch'
+import { error, success, warning } from '../utils/log'
+import { getSelectedRemoteName } from '../utils/remote'
 
 /**
  * 把 `origin` 移动到数组末尾
  * @param {string[]} remoteNames 远端名称
  * @returns {string[]}
  */
-function moveOriginToEnd(remoteNames) {
+function moveOriginToEnd(remoteNames: string[]) {
   const len = remoteNames.length
   if (len === 1 && remoteNames[0] === ORIGIN) {
     return remoteNames
   }
 
-  let idx
+  let idx: number | undefined = undefined
   for (let i = 0; i < len; i++) {
     if (remoteNames[i] === ORIGIN) {
       idx = i
@@ -33,29 +34,22 @@ function moveOriginToEnd(remoteNames) {
   return remoteNames
 }
 
-export async function runPullCommand(params) {
+export async function runPullCommand(options: PullOptions) {
   const args = ['pull']
 
-  const { s } = params
+  const { s } = options
 
   if (s) {
     await updateBranch()
 
-    const { stdout: branch } = await x('git', ['branch'], {
-      throwOnError: true,
-    })
-    const { stdout: remoteNames } = await x('git', ['remote'], {
-      throwOnError: true,
-    })
+    const { stdout: remoteNames } = await x('git', ['remote'])
     const remoteName = await getSelectedRemoteName(moveOriginToEnd(formatRemoteNames(remoteNames)))
-    const currentBranch = getCurrentBranch(branch)
+    const currentBranch = await getCurrentBranch()
 
     args.push(remoteName, currentBranch)
   }
 
-  const { stdout, stderr } = await x('git', args, {
-    throwOnError: true,
-  })
+  const { stdout, stderr } = await x('git', args)
 
   const out = stdout.trim()
   if (out) {
@@ -64,7 +58,7 @@ export async function runPullCommand(params) {
   }
 
   const err = stderr.trim()
-  if (err) {
+  if (!out && err) {
     warning(`The exec command is: git ${args.join(' ')}`)
     error(err)
   }

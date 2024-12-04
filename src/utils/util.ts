@@ -3,7 +3,7 @@
  * @param {*} val 要判断的变量
  * @returns {boolean}
  */
-export function isEmptyArray(val) {
+export function isEmptyArray(val: unknown) {
   return Array.isArray(val) && val.length === 0
 }
 
@@ -12,7 +12,7 @@ export function isEmptyArray(val) {
  * @param {string[]} choices 选项
  * @returns {{name: string, value:string}[]}
  */
-export function formatChoices(choices) {
+export function formatChoices(choices: string[]) {
   return choices.map((choice) => ({
     name: choice,
     value: choice,

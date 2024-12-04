@@ -1,12 +1,12 @@
-import { ORIGIN } from '@/constants/remote.js'
 import { x } from 'tinyexec'
+import { ORIGIN } from '../constants'
 
 /**
  * 获取本地分支列表
  * @param {string} branch 本地分支
  * @returns {string[]}
  */
-export function formatBranch(branch) {
+export function formatBranch(branch: string) {
   if (!branch) {
     return []
   }
@@ -26,13 +26,11 @@ export function formatBranch(branch) {
 
 /**
  * 获取当前分支名称
- * @param {string} branch 本地分支
  * @returns {string}
  */
-export function getCurrentBranch(branch) {
-  const currentBranch = branch.split('\n').find((br) => br.includes('*'))
-
-  return currentBranch.replace(/\*/g, '').trim()
+export async function getCurrentBranch() {
+  const { stdout } = await x('git', ['branch', '--show-current'])
+  return stdout.trim()
 }
 
 /**
@@ -40,7 +38,7 @@ export function getCurrentBranch(branch) {
  * @param {string} remoteNames 远端名称
  * @returns {string[]}
  */
-export function formatRemoteNames(remoteNames) {
+export function formatRemoteNames(remoteNames: string) {
   return remoteNames
     .split('\n')
     .filter(Boolean)
@@ -59,13 +57,13 @@ export async function updateBranch() {
  * @param {string} remoteName 远端名称
  * @returns {string[]}
  */
-export async function getRemoteBranches(remoteName) {
+export async function getRemoteBranches(remoteName: string) {
   await updateBranch()
   const { stdout: allBranch } = await x('git', ['branch', '-a'])
 
   const allBranches = formatBranch(allBranch)
     .filter((branch) => branch.includes(ORIGIN))
-    .map((branch) => branch.match(new RegExp(`${remoteName}/(\\S*)`))[1])
+    .map((branch) => branch.match(new RegExp(`${remoteName}/(\\S*)`))?.[1] ?? '')
 
   return allBranches
 }
