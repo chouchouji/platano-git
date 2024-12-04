@@ -1,26 +1,24 @@
-import { formatBranch, getCurrentBranch } from '@/utils/branch.js'
-import { error, success, warning } from '@/utils/log.js'
-import { formatChoices, isEmptyArray } from '@/utils/util.js'
 import { input, select } from '@inquirer/prompts'
 import { isEmptyPlainObject } from 'rattail'
 import { x } from 'tinyexec'
+import { SwitchOptions } from '../types'
+import { formatBranch, getCurrentBranch } from '../utils/branch'
+import { error, success, warning } from '../utils/log'
+import { formatChoices, isEmptyArray } from '../utils/util'
 
 /**
  * 获取想要切换到的分支
- * @param {string} currentBranch 当前分支
  * @param {string[]} branches 本地分支列表
  * @returns {(string | undefined)} 如果没有分支可以切换，返回undefined，否则返回所选分支
  */
-async function getSelectLocalBranch(currentBranch, branches) {
-  const choices = branches.filter((br) => br !== currentBranch)
-
-  if (isEmptyArray(choices)) {
+async function getSelectLocalBranch(branches: string[]) {
+  if (isEmptyArray(branches)) {
     return undefined
   }
 
   const selectLocalBranch = await select({
     message: 'Please select the branch you want to switch to',
-    choices: formatChoices(choices),
+    choices: formatChoices(branches),
   })
 
   return selectLocalBranch
@@ -44,7 +42,7 @@ async function getInputBranchName() {
  * @param {string[]} choices 本地分支列表
  * @returns {string}
  */
-async function getBaseBranch(currentBranch, choices) {
+async function getBaseBranch(currentBranch: string, choices: string[]) {
   const selectedBranch = await select({
     message: 'Please select the base branch',
     default: currentBranch,
@@ -54,15 +52,16 @@ async function getBaseBranch(currentBranch, choices) {
   return selectedBranch
 }
 
-export async function runSwitchCommand(inputBranch, options) {
-  const { stdout: branch } = await x('git', ['branch'], {
-    throwOnError: true,
-  })
+export async function runSwitchCommand(inputBranch: string | undefined, options: SwitchOptions) {
+  const { stdout: branch } = await x('git', ['branch'])
   const branches = formatBranch(branch)
-  const currentBranch = getCurrentBranch(branch)
+  const currentBranch = await getCurrentBranch()
 
   if (isEmptyPlainObject(options)) {
-    const switchedBranch = inputBranch === undefined ? await getSelectLocalBranch(currentBranch, branches) : inputBranch
+    const switchedBranch =
+      inputBranch === undefined
+        ? await getSelectLocalBranch(branches.filter((br) => br !== currentBranch))
+        : inputBranch
 
     if (switchedBranch === undefined) {
       warning('There is no branch to switch to')
@@ -80,9 +79,7 @@ export async function runSwitchCommand(inputBranch, options) {
     }
 
     if (switchedBranch) {
-      const { stdout, stderr } = await x('git', ['switch', switchedBranch], {
-        throwOnError: true,
-      })
+      const { stdout, stderr } = await x('git', ['switch', switchedBranch])
       const out = stdout.trim()
       if (out) {
         success(`The exec command is: git switch ${switchedBranch}`)
@@ -90,7 +87,7 @@ export async function runSwitchCommand(inputBranch, options) {
       }
 
       const err = stderr.trim()
-      if (err) {
+      if (!out && err) {
         warning(`The exec command is: git switch ${switchedBranch}`)
         error(err)
       }
@@ -102,14 +99,10 @@ export async function runSwitchCommand(inputBranch, options) {
   const { c, r } = options
 
   if (c) {
-    let originBranches = []
+    let originBranches: string[] = []
     if (r) {
-      await x('git', ['fetch', 'origin'], {
-        throwOnError: true,
-      })
-      const { stdout: originBranch } = await x('git', ['branch', '-r'], {
-        throwOnError: true,
-      })
+      await x('git', ['fetch', 'origin'])
+      const { stdout: originBranch } = await x('git', ['branch', '-r'])
       originBranches = formatBranch(originBranch)
     }
 
@@ -126,9 +119,7 @@ export async function runSwitchCommand(inputBranch, options) {
       return
     }
 
-    const { stdout, stderr } = await x('git', ['switch', '-c', newBranch, baseBranch], {
-      throwOnError: true,
-    })
+    const { stdout, stderr } = await x('git', ['switch', '-c', newBranch, baseBranch])
     const out = stdout.trim()
     if (out) {
       success(`The exec command is: git switch -c ${newBranch} ${baseBranch}`)
@@ -136,7 +127,7 @@ export async function runSwitchCommand(inputBranch, options) {
     }
 
     const err = stderr.trim()
-    if (err) {
+    if (!out && err) {
       warning(`The exec command is: git switch -c ${newBranch} ${baseBranch}`)
       error(err)
     }

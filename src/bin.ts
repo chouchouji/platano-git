@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-import { fileURLToPath } from 'url'
-import { runBranchCommand } from '@/commands/branch.js'
-import { runCheckoutCommand } from '@/commands/checkout.js'
-import { runMergeCommand } from '@/commands/merge.js'
-import { runPullCommand } from '@/commands/pull.js'
-import { runPushCommand } from '@/commands/push.js'
-import { runSwitchCommand } from '@/commands/switch.js'
+import { fileURLToPath } from 'node:url'
 import { Command } from 'commander'
 import fse from 'fs-extra'
+import { runBranchCommand } from './commands/branch'
+import { runCheckoutCommand } from './commands/checkout'
+import { runMergeCommand } from './commands/merge'
+import { runPullCommand } from './commands/pull'
+import { runPushCommand } from './commands/push'
+import { runSwitchCommand } from './commands/switch'
 
 const { readJSONSync } = fse
 
@@ -76,8 +76,8 @@ program
   .command('mr')
   .description('Merge branch')
   .argument('[branch]', 'Branch to merge')
-  .action(async (branch, options) => {
-    await runMergeCommand(branch, options)
+  .action(async (branch) => {
+    await runMergeCommand(branch)
   })
 
 program.parse()
