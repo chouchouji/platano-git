@@ -27,6 +27,7 @@ program
   .option('-d', 'Delete local branch')
   .option('-r', 'Delete remote branch')
   .option('-dr', 'Delete local and corresponding remote branch')
+  .option('-po, --prune-others', 'Process all branches exclude current branch')
   .option('-a', 'View all branches')
   .option('-s', 'Select remote name')
   .option('-m [branch]', 'Rename branch')
