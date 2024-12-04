@@ -1,14 +1,12 @@
 import { checkbox, input, select } from '@inquirer/prompts'
 import { isEmptyPlainObject, isNonEmptyArray } from 'rattail'
 import { x } from 'tinyexec'
-import { ORIGIN } from '../constants/remote'
+import { ORIGIN, PROTECTED_BRANCHES } from '../constants'
 import { BranchOptions } from '../types'
 import { formatBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches, updateBranch } from '../utils/branch'
 import { error, info, success, warning } from '../utils/log'
 import { getSelectedRemoteName } from '../utils/remote'
 import { formatChoices, isEmptyArray } from '../utils/util'
-
-const PROTECTED_BRANCHES = ['main', 'dev']
 
 /**
  * 获取删除的分支列表
@@ -17,7 +15,7 @@ const PROTECTED_BRANCHES = ['main', 'dev']
  * @returns {(string[] | undefined)} 如果没有可删除的分支，返回undefined，否则返回删除的分支列表
  */
 async function getSelectBranches(localBranch: string, currentBranch: string) {
-  const choices = formatBranch(localBranch).filter((branch) => ![currentBranch].includes(branch))
+  const choices = formatBranch(localBranch).filter((branch) => currentBranch !== branch)
 
   if (isEmptyArray(choices)) {
     return undefined

@@ -1,4 +1,4 @@
-import { input, select } from '@inquirer/prompts'
+import { input, select, search } from '@inquirer/prompts'
 import { isEmptyPlainObject } from 'rattail'
 import { x } from 'tinyexec'
 import { CheckoutOptions } from '../types'
@@ -16,9 +16,15 @@ async function getSelectLocalBranch(branches: string[]) {
     return undefined
   }
 
-  const selectLocalBranch = await select({
+  const selectLocalBranch = await search<string>({
     message: 'Please select the branch you want to switch to',
-    choices: formatChoices(branches),
+    source: (input) => {
+      if (!input) {
+        return branches
+      }
+
+      return branches.filter((branch) => branch.includes(input))
+    },
   })
 
   return selectLocalBranch

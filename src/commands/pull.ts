@@ -1,5 +1,5 @@
 import { x } from 'tinyexec'
-import { ORIGIN } from '../constants/remote'
+import { ORIGIN } from '../constants'
 import { PullOptions } from '../types'
 import { formatRemoteNames, getCurrentBranch, updateBranch } from '../utils/branch'
 import { error, success, warning } from '../utils/log'
