@@ -12,7 +12,7 @@
     "lineWidth": 120,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["**/.eslintignore", "dist/*", "**/*.md", "**/package.json", "**/pnpm-lock.yaml"]
+    "ignore": ["dist", "*.md", "package.json", "pnpm-lock.yaml"]
   },
   "organizeImports": { "enabled": true },
   "linter": {
@@ -20,7 +20,7 @@
     "rules": {
       "recommended": true
     },
-    "ignore": ["node_modules/**", ".gitignore", "package.json", "pnpm-lock.yaml", "dist/*"]
+    "ignore": ["package.json", "pnpm-lock.yaml", "dist"]
   },
   "javascript": {
     "formatter": {
