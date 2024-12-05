@@ -4,7 +4,7 @@ import { x } from 'tinyexec'
 import type { CheckoutOptions } from '../types'
 import { formatBranch, getCurrentBranch } from '../utils/branch'
 import { error, success, warning } from '../utils/log'
-import { formatChoices, isEmptyArray } from '../utils/util'
+import { isEmptyArray } from '../utils/util'
 
 /**
  * 获取想要切换到的分支
@@ -49,10 +49,10 @@ async function getInputBranchName() {
  * @returns {string}
  */
 async function getBaseBranch(currentBranch: string, choices: string[]) {
-  const selectedBranch = await select({
+  const selectedBranch = await select<string>({
     message: 'Please select the base branch',
     default: currentBranch,
-    choices: formatChoices(choices),
+    choices,
   })
 
   return selectedBranch

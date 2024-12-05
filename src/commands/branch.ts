@@ -6,7 +6,7 @@ import type { BranchOptions } from '../types'
 import { formatBranch, formatRemoteNames, getCurrentBranch, getRemoteBranches, updateBranch } from '../utils/branch'
 import { error, info, success, warning } from '../utils/log'
 import { getSelectedRemoteName } from '../utils/remote'
-import { formatChoices, isEmptyArray } from '../utils/util'
+import { isEmptyArray } from '../utils/util'
 
 /**
  * 获取删除的分支列表
@@ -21,9 +21,9 @@ async function getSelectBranches(localBranch: string, currentBranch: string) {
     return undefined
   }
 
-  const selectedBranches = await checkbox({
+  const selectedBranches = await checkbox<string>({
     message: 'Please select the branch you want to delete',
-    choices: formatChoices(choices),
+    choices,
   })
 
   return selectedBranches
@@ -120,9 +120,9 @@ async function deleteRemoteBranches(remoteName: string) {
     return
   }
 
-  const selectedBranches = await checkbox({
+  const selectedBranches = await checkbox<string>({
     message: 'Please select the branch you want to delete',
-    choices: formatChoices(choices),
+    choices,
   })
 
   if (isEmptyArray(selectedBranches)) {
@@ -202,10 +202,10 @@ async function deleteLocalAndRemoteBranches(localBranch: string, currentBranch: 
  * @returns {string[]} 返回基准分支和目标分支组成的数组
  */
 async function getBaseAndTargetBranch(currentBranch: string, choices: string[]) {
-  const selectedBranch = await select({
+  const selectedBranch = await select<string>({
     message: 'Please select the local branch you want to rename',
     default: currentBranch,
-    choices: formatChoices(choices),
+    choices,
   })
 
   const newBranch = await input({

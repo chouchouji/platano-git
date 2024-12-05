@@ -6,15 +6,3 @@
 export function isEmptyArray(val: unknown) {
   return Array.isArray(val) && val.length === 0
 }
-
-/**
- * 格式化选项
- * @param {string[]} choices 选项
- * @returns {{name: string, value:string}[]}
- */
-export function formatChoices(choices: string[]) {
-  return choices.map((choice) => ({
-    name: choice,
-    value: choice,
-  }))
-}

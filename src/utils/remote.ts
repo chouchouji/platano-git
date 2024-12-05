@@ -1,5 +1,4 @@
 import { select } from '@inquirer/prompts'
-import { formatChoices } from './util'
 
 /**
  * 获取远程名
@@ -7,9 +6,9 @@ import { formatChoices } from './util'
  * @returns {string}
  */
 export async function getSelectedRemoteName(choices: string[]) {
-  const selectedName = await select({
+  const selectedName = await select<string>({
     message: 'Please select remote name',
-    choices: formatChoices(choices),
+    choices,
   })
 
   return selectedName
