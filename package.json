@@ -10,7 +10,7 @@
     "dev": "rollup -c --watch",
     "build": "rollup -c",
     "clean": "rimraf node_modules dist",
-    "check": "biome check --write",
+    "check": "biome check --write --verbose",
     "release": "pnpm build && vr release"
   },
   "repository": {
