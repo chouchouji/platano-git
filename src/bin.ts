@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { fileURLToPath } from 'node:url'
+
+import { readFileSync } from 'node:fs'
 import { Command } from 'commander'
-import fse from 'fs-extra'
 import { runBranchCommand } from './commands/branch'
 import { runCheckoutCommand } from './commands/checkout'
 import { runMergeCommand } from './commands/merge'
@@ -9,9 +9,7 @@ import { runPullCommand } from './commands/pull'
 import { runPushCommand } from './commands/push'
 import { runSwitchCommand } from './commands/switch'
 
-const { readJSONSync } = fse
-
-const packageJson = readJSONSync(fileURLToPath(new URL('../package.json', import.meta.url)))
+const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf-8'))
 
 const program = new Command()
 

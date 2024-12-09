@@ -11,7 +11,7 @@ export default {
     dir: 'dist',
     format: 'es',
   },
-  external: ['chalk', 'tinyexec', 'fs-extra', 'commander', '@inquirer/prompts'],
+  external: ['chalk', 'tinyexec', 'commander', '@inquirer/prompts'],
   plugins: [
     typescript(),
     nodeResolve({
