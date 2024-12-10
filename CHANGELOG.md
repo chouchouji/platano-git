@@ -1,3 +1,7 @@
+## [0.4.2](https://github.com/chouchouji/platano-git/compare/v0.4.1...v0.4.2) (2024-12-10)
+
+
+
 ## [0.4.1](https://github.com/chouchouji/platano-git/compare/v0.4.0...v0.4.1) (2024-12-06)
 
 
@@ -32,20 +36,12 @@
 
 
 
-## [0.3.1](https://github.com/chouchouji/platano-git/compare/v0.3.0...v0.3.1) (2024-10-29)
+## [0.3.1](https://github.com/chouchouji/platano-git/compare/v0.2.10...v0.3.1) (2024-10-29)
 
 
 ### Features
 
 * add default branch when renaming branch name ([#11](https://github.com/chouchouji/platano-git/issues/11)) ([b98cbcb](https://github.com/chouchouji/platano-git/commit/b98cbcbe892ad170748e595d37b8cdf82f235640))
-
-
-
-# [0.3.0](https://github.com/chouchouji/platano-git/compare/v0.2.10...v0.3.0) (2024-10-28)
-
-
-### Features
-
 * support whether to fetch remote branches by r params for checkout and switch command ([2d8a5da](https://github.com/chouchouji/platano-git/commit/2d8a5da42bad31e38fbec90359ce1747060b5fa8))
 
 
@@ -167,17 +163,25 @@
 
 
 
-## [0.1.6](https://github.com/chouchouji/platano-git/compare/v0.1.3...v0.1.6) (2024-09-07)
-
-
-### Features
-
-* support -v param for branch command ([536bfd0](https://github.com/chouchouji/platano-git/commit/536bfd0c58bdcfe5375d60ae9fb6d94bc6239540))
+## [0.1.6](https://github.com/chouchouji/platano-git/compare/v0.1.5...v0.1.6) (2024-09-07)
 
 
 ### Performance Improvements
 
 * put origin to last when pull remote branch ([085d06b](https://github.com/chouchouji/platano-git/commit/085d06bb082cd762f31f165a30290d3fad12c0f2))
+
+
+
+## [0.1.5](https://github.com/chouchouji/platano-git/compare/v0.1.4...v0.1.5) (2024-07-16)
+
+
+
+## [0.1.4](https://github.com/chouchouji/platano-git/compare/v0.1.3...v0.1.4) (2024-05-05)
+
+
+### Features
+
+* support -v param for branch command ([536bfd0](https://github.com/chouchouji/platano-git/commit/536bfd0c58bdcfe5375d60ae9fb6d94bc6239540))
 
 
 
@@ -240,13 +244,21 @@
 
 
 
-## [0.0.15](https://github.com/chouchouji/platano-git/compare/v0.0.13...v0.0.15) (2024-04-06)
+## [0.0.15](https://github.com/chouchouji/platano-git/compare/v0.0.14...v0.0.15) (2024-04-06)
+
+
+### Features
+
+* support to process optional input branch for checkout command ([e03c8bb](https://github.com/chouchouji/platano-git/commit/e03c8bbae4c6fa6232162a17ab860015d48a4dc8))
+
+
+
+## [0.0.14](https://github.com/chouchouji/platano-git/compare/v0.0.13...v0.0.14) (2024-04-02)
 
 
 ### Features
 
 * support push branch to remote ([7a96b3e](https://github.com/chouchouji/platano-git/commit/7a96b3e989fd8caa4a72c57ec95fddfdabe7e9da))
-* support to process optional input branch for checkout command ([e03c8bb](https://github.com/chouchouji/platano-git/commit/e03c8bbae4c6fa6232162a17ab860015d48a4dc8))
 
 
 
@@ -295,7 +307,11 @@
 
 
 
-## [0.0.8](https://github.com/chouchouji/platano-git/compare/v0.0.6...v0.0.8) (2024-03-09)
+## [0.0.8](https://github.com/chouchouji/platano-git/compare/v0.0.7...v0.0.8) (2024-03-09)
+
+
+
+## [0.0.7](https://github.com/chouchouji/platano-git/compare/v0.0.6...v0.0.7) (2024-03-08)
 
 
 
