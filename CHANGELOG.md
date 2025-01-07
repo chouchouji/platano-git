@@ -1,3 +1,7 @@
+## [0.4.3](https://github.com/chouchouji/platano-git/compare/v0.4.2...v0.4.3) (2025-01-07)
+
+
+
 ## [0.4.2](https://github.com/chouchouji/platano-git/compare/v0.4.1...v0.4.2) (2024-12-10)
 
 
