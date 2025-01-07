@@ -8,6 +8,7 @@ import { runMergeCommand } from './commands/merge'
 import { runPullCommand } from './commands/pull'
 import { runPushCommand } from './commands/push'
 import { runSwitchCommand } from './commands/switch'
+import { error } from './utils/log'
 
 const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf-8'))
 
@@ -79,3 +80,12 @@ program
   })
 
 program.parse()
+
+process.on('uncaughtException', (err) => {
+  if (err instanceof Error && err.name === 'ExitPromptError') {
+    error('Exit prompt');
+  } else {
+    // Rethrow unknown errors
+    throw error;
+  }
+});
