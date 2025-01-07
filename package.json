@@ -4,7 +4,7 @@
   "description": "A cli for simplifying git operations",
   "type": "module",
   "bin": {
-    "platano": "/dist/bin.js"
+    "platano": "dist/bin.js"
   },
   "scripts": {
     "dev": "rollup -c --watch",
