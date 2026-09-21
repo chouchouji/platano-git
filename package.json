@@ -1,6 +1,6 @@
 {
   "name": "platano-git",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A cli for simplifying git operations",
   "type": "module",
   "bin": {
@@ -50,8 +50,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.1",
     "@varlet/release": "^0.3.2",
     "nano-staged": "^0.8.0",
