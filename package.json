@@ -1,6 +1,6 @@
 {
   "name": "platano-git",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A cli for simplifying git operations",
   "type": "module",
   "bin": {
