@@ -1,0 +1,42 @@
+--- a/dist/cjs/index.js
++++ b/dist/cjs/index.js
+@@ -129,8 +129,7 @@
+         }
+         else if (status !== 'loading' && (key.name === 'up' || key.name === 'down')) {
+             rl.clearLine(0);
+-            if ((key.name === 'up' && active !== bounds.first) ||
+-                (key.name === 'down' && active !== bounds.last)) {
++            if (searchResults.length > 0) {
+                 const offset = key.name === 'up' ? -1 : 1;
+                 let next = active;
+                 do {
+@@ -172,7 +171,7 @@
+             return color(`${cursor} ${item.name}`);
+         },
+         pageSize,
+-        loop: false,
++        loop: true,
+     });
+     let error;
+     if (searchError) {
+--- a/dist/esm/index.mjs
++++ b/dist/esm/index.mjs
+@@ -112,8 +112,7 @@
+         }
+         else if (status !== 'loading' && (key.name === 'up' || key.name === 'down')) {
+             rl.clearLine(0);
+-            if ((key.name === 'up' && active !== bounds.first) ||
+-                (key.name === 'down' && active !== bounds.last)) {
++            if (searchResults.length > 0) {
+                 const offset = key.name === 'up' ? -1 : 1;
+                 let next = active;
+                 do {
+@@ -155,7 +154,7 @@
+             return color(`${cursor} ${item.name}`);
+         },
+         pageSize,
+-        loop: false,
++        loop: true,
+     });
+     let error;
+     if (searchError) {

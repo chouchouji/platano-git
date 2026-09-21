@@ -5,6 +5,7 @@
 dist
 *.tgz
 *.gz
+.pnpm-store/
 
 # Dependency directories
 node_modules/
