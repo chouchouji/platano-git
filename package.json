@@ -1,6 +1,6 @@
 {
   "name": "platano-git",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A cli for simplifying git operations",
   "type": "module",
   "bin": {
@@ -62,7 +62,10 @@
     "typescript": "5.3.3"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["@biomejs/biome", "simple-git-hooks"],
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "simple-git-hooks"
+    ],
     "patchedDependencies": {
       "@inquirer/search@2.0.1": "patches/@inquirer__search@2.0.1.patch"
     }

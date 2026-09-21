@@ -1,8 +1,8 @@
-## [0.4.6](https://github.com/chouchouji/platano-git/compare/v0.4.5...v0.4.6) (2025-01-07)
+## [0.5.1](https://github.com/chouchouji/platano-git/compare/v0.4.6...v0.5.1) (2026-09-21)
 
 
 
-## [0.4.5](https://github.com/chouchouji/platano-git/compare/v0.4.4...v0.4.5) (2025-01-07)
+## [0.4.6](https://github.com/chouchouji/platano-git/compare/v0.4.4...v0.4.6) (2025-01-07)
 
 
 
@@ -179,25 +179,17 @@
 
 
 
-## [0.1.6](https://github.com/chouchouji/platano-git/compare/v0.1.5...v0.1.6) (2024-09-07)
-
-
-### Performance Improvements
-
-* put origin to last when pull remote branch ([085d06b](https://github.com/chouchouji/platano-git/commit/085d06bb082cd762f31f165a30290d3fad12c0f2))
-
-
-
-## [0.1.5](https://github.com/chouchouji/platano-git/compare/v0.1.4...v0.1.5) (2024-07-16)
-
-
-
-## [0.1.4](https://github.com/chouchouji/platano-git/compare/v0.1.3...v0.1.4) (2024-05-05)
+## [0.1.6](https://github.com/chouchouji/platano-git/compare/v0.1.3...v0.1.6) (2024-09-07)
 
 
 ### Features
 
 * support -v param for branch command ([536bfd0](https://github.com/chouchouji/platano-git/commit/536bfd0c58bdcfe5375d60ae9fb6d94bc6239540))
+
+
+### Performance Improvements
+
+* put origin to last when pull remote branch ([085d06b](https://github.com/chouchouji/platano-git/commit/085d06bb082cd762f31f165a30290d3fad12c0f2))
 
 
 
