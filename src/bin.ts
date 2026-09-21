@@ -83,9 +83,9 @@ program.parse()
 
 process.on('uncaughtException', (err) => {
   if (err instanceof Error && err.name === 'ExitPromptError') {
-    error('Exit prompt');
+    error('Exit prompt')
   } else {
     // Rethrow unknown errors
-    throw error;
+    throw error
   }
-});
+})
